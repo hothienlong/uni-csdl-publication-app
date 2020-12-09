@@ -82,6 +82,7 @@ function getPrivilege(user, callback) {
                 privilege.reviewInfo = true;
                 privilege.reviewEditorAssignment = true;
                 privilege.reviewReviewerAssignment = true;
+                privilege.getPaper = true;
                 privilege.getPaperAll = true;
                 privilege.getReviewAll = true;
                 privilege.modifyCriteria = true;

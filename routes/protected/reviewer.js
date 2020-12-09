@@ -15,11 +15,7 @@ router.get('/papers', (req,res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
 
     connection.query(
-        `select (title, summary, associated_file, page_count, sent_by, sent_date) from paper 
-            join review_assignment_detail on id = review_assignment_detail.paper_id
-            join review_review_assignment on review_assignment_detail.paper_id = review_review_assignment.paper_id
-            where review_review_assignment.reviewer_id = ?;
-        ;`,
+        'call reviewer_get_papers(?);',
         [req.user.username],
         (err, results, fieldInfo)=>{
             if(err) return res.status(500).send(err);

@@ -77,15 +77,11 @@ router.post('/removeReviewerAssignment', (req, res)=>{
     )
 });
 
-router.get('/paper', (req, res)=>{
+router.get('/papers', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
 
     connection.query(
-        `select (title, summary, associated_file, page_count, sent_by, sent_date) from paper 
-            join review_assignment_detail on id = review_assignment_detail.paper_id
-            join editor_review_assignment on review_assignment_detail.paper_id = review_review_assignment.paper_id
-            where editor_review_assignment.editor_id = ?;
-        ;`,
+        'call editor_get_papers(?);',
         [req.user.username],
         (err, results, fieldInfo)=>{
             if(err) return res.status(500).send(err);
@@ -94,11 +90,11 @@ router.get('/paper', (req, res)=>{
     )
 });
 
-router.get('/allPaper', (req,res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
+router.get('/allPapers', (req,res)=>{
+    if(!req.privilege.getPaperAll) return res.sendStatus(401);
 
     connection.query(
-        `select (title, summary, associated_file, page_count, sent_by, sent_date) from paper;`,
+        'call editor_get_all_papers();',
         [],
         (err, results, fieldInfo)=>{
             if(err) return res.status(500).send(err);
