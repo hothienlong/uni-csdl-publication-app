@@ -11,9 +11,11 @@ begin
     declare found_user_as_author int;
     declare found_user_as_contact_author int;
 
-    set found_user_as_author = (select count(s_id)
-    from author
-    where s_id = new.s_id);
+    set found_user_as_author = (
+        select count(s_id)
+        from author
+        where s_id = new.s_id
+    );
 
     set found_user_as_contact_author = (
 		select count(s_id)

@@ -16,7 +16,7 @@ router.post('/createReviewDetail', (req, res)=>{
     if(!req.privilege.reviewInfo) return res.sendStatus(401);
 
     connection.query(
-        'call createReviewDetail(?,?);',
+        'insert into review_assignment_detail(p_id, reviewing_date) values(?, ?);',
         [req.body.paperId, req.body.reviewDate],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
@@ -29,7 +29,7 @@ router.post('/assignEditor', (req, res)=>{
     if(!req.privilege.reviewEditorAssignment) return res.sendStatus(401);
 
     connection.query(
-        'call assignEditor(?,?);',
+        'insert into editor_review_assignment(editor_id, paper_id) values(?, ?);',
         [req.body.paperId, req.body.editorId],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
@@ -42,7 +42,7 @@ router.post('/assignReviewer', (req, res)=>{
     if(!req.privilege.reviewReviewerAssignment) return res.sendStatus(401);
 
     connection.query(
-        'call assignReviewer(?,?);',
+        'insert into review_review_assignment(reviewer_id, paper_id) values(reviewerId, paperId);',
         [req.body.paperId, req.body.reviewerId],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
@@ -55,7 +55,7 @@ router.post('/removeEditorAssignment', (req, res)=>{
     if(!req.privilege.reviewEditorAssignment) return res.sendStatus(401);
 
     connection.query(
-        'call removeEditorAssignment(?,?);',
+        'delete from editor_review_assignment where editor_id = editorId and paper_id = paperId;',
         [req.body.paperId, req.body.editorId],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
@@ -68,7 +68,7 @@ router.post('/removeReviewerAssignment', (req, res)=>{
     if(!req.privilege.reviewReviewerAssignment) return res.sendStatus(401);
 
     connection.query(
-        'call removeReviewerAssignment(?,?);',
+        'delete from reviewer_review_assignment where reviewer_id = reviewerId and paper_id = paperId;        ',
         [req.body.paperId, req.body.reviewerId],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
