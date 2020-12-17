@@ -43,9 +43,16 @@ create procedure create_user
     is_editor int
 )
 begin
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;  -- rollback any error in the transaction
+        RESIGNAL;
+    END;
+
+    start transaction;
     insert into scientist
         (id, hashed_pass, fname, address, email, company, job, degree, profession) 
-        VALUES (user_id,hased_pass,fname,address,email,company,job,degree,profession);
+        VALUES (user_id,hashed_pass,fname,address,email,company,job,degree,profession);
     
     -- a scientist can not be an author/contact author and a editor at the same time --
     -- this will be checked using a trigger
@@ -62,6 +69,7 @@ begin
     if (is_editor) then
         insert into editor (s_id, appointed_date) values ('test', curdate());	
     end if;
+    commit;
 end$$
 
 create procedure get_hashed_password
@@ -69,7 +77,7 @@ create procedure get_hashed_password
     user_id varchar(45)
 )
 begin
-    select id, hased_pass from scientist
+    select id, hashed_pass from scientist
     where id = user_id;
 end$$
 
