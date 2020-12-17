@@ -8,6 +8,12 @@ delimiter $$
 create procedure submit_overview_paper
 (p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), sent_date date)
 begin
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;  -- rollback any error in the transaction
+        RESIGNAL;
+    END;
+
     begin transaction;
 	insert into paper (id, title, summary, associated_file, page_count, sent_by, sent_date)
         values (p_id, title, summary, associated_file, page_count, sent_by, sent_date);    
@@ -19,6 +25,12 @@ end$$
 create procedure submit_research_paper
 (p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), sent_date date)
 begin
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;  -- rollback any error in the transaction
+        RESIGNAL;
+    END;
+
     begin transaction;
 	insert into paper (id, title, summary, associated_file, page_count, sent_by, sent_date)
         values (p_id, title, summary, associated_file, page_count, sent_by, sent_date);
@@ -35,6 +47,12 @@ create procedure submit_book_review
     ISBN varchar(45), book_page_count int, publish_year year, book_title text, publisher text
 )
 begin
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;  -- rollback any error in the transaction
+        RESIGNAL;
+    END;
+    
     begin transaction;
 	insert into paper (id, title, summary, associated_file, page_count, sent_by, sent_date)
         values (p_id, title, summary, associated_file, page_count, sent_by, sent_date);
