@@ -17,4 +17,4 @@ begin
 end$$
 delimiter ;
 
-call get_paper_of_author(7,2)
+call get_paper_of_author('qttho','vuhoanglan');

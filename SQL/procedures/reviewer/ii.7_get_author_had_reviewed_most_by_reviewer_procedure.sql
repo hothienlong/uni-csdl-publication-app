@@ -18,6 +18,4 @@ begin
 end$$
 delimiter ;
 
-call get_author_had_reviewed_most_by_reviewer(7)
-
-
+call get_author_had_reviewed_most_by_reviewer('qttho');

@@ -8,7 +8,7 @@ create procedure get_best_result_paper
 )
 begin
 	select p_id
-    from review_assigment_detail
+    from review_assignment_detail
     where p_id in (
 		select paper_id
         from reviewer_review_assignment r
@@ -19,4 +19,4 @@ begin
 end$$
 delimiter ;
 
-call get_best_result_paper(7)
+call get_best_result_paper('qttho')
