@@ -19,6 +19,9 @@
 -- Table structure for table `AUTHOR`
 --
 
+
+USE PUBLICATION;
+
 DROP TABLE IF EXISTS `AUTHOR`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -274,7 +277,7 @@ CREATE TABLE `PAPER` (
 
 LOCK TABLES `PAPER` WRITE;
 /*!40000 ALTER TABLE `PAPER` DISABLE KEYS */;
-INSERT INTO `PAPER` VALUES ('1','title_1','sumary1','file1',1,'vuhoanglan','2019-12-21'),('2','title_2','sumary2','file2',2,'vuhoanglan','2020-12-22'),('3','title_3','sumary3','file3',3,'vutrongphung','2020-12-21'),('4','title_4','sumary4','file4',4,'vutrongphung','2020-12-22'),('5','title_5','sumary5','file5',5,'vutrongphung','2020-12-23'),('6','title_6','sumary6','file6',6,'vutrongphung','2020-12-23');
+INSERT INTO `PAPER` VALUES ('1','title_1','sumary1','file1',1,'vuhoanglan','2010-12-21'),('10','title_10','sumary10','file10',6,'vutrongphung','2018-12-23'),('2','title_2','sumary2','file2',2,'vuhoanglan','2020-12-22'),('3','title_3','sumary3','file3',3,'vutrongphung','2019-12-21'),('4','title_4','sumary4','file4',4,'vutrongphung','2020-12-22'),('5','title_5','sumary5','file5',5,'vutrongphung','2020-12-23'),('6','title_6','sumary6','file6',6,'vutrongphung','2020-12-23'),('7','title_7','sumary7','file7',6,'vuhoanglan','2010-12-23'),('8','title_8','sumary8','file8',6,'vuhoanglan','2020-12-23'),('9','title_9','sumary9','file9',6,'vutrongphung','2019-12-23');
 /*!40000 ALTER TABLE `PAPER` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,7 +428,7 @@ CREATE TABLE `REVIEW_ASSIGNMENT_DETAIL` (
 
 LOCK TABLES `REVIEW_ASSIGNMENT_DETAIL` WRITE;
 /*!40000 ALTER TABLE `REVIEW_ASSIGNMENT_DETAIL` DISABLE KEYS */;
-INSERT INTO `REVIEW_ASSIGNMENT_DETAIL` VALUES ('1','2029-12-24','note1_update','2020-12-25','REJECTION'),('2','2020-12-24','note2','2020-12-25','ACCEPTANCE'),('3','2020-12-24','note3','2020-12-25','REJECTION'),('4','2020-12-24','note4','2020-12-25','ACCEPTANCE'),('5','2020-12-24','note5','2020-12-25','REJECTION'),('6','2020-12-24','note6','2020-12-25',NULL);
+INSERT INTO `REVIEW_ASSIGNMENT_DETAIL` VALUES ('1','2010-12-24','note1_update','2010-12-25','REJECTION'),('10','2018-12-24','note10','2018-12-25','REJECTION'),('2','2020-12-24','note2','2020-12-25','ACCEPTANCE'),('3','2019-12-24','note3','2020-12-25','REJECTION'),('4','2020-12-24','note4','2020-12-25','ACCEPTANCE'),('5','2020-12-24','note5','2020-12-25','REJECTION'),('6','2020-12-24','note6','2020-12-25','REJECTION'),('7','2010-12-24','note7','2010-12-25','REJECTION'),('8','2020-12-24','note8','2020-12-25','REJECTION'),('9','2019-12-24','note9','2019-12-25','REJECTION');
 /*!40000 ALTER TABLE `REVIEW_ASSIGNMENT_DETAIL` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,7 +509,7 @@ CREATE TABLE `REVIEWER_REVIEW_ASSIGNMENT` (
 
 LOCK TABLES `REVIEWER_REVIEW_ASSIGNMENT` WRITE;
 /*!40000 ALTER TABLE `REVIEWER_REVIEW_ASSIGNMENT` DISABLE KEYS */;
-INSERT INTO `REVIEWER_REVIEW_ASSIGNMENT` VALUES ('qttho','1'),('qttho','2'),('qttho','3'),('nnhhaadd_sci','4'),('nnhhaadd_sci','5'),('nnhhaadd_sci','6');
+INSERT INTO `REVIEWER_REVIEW_ASSIGNMENT` VALUES ('qttho','1'),('qttho','10'),('qttho','2'),('qttho','3'),('nnhhaadd_sci','4'),('nnhhaadd_sci','5'),('nnhhaadd_sci','6'),('qttho','7'),('qttho','8'),('qttho','9');
 /*!40000 ALTER TABLE `REVIEWER_REVIEW_ASSIGNMENT` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -575,4 +578,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-25  1:29:36
+-- Dump completed on 2020-12-25 12:50:02
