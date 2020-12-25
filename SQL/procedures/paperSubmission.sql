@@ -14,7 +14,7 @@ begin
         RESIGNAL;
     END;
 
-    begin transaction;
+    start transaction;
 	insert into paper (id, title, summary, associated_file, page_count, sent_by, sent_date)
         values (p_id, title, summary, associated_file, page_count, sent_by, sent_date);    
     insert into research_overview_paper
@@ -31,7 +31,7 @@ begin
         RESIGNAL;
     END;
 
-    begin transaction;
+    start transaction;
 	insert into paper (id, title, summary, associated_file, page_count, sent_by, sent_date)
         values (p_id, title, summary, associated_file, page_count, sent_by, sent_date);
     insert into research_paper
@@ -44,7 +44,8 @@ delimiter $$
 create procedure submit_book_review
 (
 	p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), sent_date date,
-    ISBN varchar(45), book_page_count int, publish_year year, book_title text, publisher text
+    ISBN varchar(45), book_page_count int, publish_year year, book_title text, publisher text,
+    author_name varchar(45)
 )
 begin
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -53,7 +54,7 @@ begin
         RESIGNAL;
     END;
     
-    begin transaction;
+    start transaction;
 	insert into paper (id, title, summary, associated_file, page_count, sent_by, sent_date)
         values (p_id, title, summary, associated_file, page_count, sent_by, sent_date);
 
@@ -62,6 +63,9 @@ begin
     
     insert into book_review
         values (p_id, ISBN);
+        
+	insert into book_author
+		values (ISBN, author_name);
     commit;
 end$$
 delimiter ;

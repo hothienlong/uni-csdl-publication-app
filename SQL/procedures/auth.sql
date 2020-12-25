@@ -1,8 +1,8 @@
 use publication;
 
 -- turn this alter table on if the table does not contain hashed_pass column
--- ALTER TABLE scientist
--- ADD or alter HASHED_PASS TEXT NOT NULL;
+ALTER TABLE scientist
+ADD HASHED_PASS TEXT NOT NULL;
 
 drop procedure if exists get_user_roles;
 drop procedure if exists create_user;
