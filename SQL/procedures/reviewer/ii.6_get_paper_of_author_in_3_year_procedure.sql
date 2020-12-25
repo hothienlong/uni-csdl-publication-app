@@ -18,6 +18,7 @@ begin
                         where r.reviewer_id = reviewer_id
                     )
                     and TIMESTAMPDIFF(YEAR,reviewing_date,CURDATE()) <= 3
+                    and result <> '' --- Bài báo đã phản biện, bài báo đang phản biện sẽ có result = '' 
 				)
 				and p.sent_by = author_id;
 end$$
