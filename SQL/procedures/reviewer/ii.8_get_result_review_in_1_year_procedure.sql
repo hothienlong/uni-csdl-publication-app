@@ -15,6 +15,7 @@ begin
         from reviewer_review_assignment r
         where r.reviewer_id = reviewer_id
     )
+    and result is not null
     and TIMESTAMPDIFF(YEAR,reviewing_date,CURDATE()) <= 1;
     
 end$$
