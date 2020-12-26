@@ -20,14 +20,28 @@ router.post('/submit_research_paper', (req, res)=>{
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
     var sent_by = req.body.sent_by;
-    var sent_date = req.body.sent_date;
+    
+    var num_author = req.body.num_author;
+    var write_authors_id = req.body.write_authors_id;
 
-    var query = 'call submit_research_paper(?,?,?,?,?,?,?);';
+    var query = 'call submit_research_paper(?,?,?,?,?,?);';
     connection.query(
         query,
-        [p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
+        [p_id, title, summary, associated_file, page_count, sent_by], 
         (err, results, fields)=>{
-            if (err) return res.status(500).send(err);
+        if (err) return res.status(500).send(err);
+
+        for(var i = 0; i < num_author; i++){
+            var subquery = 'call write_paper(?,?);'
+            connection.query(
+                subquery,
+                [p_id, write_authors_id[i]],
+                (err, results, fields)=>{
+                    if (err) return res.status(500).send(err);
+                }
+            );
+        }
+
         return res.sendStatus(200);
         }
     );
@@ -43,13 +57,28 @@ router.post('/submit_overview_paper', (req, res)=>{
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
     var sent_by = req.body.sent_by;
-    var sent_date = req.body.sent_date;
-    var query = 'call submit_overview_paper(?,?,?,?,?,?,?);';
+
+    var num_author = req.body.num_author;
+    var write_authors_id = req.body.write_authors_id;
+
+    var query = 'call submit_overview_paper(?,?,?,?,?,?);';
     connection.query(
         query,
-        [p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
+        [p_id, title, summary, associated_file, page_count, sent_by], 
         (err, results, fields)=>{
             if (err) return res.status(500).send(err);
+
+            for(var i = 0; i < num_author; i++){
+                var subquery = 'call write_paper(?,?);'
+                connection.query(
+                    subquery,
+                    [p_id, write_authors_id[i]],
+                    (err, results, fields)=>{
+                        if (err) return res.status(500).send(err);
+                    }
+                );
+            }
+
             return res.sendStatus(200);
         }
     );
@@ -63,24 +92,37 @@ router.post('/submit_book_review', (req, res)=>{
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
     var sent_by = req.body.sent_by;
-    var sent_date = req.body.sent_date;
-
     var ISBN = req.body.ISBN;
-    var book_page_count = req.body.book_page_count;
-    var publish_year = req.body.publish_year;
-    var book_title = req.body.book_title; 
-    var publisher = req.body.publisher;
 
-    var author_name = req.body.author_name;
+    // var book_page_count = req.body.book_page_count;
+    // var publish_year = req.body.publish_year;
+    // var book_title = req.body.book_title; 
+    // var publisher = req.body.publisher;
 
-    var query = 'call submit_book_review(?,?,?,?,?,?,?, ?,?,?,?,?, ?);';
+    // var author_name = req.body.author_name;
+
+    var num_author = req.body.num_author;
+    var write_authors_id = req.body.write_authors_id;
+
+    var query = 'call submit_book_review(?,?,?,?,?,?,?);';
     connection.query(
         query,
-        [p_id, title, summary, associated_file, page_count, sent_by, sent_date,
-        ISBN, book_page_count, publish_year, book_title, publisher,
-        author_name], 
+        [p_id, title, summary, associated_file, page_count, sent_by,
+        ISBN], 
         (err, results, fields)=>{
             if (err) return res.status(500).send(err);
+
+            for(var i = 0; i < num_author; i++){
+                var subquery = 'call write_paper(?,?);'
+                connection.query(
+                    subquery,
+                    [p_id, write_authors_id[i]],
+                    (err, results, fields)=>{
+                        if (err) return res.status(500).send(err);
+                    }
+                );
+            }
+
             return res.sendStatus(200);
         }
     );
@@ -100,6 +142,33 @@ router.get('/papers', (req, res)=>{
         }
     );
  
+});
+
+
+// 12 chức năng contact_author
+
+router.put('/update_information', (req, res)=>{
+    if(!req.privilege.updateAccount) return res.sendStatus(401);
+    var s_id = req.user.username;
+    var fname = req.body.fname;
+    var address = req.body.address;
+    var email = req.body.email;
+    var company = req.body.company;
+    var job = req.body.job;
+    var degree = req.body.degree;
+    var profession = req.body.profession;
+
+    console.log(s_id);
+
+    var query = 'call update_information_contact_author(?,?,?,?,?,?,?,?);';
+    connection.query(
+        query,
+        [s_id, fname, address, email, company, job, degree, profession], 
+        (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.sendStatus(200);
+        }
+    );
 });
 
 router.put('/edit_paper', (req, res)=>{
@@ -128,7 +197,6 @@ router.put('/edit_paper', (req, res)=>{
             return res.send(results);
         }
     );
-
 });
 
 router.delete('/delete_paper', (req, res)=>{
@@ -154,5 +222,21 @@ router.delete('/delete_paper', (req, res)=>{
             return res.send(results);
         }
     );
+});
+
+router.get('/info_book_authors', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var p_id = req.body.p_id;
+
+    var query = 'call get_information_book_authors(?);';
+    connection.query(
+        query,
+        [p_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+ 
 });
 module.exports = router;
