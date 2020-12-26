@@ -1,0 +1,1462 @@
+{
+	"info": {
+		"_postman_id": "eb187745-3d7f-4e8b-8ce2-dec7f5895d10",
+		"name": "ContactAuthorAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "iii",
+			"item": [
+				{
+					"name": "update_information",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "fname",
+									"value": "ho thien long",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "new address",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "thienlong@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "com",
+									"type": "text"
+								},
+								{
+									"key": "job",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "degree",
+									"value": "2020-12-08",
+									"type": "text"
+								},
+								{
+									"key": "profession",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/update_information",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"update_information"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit_paper",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "p_id",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "title13",
+									"type": "text"
+								},
+								{
+									"key": "summary",
+									"value": "update summary",
+									"type": "text"
+								},
+								{
+									"key": "associated_file",
+									"value": "file13",
+									"type": "text"
+								},
+								{
+									"key": "page_count",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "sent_date",
+									"value": "2020-12-08",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/edit_paper",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"edit_paper"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_paper",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "p_id",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/delete_paper",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"delete_paper"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_info_book_author",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "p_id",
+									"value": "14",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/info_book_authors",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"info_book_authors"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_status_paper",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "p_id",
+									"value": "14",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/info_book_authors",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"info_book_authors"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_review_summary",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "p_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "file3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/review_summary",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"review_summary"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_list_paper_in_one_year",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/list_paper_in_one_year",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"list_paper_in_one_year"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_list_posted_paper_in_one_year Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "file3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/list_posted_paper_in_one_year",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"list_posted_paper_in_one_year"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_list_publication_paper_in_one_year",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "file3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/list_publication_paper_in_one_year",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"list_publication_paper_in_one_year"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_papers_worst_result",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvbmdhdXRob3IiLCJpYXQiOjE2MDg5MDg5MzJ9.1DtprsWrvZ1xyh4MrgGbm7v9I6UppkK0OGvwM8mx9Ew"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "file3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/papers_worst_result",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"papers_worst_result"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_total_papers_in_5_years",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "file3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/total_papers_in_5_years",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"total_papers_in_5_years"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_total_research_papers_in_5_years",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "file3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/total_research_papers_in_5_years",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"total_research_papers_in_5_years"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_total_overview_papers_in_5_years",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "file3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/api/contactAuthor/total_overview_papers_in_5_years",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"contactAuthor",
+								"total_overview_papers_in_5_years"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "submit_research_paper",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvbmdhdXRob3IiLCJpYXQiOjE2MDg5MDg5MzJ9.1DtprsWrvZ1xyh4MrgGbm7v9I6UppkK0OGvwM8mx9Ew"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"p_id\" : 11,\r\n \"title\" : \"title11\",\r\n \"summary\" : null,\r\n \"associated_file\" : \"file11\",\r\n \"page_count\" : 100,\r\n \"num_author\" : 2,\r\n \"write_authors_id\" : [\"longauthorwrite\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/contactAuthor/submit_research_paper",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"contactAuthor",
+						"submit_research_paper"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view_paper",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "file3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/api/contactAuthor/papers",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"contactAuthor",
+						"papers"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "submit_book_review",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"p_id\" : 14,\r\n \"title\" : \"title14\",\r\n \"summary\" : null,\r\n \"associated_file\" : \"file14\",\r\n \"page_count\" : 100,\r\n \"ISBN\" : 12,\r\n \"num_author\" : 2,\r\n \"write_authors_id\" : [\"longauthorwrite\",\"longcontact\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/contactAuthor/submit_book_review",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"contactAuthor",
+						"submit_book_review"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authorC signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "longcontact",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "thienlong",
+							"type": "text"
+						},
+						{
+							"key": "fname",
+							"value": "ho thien long",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "add",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "thienlong@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "com",
+							"type": "text"
+						},
+						{
+							"key": "job",
+							"value": "none",
+							"type": "text"
+						},
+						{
+							"key": "degree",
+							"value": "none",
+							"type": "text"
+						},
+						{
+							"key": "profession",
+							"value": "none",
+							"type": "text"
+						},
+						{
+							"key": "is_author",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "is_contact_author",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "is_reviewer",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "is_editor",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/authenticate/signup",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"authenticate",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authorC signin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "longcontact",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "thienlong",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/authenticate/signin",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"authenticate",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "submit_overview_paper",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvbmdjb250YWN0IiwiaWF0IjoxNjA4OTk2OTY4fQ.XNJL-Ot26B_xmGJg8iMA8CsKhnoPhlimWc_4nS-6A1w",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"p_id\" : 13,\r\n \"title\" : \"title13\",\r\n \"summary\" : null,\r\n \"associated_file\" : \"file13\",\r\n \"page_count\" : 100,\r\n \"num_author\" : 3,\r\n \"write_authors_id\" : [\"longauthorwrite\",\"longauthor\",\"longcontact\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/contactAuthor/submit_overview_paper",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"contactAuthor",
+						"submit_overview_paper"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
