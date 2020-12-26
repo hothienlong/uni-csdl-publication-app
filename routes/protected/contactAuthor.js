@@ -19,7 +19,7 @@ router.post('/submit_research_paper', (req, res)=>{
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    var sent_by = req.body.sent_by;
+    var sent_by = req.user.username;
 
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
@@ -56,7 +56,7 @@ router.post('/submit_overview_paper', (req, res)=>{
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    var sent_by = req.body.sent_by;
+    var sent_by = req.user.username;
 
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
@@ -91,7 +91,7 @@ router.post('/submit_book_review', (req, res)=>{
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    var sent_by = req.body.sent_by;
+    var sent_by = req.user.username;
     var ISBN = req.body.ISBN;
 
     // var book_page_count = req.body.book_page_count;
@@ -182,7 +182,7 @@ router.put('/edit_paper', (req, res)=>{
     var sent_by = req.user.username;
     var sent_date = req.body.sent_date;
 
-    var query = 'call edit_paper(?,?,?,?,?,?,?);';
+    var query = 'call edit_paper(?,?,?,?,?,?,?,?);';
     connection.query(
         query,
         [s_id, p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
@@ -227,12 +227,13 @@ router.delete('/delete_paper', (req, res)=>{
 
 router.get('/info_book_authors', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
     var p_id = req.body.p_id;
 
-    var query = 'call get_information_book_authors(?);';
+    var query = 'call get_information_book_authors(?,?);';
     connection.query(
         query,
-        [p_id], 
+        [s_id, p_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
             return res.send(results);
@@ -305,6 +306,51 @@ router.get('/papers_worst_result', (req, res)=>{
     var s_id = req.user.username;
 
     var query = 'call get_papers_worst_result(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
+
+router.get('/total_papers_in_5_years', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_total_papers_in_5_years(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
+
+router.get('/total_research_papers_in_5_years', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_total_research_papers_in_5_years(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
+
+router.get('/total_overview_papers_in_5_years', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_total_overview_papers_in_5_years(?);';
     connection.query(
         query,
         [s_id], 
