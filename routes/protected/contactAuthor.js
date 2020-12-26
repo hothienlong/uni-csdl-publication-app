@@ -241,6 +241,22 @@ router.get('/info_book_authors', (req, res)=>{
     );
 });
 
+router.get('/status_paper', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+    var p_id = req.body.p_id;
+
+    var query = 'call get_status_paper(?,?);';
+    connection.query(
+        query,
+        [s_id, p_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
+
 router.get('/review_summary', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var p_id = req.body.p_id;
