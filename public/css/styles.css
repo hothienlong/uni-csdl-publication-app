@@ -1,0 +1,27 @@
+.vertical-center {
+    /* min-height: 100%;  Fallback for browsers do NOT support vh unit */
+    /* min-height: 100vh; */
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    height: 70vh;
+}
+
+.vertical-center-register {
+    /* min-height: 100%;  Fallback for browsers do NOT support vh unit */
+    /* min-height: 100vh; */
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    /* height: 100vh; */
+}
+
+.table-paper {
+    margin: 20px;
+}
+
+.table td {
+    vertical-align: middle !important;
+}   
