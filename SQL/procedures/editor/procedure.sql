@@ -13,6 +13,37 @@ end |
 delimiter ;
 grant execute on procedure publication.assign_review to editor@localhost;
 
+
+-- 2
+drop procedure if exists update_paper_status;
+delimiter |
+create procedure update_paper_status
+(paper_id varchar(45), status varchar(45))
+begin
+	update paper 
+		set paper.status = status
+		where paper.id = paper_id;
+end |
+delimiter ;
+grant execute on procedure publication.update_paper_status to editor@localhost;
+
+-- 4
+drop procedure if exists update_result_after_review;
+delimiter |
+create procedure update_result_after_review 
+(paper_id varchar(45), result varchar(45), inform_date date)
+begin
+	update paper 
+		set status = 'COMPLETED_REVIEW'
+		where paper.id = paper_id;
+    update review_assignment_detail as r
+		set r.inform_date = inform_date,
+			r.result = result
+		where r.p_id = paper_id;
+end |
+delimiter ;
+grant execute on procedure publication.update_result_after_review to editor@localhost;
+
 -- 5,6
 drop procedure if exists get_paper_by_type_and_status;
 delimiter |
