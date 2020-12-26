@@ -1,3 +1,4 @@
+-- - không cần thiết
 use publication;
 
 drop procedure if exists update_information_contact_author ;

@@ -20,7 +20,7 @@ router.post('/submit_research_paper', (req, res)=>{
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
     var sent_by = req.body.sent_by;
-    
+
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
 
@@ -172,7 +172,8 @@ router.put('/update_information', (req, res)=>{
 });
 
 router.put('/edit_paper', (req, res)=>{
-    if(!req.privilege.paperSubmission) return res.sendStatus(401);
+    if(!req.privilege.paperEdit) return res.sendStatus(401);
+    var s_id = req.user.username;
     var p_id = req.body.p_id;
     var title = req.body.title;
     var summary = req.body.summary;
@@ -184,7 +185,7 @@ router.put('/edit_paper', (req, res)=>{
     var query = 'call edit_paper(?,?,?,?,?,?,?);';
     connection.query(
         query,
-        [p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
+        [s_id, p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
         (err, results, fields)=>{
             if (err) return res.status(500).send(err);
             // paper = results[0];
@@ -200,7 +201,7 @@ router.put('/edit_paper', (req, res)=>{
 });
 
 router.delete('/delete_paper', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
+    if(!req.privilege.paperDelete) return res.sendStatus(401);
     var s_id = req.user.username;
     var p_id = req.body.p_id;
 
@@ -237,6 +238,35 @@ router.get('/info_book_authors', (req, res)=>{
             return res.send(results);
         }
     );
- 
+});
+
+router.get('/review_summary', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var p_id = req.body.p_id;
+
+    var query = 'call get_review_summary(?);';
+    connection.query(
+        query,
+        [p_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
+
+router.get('/list_paper_in_one_year', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_list_paper_in_one_year(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
 });
 module.exports = router;
