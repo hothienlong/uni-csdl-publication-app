@@ -269,4 +269,49 @@ router.get('/list_paper_in_one_year', (req, res)=>{
         }
     );
 });
+
+router.get('/list_posted_paper_in_one_year', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_list_posted_paper_in_one_year(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
+
+router.get('/list_publication_paper_in_one_year', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_list_publication_paper_in_one_year(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
+
+router.get('/papers_worst_result', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_papers_worst_result(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results);
+        }
+    );
+});
 module.exports = router;
