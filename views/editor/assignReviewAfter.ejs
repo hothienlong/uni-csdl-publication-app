@@ -61,7 +61,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/views/editor/paper">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>Paper</span></a>
+                    <span>All Papers</span></a>
             </li>
 
             <li class="nav-item">
@@ -71,7 +71,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="/views/editor/assignReview">
+                <a class="nav-link" href="/views/editor/assignReviewAfter">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Assign review</span></a>
             </li>
@@ -152,7 +152,7 @@
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <%- include('./layout/topbar'); %>
+                <%- include('../layout/topbar'); %>
                 <div class="container-fluid">
                     <!-- <h1 class="h3 mb-2 text-gray-800">Tables</h1> -->
                     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
@@ -160,32 +160,63 @@
                             href="https://datatables.net">official DataTables documentation</a>.</p> -->
                     
                     <!-- <div class="card shadow mb-4"> -->
-                        <div class="row">
-                            <div class="col-3">
-                                <form action="/views/editor/addPaper" method="POST">                    
-                                    <div class="form-group">
-                                        <label for="papers">Select paper:</label>                                                        
-                                        <select name="papers" id="papers" style="width: 100%">
-                                            <option value="-1">Please choose a paper</option>
-                                            <%  papers.forEach(function (au) { %>
-                                                <option value=<%= au.id %>> <%= au.id %> </option>
-                                            <% }) %>                                                                                                                                                                                    
-                                        </select>
-                                    </div>      
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <button id='selectPaperBtn' class="btn btn-info me-md-2" type="button" style="margin-right: 5px;">Select</button>
-                                        <!-- <button class="btn btn-primary" type="button">Go back</button> -->
-                                    </div>                  
-                                </form>
-    
-                            </div>
+                       
                             
-                            <form action="/views/editor/addPaper" method="POST">
-                        
-                        
-                        
-                            </form>
-                        </div>
+                         <div>
+                            <form action="/views/editor/assignReviewAfter" method="POST"> 
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="papers">Paper:</label>                                                        
+                                            <input type="text" name="paperId" style="width: 100%;" value="<%= paperId %>"/>
+                                        </div> 
+                                    </div>
+                                      
+                                    <div class="col-4">
+                                        <% var i = 0; %>                   
+                                        <% result[0].forEach((reviewer) => { %>
+                                            <% i++; %>
+                                            <div class="form-group">
+                                                <label for="reviewer<%= i %>">Reviewer <%= i %></label>                                                    
+                                                <input id="reviewer<%= i %>" style="width: 100%;" type="text" name="reviewer<%= i %>" value="<%= reviewer.reviewer_id %>" disabled/>
+                                            </div>
+                                        <% }) %>
+                                        <% if (i < 3) %>
+                                        <%      i++;                 %>
+                                        <%      for (i; i < 4; ++i) {%>
+                                                    <div class="form-group">
+                                                        <label for="papers">Reviewer <%= i %></label>                                                        
+                                                        <select id="reviewer<%= i %>" name="reviewer<%= i %>" style="width: 100%">
+                                                            <option value="-1">Please choose a reviewer</option>
+                                                            <%  result[1].forEach(function (reviewer) { %>
+                                                                <option value=<%= reviewer.s_id %>> <%= reviewer.s_id %> </option>
+                                                            <% }) %>                                                                                                                                                                                    
+                                                        </select>
+                                                    </div>      
+                                        <%      } %>
+
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button id='selectPaperBtn' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Submit</button>
+                                            <!-- <button class="btn btn-primary" type="button">Go back</button> -->
+                                        </div>
+                                    </div>       
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="reviewing-date">Reviewing date (YYYY-MM-DD)</label>  <br> 
+                                            <% if (result[0][0].reviewing_date == '') {%>                                                    
+                                                <input style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" placeholder=""/>                                                 
+                                            <% } else { %>
+                                                <input style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" value="<%= result[0][0].reviewing_date.substring(0, 10) %>"/>
+                                            <% } %>
+                                        </div>
+                                    </div>          
+                                </div>
+                         
+                            </form>                      
+                                                         
+                         </div>
+                                                                                 
+                                             
                         
                     </div>
                 <!-- </div>    -->
@@ -193,7 +224,7 @@
                
             
             <footer class="sticky-footer bg-white">
-                <%- include('./layout/footer') %>
+                <%- include('../layout/footer') %>
             </footer>
         </div>
     </div>

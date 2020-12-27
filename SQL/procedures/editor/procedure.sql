@@ -8,7 +8,9 @@ begin
 		insert into review_assignment_detail (p_id, reviewing_date) values (paper_id, review_date);
 	end if;
     insert into review_review_assignment (reviewer_id, paper_id) values (reviewer_id, paper_id);
-    insert into editor_review_assignment (editor_id, paper_id) values (editor_id, paper_id);
+    if ((select count(*) from editor_review_assignment as e where e.editor_id = editor_id and e.paper_id = paper_id) = 0) then
+		insert into editor_review_assignment (editor_id, paper_id) values (editor_id, paper_id);
+    end if;
 end |
 delimiter ;
 grant execute on procedure publication.assign_review to editor@localhost;
@@ -26,6 +28,7 @@ begin
 end |
 delimiter ;
 grant execute on procedure publication.update_paper_status to editor@localhost;
+
 
 -- 4
 drop procedure if exists update_result_after_review;
@@ -65,9 +68,10 @@ delimiter ;
 grant execute on procedure publication.get_paper_by_type_and_status to editor@localhost;
 
 -- 7
-drop procedure if exists get_posted_paper_by_type_and_years;
+use publication;
+drop procedure if exists get_posted_paper_by_years;
 delimiter |
-create procedure get_posted_paper_by_type_and_years(type_paper varchar(45), distant_year int)
+create procedure get_posted_paper_by_years(type_paper varchar(45), distant_year int)
 begin
 	if (type_paper = 'BOOK_REVIEW') then
 		select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, b.isbn
@@ -87,7 +91,7 @@ begin
     end if;
 end |
 delimiter ;
-grant execute on procedure publication.get_posted_paper_by_type_and_years to editor@localhost;
+grant execute on procedure publication.get_posted_paper_by_years to editor@localhost;
 
 -- 8
 drop procedure if exists get_published_paper_by_author;
@@ -122,3 +126,25 @@ begin
 end |
 delimiter ;
 grant execute on procedure publication.count_paper_by_status to editor@localhost;
+
+
+
+drop procedure if exists get_reviewer_by_paper;
+delimiter |
+create procedure get_reviewer_by_paper(paperId varchar(45))
+begin
+	select r.reviewer_id, re.reviewing_date
+    from review_review_assignment as r inner join review_assignment_detail as re on r.paper_id = re.p_id where r.paper_id  = paperId;
+end |
+delimiter ;
+grant execute on procedure publication.get_reviewer_by_paper to editor@localhost;
+
+
+drop procedure if exists get_all_reviewers;
+delimiter |
+create procedure get_all_reviewers()
+begin
+	select s_id from reviewer;
+end |
+delimiter ;
+grant execute on procedure publication.get_all_reviewers to editor@localhost;

@@ -9,16 +9,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Scientist - Dashboard</title>
+    <title>Scientist - Paper</title>
 
-    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -39,13 +43,11 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/views/editor">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            
-            
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -55,11 +57,11 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            
             <li class="nav-item">
                 <a class="nav-link" href="/views/editor/paper">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>Paper</span></a>
+                    <span>All Papers</span></a>
             </li>
 
             <li class="nav-item">
@@ -68,8 +70,8 @@
                     <span>Paper assigned</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/views/editor/assignReview">
+            <li class="nav-item active">
+                <a class="nav-link" href="/views/editor/assignReviewBefore">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Assign review</span></a>
             </li>
@@ -143,18 +145,49 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
             
+
         </ul>
 
-        <!-- end side bar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <%- include('./layout/topbar'); %>
-            </div>
-            <h2>Goodbye ;)</h2>
-
+                <%- include('../layout/topbar'); %>
+                <div class="container-fluid">
+                    <!-- <h1 class="h3 mb-2 text-gray-800">Tables</h1> -->
+                    <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank"
+                            href="https://datatables.net">official DataTables documentation</a>.</p> -->
+                    
+                    <!-- <div class="card shadow mb-4"> -->
+                        <div class="row">
+                            <div class="col-3">
+                                <form action="/views/editor/assignReviewBefore" method="POST">                    
+                                    <div class="form-group">
+                                        <label for="papers">Select paper:</label>                                                        
+                                        <select name="paperId" id="paperId" style="width: 100%">
+                                            <option value="-1">Please choose a paper</option>
+                                            <%  papers.forEach(function (au) { %>
+                                                <option value=<%= au.id %>> <%= au.id %> </option>
+                                            <% }) %>                                                                                                                                                                                    
+                                        </select>
+                                    </div>      
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button id='selectPaperBtn' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Select</button>
+                                        <!-- <button class="btn btn-primary" type="button">Go back</button> -->
+                                    </div>                  
+                                </form>
+    
+                            </div>                            
+                        </div>                        
+                        
+                    </div>
+                <!-- </div>    -->
+            </div>                    
+               
+            
             <footer class="sticky-footer bg-white">
-                <%- include('./layout/footer') %>
+                <%- include('../layout/footer') %>
             </footer>
         </div>
     </div>
@@ -186,16 +219,31 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+     <!-- Bootstrap core JavaScript-->
+     <script src="vendor/jquery/jquery.min.js"></script>
+     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
+     <!-- Core plugin JavaScript-->
+     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+ 
+     <!-- Custom scripts for all pages-->
+     <script src="js/sb-admin-2.min.js"></script>
+ 
+     <!-- Page level plugins -->
+     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#paperTable').DataTable();
+        });
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    </script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
+    <script>
+        $('#papers').select2();
+    </script>
 
     <!-- <script src="vendor/chart.js/Chart.min.js"></script>
 <script src="js/demo/chart-area-demo.js"></script>

@@ -94,9 +94,12 @@ router.post('/assignReview', (req, res) => {
     }
     connection.query(
         'call assign_review(?,?,?,?);',
-        [req.body.editorId, req.body.reviewerId, req.body.paperId, req.body.reviewDate],
+        [req.user, req.body.reviewerId, req.body.paperId, req.body.reviewDate],
         (err, results, fieldInfo) => {
-            if (err) return res.status(500).send(err);
+            if (err){
+                console.log('err: ', err);
+                return res.status(500).send(err);
+            } 
             res.sendStatus(200);            
         }
     )
@@ -197,6 +200,31 @@ router.get('/getNumsPaper/:statusPaper', (req, res) => {
     )
 });
 
+
+router.get('/getReviewerByPaper/:paperId', (req, res) => {
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    connection.query(
+        'call get_reviewer_by_paper(?)',
+        [req.params.paperId],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            res.json(results[0]);
+        }
+    )
+});
+
+
+router.get('/getAllReviewers', (req, res) => {
+    // if(!req.privilege.getPaper) return res.sendStatus(401);
+    connection.query(
+        'call get_all_reviewers()',
+        [],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            res.json(results[0]);
+        }
+    )
+});
 
 
 module.exports = router;
