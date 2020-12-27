@@ -14,7 +14,7 @@ begin
                     select p_id from review_assignment_detail
                     where p_id in (
                         select r.paper_id
-                        from reviewer_review_assignment r
+                        from review_review_assignment r
                         where r.reviewer_id = reviewer_id
                     )
                     and result is null

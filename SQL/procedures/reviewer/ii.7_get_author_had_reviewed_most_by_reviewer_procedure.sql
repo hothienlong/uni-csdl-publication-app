@@ -10,7 +10,7 @@ begin
     select sent_by as author, count(sent_by) as num
     from paper
     where id in (	select r.paper_id 
-                    from reviewer_review_assignment r
+                    from review_review_assignment r
                     where r.reviewer_id = reviewer_id)
     group by sent_by
     order by num desc limit 1;
