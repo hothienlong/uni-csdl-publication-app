@@ -7,7 +7,7 @@ create procedure get_author_had_reviewed_most_by_reviewer
 	reviewer_id varchar(45)
 )
 begin
-    select sent_by, count(sent_by) as num
+    select sent_by as author, count(sent_by) as num
     from paper
     where id in (	select r.paper_id 
                     from reviewer_review_assignment r
@@ -18,4 +18,7 @@ begin
 end$$
 delimiter ;
 
-call get_author_had_reviewed_most_by_reviewer('qttho');
+
+
+grant execute on procedure publication.get_author_had_reviewed_most_by_reviewer to reviewer@localhost;
+call get_author_had_reviewed_most_by_reviewer('nnhhaadd_sci');

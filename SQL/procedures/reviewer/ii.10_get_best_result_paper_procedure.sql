@@ -7,8 +7,8 @@ create procedure get_best_result_paper
 	reviewer_id varchar(45)
 )
 begin
-	select p_id
-    from review_assignment_detail
+	select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, result
+    from review_assignment_detail join paper p on p_id = p.id
     where p_id in (
 		select paper_id
         from reviewer_review_assignment r
@@ -19,4 +19,6 @@ begin
 end$$
 delimiter ;
 
-call get_best_result_paper('qttho')
+grant execute on procedure publication.get_best_result_paper to reviewer@localhost;
+
+call get_best_result_paper('nnhhaadd_sci')

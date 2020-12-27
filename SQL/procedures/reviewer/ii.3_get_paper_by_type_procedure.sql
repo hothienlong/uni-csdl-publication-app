@@ -49,4 +49,7 @@ begin
 end$$
 delimiter ;
 
+
+grant execute on procedure publication.get_paper_by_type to reviewer@localhost;
+
 call get_paper_by_type('nnhhaadd_sci','RESEARCH_OVERVIEW_PAPER')

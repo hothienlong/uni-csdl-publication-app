@@ -18,7 +18,7 @@ begin
     );
     
     
-	select year(reviewing_date) , count(year(reviewing_date)) / total_paper_had_reviewed as avg_paper_of_year_per_5_year
+	select year(reviewing_date) as year , count(year(reviewing_date)) / total_paper_had_reviewed as avg_paper_of_year_per_5_year
     from review_assignment_detail
     where p_id in (
 		select r.paper_id
@@ -32,4 +32,6 @@ begin
 end$$
 delimiter ;
 
-call get_avg_paper_of_year_per_5_year('qttho');
+grant execute on procedure publication.get_avg_paper_of_year_per_5_year to reviewer@localhost;
+
+call get_avg_paper_of_year_per_5_year('nnhhaadd_sci');

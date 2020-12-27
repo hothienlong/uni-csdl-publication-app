@@ -8,8 +8,8 @@ create procedure get_result_review_in_1_year
 )
 begin
     
-    select p_id, result
-    from review_assignment_detail
+    select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, result
+    from review_assignment_detail join paper p on p_id = p.id
     where p_id in (
 		select r.paper_id
         from reviewer_review_assignment r
@@ -21,4 +21,6 @@ begin
 end$$
 delimiter ;
 
-call get_result_review_in_1_year('qttho');
+grant execute on procedure publication.get_result_review_in_1_year to reviewer@localhost;
+
+call get_result_review_in_1_year('nnhhaadd_sci');

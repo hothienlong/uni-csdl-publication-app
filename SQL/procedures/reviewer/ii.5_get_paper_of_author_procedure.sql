@@ -24,4 +24,7 @@ begin
 end$$
 delimiter ;
 
+
+
+grant execute on procedure publication.get_paper_of_author to reviewer@localhost;
 call get_paper_of_author('nnhhaadd_sci','vutrongphung');

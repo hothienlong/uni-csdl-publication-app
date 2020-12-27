@@ -8,7 +8,7 @@ create procedure get_paper_of_author_in_3_year
 )
 begin
     
-    select p.id
+    select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
     from paper p
     where p.id in (
 					select p_id from review_assignment_detail
@@ -24,4 +24,6 @@ begin
 end$$
 delimiter ;
 
-call get_paper_of_author_in_3_year('qttho','vuhoanglan');
+grant execute on procedure publication.get_paper_of_author_in_3_year to reviewer@localhost;
+
+call get_paper_of_author_in_3_year('nnhhaadd_sci','vutrongphung');

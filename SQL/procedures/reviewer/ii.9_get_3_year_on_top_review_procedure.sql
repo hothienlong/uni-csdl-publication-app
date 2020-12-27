@@ -8,7 +8,7 @@ create procedure get_3_year_on_top_review
 )
 begin
     
-	select year(reviewing_date)
+	select year(reviewing_date) as year
     from review_assignment_detail
     where p_id in (
 		select r.paper_id
@@ -22,4 +22,5 @@ begin
 end$$
 delimiter ;
 
-call get_3_year_on_top_review('qttho');
+grant execute on procedure publication.get_3_year_on_top_review to reviewer@localhost;
+call get_3_year_on_top_review('nnhhaadd_sci');

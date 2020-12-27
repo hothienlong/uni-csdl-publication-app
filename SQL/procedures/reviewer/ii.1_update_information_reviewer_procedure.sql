@@ -26,4 +26,7 @@ begin
 end$$
 delimiter ;
 
+
+grant execute on procedure publication.update_information_reviewer to reviewer@localhost;
+
 call update_information_reviewer('qttho','2020-12-20', 'qttho@gmail.com', 'Quan Thanh Tho' , 'HCMUT1' , 'thoquan@gmail.com' , 'BKU' , 'Dev' , 'Professor' , 'Science')
