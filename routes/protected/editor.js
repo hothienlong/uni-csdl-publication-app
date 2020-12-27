@@ -198,3 +198,7 @@ router.get('/getNumsPaper/:statusPaper', (req, res) => {
         }
     )
 });
+
+
+
+module.exports = router;

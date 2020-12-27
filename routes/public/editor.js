@@ -70,6 +70,19 @@ router.get('/paperAssigned', (req, res) => {
 });
 
 
+router.get('/assignReview', (req, res) => {  
+    fetch('http://localhost:3000/api/editor/allPapers', {
+        method: 'GET',
+        headers: {
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(papers => res.render('assignReview', {papers}))
+        .catch(err => console.log(err));
+});
+
+
 router.get('/paper/:paperId', (req, res) => {
     fetch('http://localhost:3000/api/editor/paper/' + toString(req.params.paperId), {
         method: 'POST', // or 'PUT'

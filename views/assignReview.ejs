@@ -22,6 +22,7 @@
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -57,7 +58,7 @@
             </div>
 
             
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/views/editor/paper">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Paper</span></a>
@@ -69,7 +70,7 @@
                     <span>Paper assigned</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/views/editor/assignReview">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Assign review</span></a>
@@ -149,88 +150,46 @@
 
         </ul>
 
-
-
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <%- include('./layout/topbar'); %>
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                    <!-- <h1 class="h3 mb-2 text-gray-800">Tables</h1> -->
+                    <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                            href="https://datatables.net">official DataTables documentation</a>.</p> -->
                     
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                            <div>
-                                <a href="/views/editor/addpaper" class="btn btn-primary btn-icon-split">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">Add paper</span>
-                                </a>
-                                <a href="/views/editor/paperAssigned" class="btn btn-primary btn-icon-split">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">View all paper assigned</span>
-                                </a>
+                    <!-- <div class="card shadow mb-4"> -->
+                        <div class="row">
+                            <div class="col-3">
+                                <form action="/views/editor/addPaper" method="POST">                    
+                                    <div class="form-group">
+                                        <label for="papers">Select paper:</label>                                                        
+                                        <select name="papers" id="papers" style="width: 100%">
+                                            <option value="-1">Please choose a paper</option>
+                                            <%  papers.forEach(function (au) { %>
+                                                <option value=<%= au.id %>> <%= au.id %> </option>
+                                            <% }) %>                                                                                                                                                                                    
+                                        </select>
+                                    </div>      
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button id='selectPaperBtn' class="btn btn-info me-md-2" type="button" style="margin-right: 5px;">Select</button>
+                                        <!-- <button class="btn btn-primary" type="button">Go back</button> -->
+                                    </div>                  
+                                </form>
+    
                             </div>
+                            
+                            <form action="/views/editor/addPaper" method="POST">
+                        
+                        
+                        
+                            </form>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="paperTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Title</th>
-                                            <th>Summary</th>
-                                            <th>Associated file</th>
-                                            <!-- <th>Page number</th> -->
-                                            <th>Autor contact</th>
-                                            <th>Send date</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% for (var i=0; i < data.length; i++) { %>
-                                            <tr>
-                                                <td>
-                                                    <%= data[i].id %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].title %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].summary %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].associated_file %>
-                                                </td>
-                                                <!-- <td>
-                                                    <%= data[i].page_count %>
-                                                </td> -->
-                                                <td>
-                                                    <%= data[i].sent_by %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].sent_date.substring(0, 10) %>
-                                                </td>
-                                                <td>
-                                                    <a href="/views/editor/paper/<%=data[i].id%>" class="btn btn-block"><i
-                                                        class="fa fa-angle-double-right"></i></a>
-                                                </td>
-                                            </tr>
-                                            <% } %>
-                    
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- <button class="btn btn-success" type="button" id="getAllPapers" style="margin-left: 20px;">Get all papers</button> -->
-                        </div>
-                    </div>   
-                </div>                    
+                        
+                    </div>
+                <!-- </div>    -->
+            </div>                    
                
             
             <footer class="sticky-footer bg-white">
@@ -284,6 +243,12 @@
             $('#paperTable').DataTable();
         });
 
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    <script>
+        $('#papers').select2();
     </script>
 
     <!-- <script src="vendor/chart.js/Chart.min.js"></script>

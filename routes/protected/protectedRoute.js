@@ -94,8 +94,7 @@ function getPrivilege(user, callback) {
 }
 
 router.use((req, res, next)=>{
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+    const token = req.headers.authorization
     if (token == null) return res.sendStatus(401);
   
     jwt.verify(token, 'JWR-TOKEN-SECRET-SHOULD-BE-STORED-IN-PROCESS-ENV', (err, user) => {
@@ -115,6 +114,10 @@ router.get('/',(req, res)=>{
 // router.use('/author', require('./author'));
 router.use('/contactAuthor', require('./contactAuthor'));
 router.use('/reviewer', require('./reviewer'));
-router.use('/editor', require('./editor'));
+router.use('/editor', (req, res, next) => {
+    req.user = jwt.decode(req.headers.authorization).username;
+    next();
+} ,require('./editor'));
+
 
 module.exports = router;
