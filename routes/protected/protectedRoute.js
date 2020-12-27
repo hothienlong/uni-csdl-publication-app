@@ -33,6 +33,7 @@ function getPrivilege(user, callback) {
         getAssignmentAll: false,
         modifyCriteria: false,
         viewCriteria: false,
+        updateResult: false
     };
     //TODO update privileges
     let query = 'call get_user_roles(?);';
@@ -87,6 +88,7 @@ function getPrivilege(user, callback) {
                 privilege.getReviewAll = true;
                 privilege.modifyCriteria = true;
                 privilege.viewCriteria = true;
+                privilege.updateResult = true;
             }
 
             callback(privilege);

@@ -30,10 +30,9 @@ router.get('/papers', (req, res)=>{
 });
 
 router.get('/allPapers', (req,res)=>{
-    // if(!req.privilege.getPaperAll) {
-    //     return res.sendStatus(401);
-    // }
-    // console.log("server: ", req.headers.authorization);
+    if(!req.privilege.getPaperAll) {
+        return res.sendStatus(401);
+    }    
     connection.query(
         'call editor_get_all_papers();',
         [],
@@ -47,10 +46,9 @@ router.get('/allPapers', (req,res)=>{
 
 
 router.get('/allPapersAssigned', (req,res)=>{
-    // if(!req.privilege.getPaperAll) {
-    //     return res.sendStatus(401);
-    // }
-    // console.log("user: ", req.user);
+    if(!req.privilege.getPaper) {
+        return res.sendStatus(401);
+    }
     connection.query(
         'call editor_get_papers(?);',
         [req.user],
@@ -90,21 +88,10 @@ router.post('/addPaper', (req, res) => {
 });
 
 
-
-// router.get('/getContactAuthor', (req, res) => {
-//     connection.query(
-//         'call get_contact_author();',
-//         [],
-//         (err, results, fieldInfo) => {
-//             if (err) return res.status(500).send(err);
-//             // console.log("result: ",results[0]);
-//             res.json(results[0]);
-//         }
-//     )
-// });
-
-
 router.post('/assignReview', (req, res) => {
+    if (!req.privilege.reviewEditorAssignment || !req.privilege.reviewReviewerAssignment){
+        return res.sendStatus(401);
+    }
     connection.query(
         'call assign_review(?,?,?,?);',
         [req.body.editorId, req.body.reviewerId, req.body.paperId, req.body.reviewDate],
@@ -117,6 +104,9 @@ router.post('/assignReview', (req, res) => {
 
 
 router.post('/updatePaperStatus', (req, res) => {
+    if (!req.privilege.updateResult) {
+        return res.sendStatus(401);
+    }
     connection.query(
         'call update_paper_status(?,?);',
         [req.body.paperId, req.body.status],
@@ -129,6 +119,9 @@ router.post('/updatePaperStatus', (req, res) => {
 
 
 router.post('/updateResultAfterReview', (req, res) => {
+    if (!req.privilege.updateResult) {
+        return res.sendStatus(401);
+    }
     connection.query(
         'call update_result_after_review(?,?,?);',
         [req.body.paperId, req.body.result, req.body.informDate],
@@ -142,6 +135,7 @@ router.post('/updateResultAfterReview', (req, res) => {
 
 
 router.get('/getPaperByTypeAndStatus', (req, res) => {
+    if(!req.privilege.getPaper) return res.sendStatus(401);
     connection.query(
         'call get_paper_by_type_and_status(?,?);',
         [req.body.typePaper, req.body.statusPaper],
@@ -154,6 +148,7 @@ router.get('/getPaperByTypeAndStatus', (req, res) => {
 
 
 router.get('/getPostedPaperByTypeAndYears/:typePaper', (req, res) => {
+    if(!req.privilege.getPaper) return res.sendStatus(401);
     connection.query(
         'call get_posted_paper_by_type_and_years(?);',
         [req.body.typePaper, req.body.year],
@@ -166,6 +161,7 @@ router.get('/getPostedPaperByTypeAndYears/:typePaper', (req, res) => {
 
 
 router.get('/getPublishedPaper/:authorId', (req, res) => {
+    if(!req.privilege.getPaper) return res.sendStatus(401);
     connection.query(
         'call get_published_paper_by_author(?);',
         [req.params.authorId],
@@ -177,6 +173,7 @@ router.get('/getPublishedPaper/:authorId', (req, res) => {
 });
 
 router.get('/getPostedPaper/:authorId', (req, res) => {
+    if(!req.privilege.getPaper) return res.sendStatus(401);
     connection.query(
         'call get_posted_paper_by_author(?);',
         [req.params.authorId],
@@ -189,6 +186,7 @@ router.get('/getPostedPaper/:authorId', (req, res) => {
 
 
 router.get('/getNumsPaper/:statusPaper', (req, res) => {
+    if(!req.privilege.getPaper) return res.sendStatus(401);
     connection.query(
         'call count_paper_by_status(?);',
         [req.params.statusPaper],
