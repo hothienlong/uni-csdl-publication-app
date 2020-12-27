@@ -153,10 +153,10 @@ router.get('/getPaperByTypeAndStatus', (req, res) => {
 });
 
 
-router.get('/getPostedPaperInThreeYear/:typePaper', (req, res) => {
+router.get('/getPostedPaperByTypeAndYears/:typePaper', (req, res) => {
     connection.query(
-        'call get_posted_paper_in_three_year(?);',
-        [req.params.typePaper],
+        'call get_posted_paper_by_type_and_years(?);',
+        [req.body.typePaper, req.body.year],
         (err, results, fieldInfo) => {
             if (err) return res.status(500).send(err);
             res.json(results[0]);

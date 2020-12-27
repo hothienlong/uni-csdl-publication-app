@@ -65,29 +65,29 @@ delimiter ;
 grant execute on procedure publication.get_paper_by_type_and_status to editor@localhost;
 
 -- 7
-drop procedure if exists get_posted_paper_in_three_year;
+drop procedure if exists get_posted_paper_by_type_and_years;
 delimiter |
-create procedure get_posted_paper_in_three_year(type_paper varchar(45))
+create procedure get_posted_paper_by_type_and_years(type_paper varchar(45), distant_year int)
 begin
 	if (type_paper = 'BOOK_REVIEW') then
 		select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, b.isbn
 		from paper as p inner join book_review as b on p.id = b.p_id
 			inner join review_assignment_detail as re on p.id = re.p_id
-		where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 1095;
+		where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 365*distant_year;
 	elseif (type_paper = 'RESEARCH_OVERVIEW_PAPER') then
 		select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
 		from paper as p inner join research_over_view_paper as r on p.id = r.p_id
 			inner join review_assignment_detail as re on p.id = re.p_id
-        where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 1095;
+        where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 365*distant_year;
     elseif (type_paper = 'RESEARCH_PAPER') then
 		select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
 		from paper as p inner join research_paper as r on p.id = r.p_id 
 			inner join review_assignment_detail as re on p.id = re.p_id
-        where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 1095;
+        where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 365*distant_year;
     end if;
 end |
 delimiter ;
-grant execute on procedure publication.get_posted_paper_in_three_year to editor@localhost;
+grant execute on procedure publication.get_posted_paper_by_type_and_years to editor@localhost;
 
 -- 8
 drop procedure if exists get_published_paper_by_author;
