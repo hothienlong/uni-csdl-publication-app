@@ -18,8 +18,6 @@
 --
 -- Table structure for table `AUTHOR`
 --
-
-
 USE PUBLICATION;
 
 DROP TABLE IF EXISTS `AUTHOR`;
@@ -184,8 +182,8 @@ CREATE TABLE `CRITERIA_REVIEW` (
   PRIMARY KEY (`P_ID`,`REVIEWER_ID`,`CRITERIA_ID`),
   KEY `REVIEWER_ID` (`REVIEWER_ID`),
   KEY `CRITERIA_ID` (`CRITERIA_ID`),
-  CONSTRAINT `criteria_review_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `REVIEWER_REVIEW_ASSIGNMENT` (`PAPER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `criteria_review_ibfk_2` FOREIGN KEY (`REVIEWER_ID`) REFERENCES `REVIEWER_REVIEW_ASSIGNMENT` (`REVIEWER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `criteria_review_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `REVIEW_REVIEW_ASSIGNMENT` (`PAPER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `criteria_review_ibfk_2` FOREIGN KEY (`REVIEWER_ID`) REFERENCES `REVIEW_REVIEW_ASSIGNMENT` (`REVIEWER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `criteria_review_ibfk_3` FOREIGN KEY (`CRITERIA_ID`) REFERENCES `CRITERIA` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -467,6 +465,33 @@ INSERT INTO `REVIEW_ASSIGNMENT_DETAIL` VALUES ('1','2010-12-24','note1_update','
 UNLOCK TABLES;
 
 --
+-- Table structure for table `REVIEW_REVIEW_ASSIGNMENT`
+--
+
+DROP TABLE IF EXISTS `REVIEW_REVIEW_ASSIGNMENT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `REVIEW_REVIEW_ASSIGNMENT` (
+  `REVIEWER_ID` varchar(45) NOT NULL,
+  `PAPER_ID` varchar(45) NOT NULL,
+  PRIMARY KEY (`REVIEWER_ID`,`PAPER_ID`),
+  KEY `PAPER_ID` (`PAPER_ID`),
+  CONSTRAINT `review_review_assignment_ibfk_1` FOREIGN KEY (`REVIEWER_ID`) REFERENCES `REVIEWER` (`S_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `review_review_assignment_ibfk_2` FOREIGN KEY (`PAPER_ID`) REFERENCES `REVIEW_ASSIGNMENT_DETAIL` (`P_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `REVIEW_REVIEW_ASSIGNMENT`
+--
+
+LOCK TABLES `REVIEW_REVIEW_ASSIGNMENT` WRITE;
+/*!40000 ALTER TABLE `REVIEW_REVIEW_ASSIGNMENT` DISABLE KEYS */;
+INSERT INTO `REVIEW_REVIEW_ASSIGNMENT` VALUES ('qttho','1'),('qttho','10'),('nnhhaadd_sci','11'),('qttho','2'),('qttho','3'),('nnhhaadd_sci','4'),('nnhhaadd_sci','5'),('nnhhaadd_sci','6'),('qttho','7'),('qttho','8'),('qttho','9');
+/*!40000 ALTER TABLE `REVIEW_REVIEW_ASSIGNMENT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `REVIEW_SUMMARY`
 --
 
@@ -480,8 +505,8 @@ CREATE TABLE `REVIEW_SUMMARY` (
   `NOTE_ABOUT_PAPER` text,
   PRIMARY KEY (`P_ID`,`REVIEWER_ID`),
   KEY `REVIEWER_ID` (`REVIEWER_ID`),
-  CONSTRAINT `review_summary_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `REVIEWER_REVIEW_ASSIGNMENT` (`PAPER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `review_summary_ibfk_2` FOREIGN KEY (`REVIEWER_ID`) REFERENCES `REVIEWER_REVIEW_ASSIGNMENT` (`REVIEWER_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `review_summary_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `REVIEW_REVIEW_ASSIGNMENT` (`PAPER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `review_summary_ibfk_2` FOREIGN KEY (`REVIEWER_ID`) REFERENCES `REVIEW_REVIEW_ASSIGNMENT` (`REVIEWER_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -518,33 +543,6 @@ LOCK TABLES `REVIEWER` WRITE;
 /*!40000 ALTER TABLE `REVIEWER` DISABLE KEYS */;
 INSERT INTO `REVIEWER` VALUES ('nnhhaadd_sci','2020-12-20','nhad@gmail.com'),('qttho','2020-12-20','qttho@gmail.com');
 /*!40000 ALTER TABLE `REVIEWER` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `REVIEWER_REVIEW_ASSIGNMENT`
---
-
-DROP TABLE IF EXISTS `REVIEWER_REVIEW_ASSIGNMENT`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `REVIEWER_REVIEW_ASSIGNMENT` (
-  `REVIEWER_ID` varchar(45) NOT NULL,
-  `PAPER_ID` varchar(45) NOT NULL,
-  PRIMARY KEY (`REVIEWER_ID`,`PAPER_ID`),
-  KEY `PAPER_ID` (`PAPER_ID`),
-  CONSTRAINT `reviewer_review_assignment_ibfk_1` FOREIGN KEY (`REVIEWER_ID`) REFERENCES `REVIEWER` (`S_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `reviewer_review_assignment_ibfk_2` FOREIGN KEY (`PAPER_ID`) REFERENCES `REVIEW_ASSIGNMENT_DETAIL` (`P_ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `REVIEWER_REVIEW_ASSIGNMENT`
---
-
-LOCK TABLES `REVIEWER_REVIEW_ASSIGNMENT` WRITE;
-/*!40000 ALTER TABLE `REVIEWER_REVIEW_ASSIGNMENT` DISABLE KEYS */;
-INSERT INTO `REVIEWER_REVIEW_ASSIGNMENT` VALUES ('qttho','1'),('qttho','10'),('nnhhaadd_sci','11'),('qttho','2'),('qttho','3'),('nnhhaadd_sci','4'),('nnhhaadd_sci','5'),('nnhhaadd_sci','6'),('qttho','7'),('qttho','8'),('qttho','9');
-/*!40000 ALTER TABLE `REVIEWER_REVIEW_ASSIGNMENT` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -747,7 +745,7 @@ begin
     from review_assignment_detail
     where p_id in (
 		select r.paper_id
-        from reviewer_review_assignment r
+        from review_review_assignment r
         where r.reviewer_id = reviewer_id
     )
     group by year(reviewing_date)
@@ -777,7 +775,7 @@ begin
     select sent_by as author, count(sent_by) as num
     from paper
     where id in (	select r.paper_id 
-                    from reviewer_review_assignment r
+                    from review_review_assignment r
                     where r.reviewer_id = reviewer_id)
     group by sent_by
     order by num desc limit 1;
@@ -808,7 +806,7 @@ begin
     from review_assignment_detail
     where p_id in (
 		select r.paper_id
-        from reviewer_review_assignment r
+        from review_review_assignment r
         where r.reviewer_id = reviewer_id
     );
     
@@ -817,7 +815,7 @@ begin
     from review_assignment_detail
     where p_id in (
 		select r.paper_id
-        from reviewer_review_assignment r
+        from review_review_assignment r
         where r.reviewer_id = reviewer_id
     )
     group by year(reviewing_date)
@@ -848,7 +846,7 @@ begin
     from review_assignment_detail join paper p on p_id = p.id
     where p_id in (
 		select paper_id
-        from reviewer_review_assignment r
+        from review_review_assignment r
         where r.reviewer_id = reviewer_id
     ) and result = 'ACCEPTANCE'
     limit 3;
@@ -902,7 +900,7 @@ begin
                         select p_id from review_assignment_detail
                         where p_id in (
 					select r.paper_id
-                                        from reviewer_review_assignment r
+                                        from review_review_assignment r
                                         where r.reviewer_id = reviewer_id
                         )
                         and result is null
@@ -915,7 +913,7 @@ begin
                         select p_id from review_assignment_detail
                         where p_id in (
 					select r.paper_id
-                                        from reviewer_review_assignment r
+                                        from review_review_assignment r
                                         where r.reviewer_id = reviewer_id
                         )
                         and result is null
@@ -927,7 +925,7 @@ begin
                         select p_id from review_assignment_detail
                         where p_id in (
 					select r.paper_id
-                                        from reviewer_review_assignment r
+                                        from review_review_assignment r
                                         where r.reviewer_id = reviewer_id
                         )
                         and result is null
@@ -961,7 +959,7 @@ begin
                         select p_id from review_assignment_detail
                         where p_id in (
 					    select r.paper_id
-                                        from reviewer_review_assignment r
+                                        from review_review_assignment r
                                         where r.reviewer_id = reviewer_id
                         )
                         and result is not null
@@ -975,7 +973,7 @@ begin
                         select p_id from review_assignment_detail
                         where p_id in (
 					    select r.paper_id
-                                        from reviewer_review_assignment r
+                                        from review_review_assignment r
                                         where r.reviewer_id = reviewer_id
                         )
                         and result is not null
@@ -988,7 +986,7 @@ begin
                         select p_id from review_assignment_detail
                         where p_id in (
 					    select r.paper_id
-                                        from reviewer_review_assignment r
+                                        from review_review_assignment r
                                         where r.reviewer_id = reviewer_id
                         )
                         and result is not null
@@ -1023,7 +1021,7 @@ begin
                     select p_id from review_assignment_detail
                     where p_id in (
                         select r.paper_id
-                        from reviewer_review_assignment r
+                        from review_review_assignment r
                         where r.reviewer_id = reviewer_id
                     )
                     and result is null
@@ -1057,7 +1055,7 @@ begin
 					select p_id from review_assignment_detail
                     where p_id in (
 						select r.paper_id
-                        from reviewer_review_assignment r
+                        from review_review_assignment r
                         where r.reviewer_id = reviewer_id
                     )
                     and result is not null
@@ -1116,7 +1114,7 @@ begin
     from review_assignment_detail join paper p on p_id = p.id
     where p_id in (
 		select r.paper_id
-        from reviewer_review_assignment r
+        from review_review_assignment r
         where r.reviewer_id = reviewer_id
     )
     and result is not null
@@ -1175,7 +1173,7 @@ begin
     from review_assignment_detail join paper p on p_id = p.id
     where p_id in (
 		select paper_id
-        from reviewer_review_assignment r
+        from review_review_assignment r
         where r.reviewer_id = reviewer_id
     ) and result = 'REJECTION'
     limit 3;
@@ -1354,4 +1352,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-27 16:13:11
+-- Dump completed on 2020-12-27 17:11:42
