@@ -1,5 +1,4 @@
 const PORT = 3000;
-
 const express = require('express');
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
@@ -13,6 +12,8 @@ app.set('views', path.join(__dirname, 'views'));
 // var viewsPath = __dirname + '/views/';
 
 
+
+const PORT = 3000;
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
