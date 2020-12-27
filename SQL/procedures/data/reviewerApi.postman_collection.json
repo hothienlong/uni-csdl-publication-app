@@ -1,0 +1,427 @@
+{
+	"info": {
+		"_postman_id": "503d6a49-17c5-4c04-a02e-a17db1948cb5",
+		"name": "reviewerApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "nnhhaadd_sci",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "nghuuanhdai1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/authenticate/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"authenticate",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_paper_by_type",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "type_paper",
+							"value": "RESEARCH_OVERVIEW_PAPER",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_paper_by_type",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_paper_by_type"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_paper_by_type_in_3_year",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "type_paper",
+							"value": "RESEARCH_OVERVIEW_PAPER",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_paper_by_type_in_3_year",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_paper_by_type_in_3_year"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_paper_of_author",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "author_id",
+							"value": "vutrongphung",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_paper_of_author",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_paper_of_author"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_paper_of_author_in_3_year",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "author_id",
+							"value": "vutrongphung",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_paper_of_author_in_3_year",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_paper_of_author_in_3_year"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_author_had_reviewed_most",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_author_had_reviewed_most",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_author_had_reviewed_most"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_result_review_in_1_year",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "author_id",
+							"value": "vutrongphung",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_result_review_in_1_year",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_result_review_in_1_year"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_3_year_on_top_review",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "author_id",
+							"value": "vutrongphung",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_3_year_on_top_review",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_3_year_on_top_review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_best_result_paper",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "author_id",
+							"value": "vutrongphung",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_best_result_paper",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_best_result_paper"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_worst_result_paper",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "author_id",
+							"value": "vutrongphung",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_worst_result_paper",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_worst_result_paper"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewer_get_avg_paper_of_year_per_5_year",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5uaGhhYWRkX3NjaSIsImlhdCI6MTYwOTA1NzQwN30.-XXEF6uX_JjHB-hhitOQbCPZpC1fOBkU367EngOQ0qI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "author_id",
+							"value": "vutrongphung",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/reviewer/reviewer_get_avg_paper_of_year_per_5_year",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviewer",
+						"reviewer_get_avg_paper_of_year_per_5_year"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
