@@ -24,6 +24,7 @@ router.post('/signup', (req, res)=>{
     const job = req.body.job;
     const degree = req.body.degree;
     const profession = req.body.profession;
+    const position = req.body.position;
 
     bcrypt.hash(password, saltRounds, function(err, hash) {
         if(err)
@@ -35,9 +36,28 @@ router.post('/signup', (req, res)=>{
             query,
             [username, hash, fname, address, email, company, job, degree, profession], 
             (err, results, fields)=>{
-                if(err) return res.sendStatus(500);
-                const token = jwt.sign({username:username}, 'JWR-TOKEN-SECRET-SHOULD-BE-STORED-IN-PROCESS-ENV');
-                res.status(200).json(token);
+                if(err) return res.json({result: 'fail'});
+                
+                if (position.includes('editor')) {
+                    let query = 'INSERT INTO EDITOR (S_ID, APPOINTED_DATE) VALUES(?, ?);';
+                    connection.query(query, [username, new Date('2000-01-01')], (err, results, fields) => {});
+                    return res.json({result: 'success'});
+                }
+                if (position.includes('contact_author')) {
+                    let query = 'INSERT INTO CONTACT_AUTHOR (S_ID) VALUES(?);';
+                    connection.query(query, [username], (err, results, fields) => {});
+                    return res.json({result: 'success'});
+                }
+                if (position.includes('author')) {
+                    let query = 'INSERT INTO AUTHOR (S_ID) VALUES(?);';
+                    connection.query(query, [username], (err, results, fields) => {});
+                    return res.json({result: 'success'});
+                }
+                if (position.includes('reviewer')) {
+                    let query = 'INSERT INTO REVIEWER (S_ID, COLLABORATION_DATE, WORK_EMAIL) VALUES(?,?,?);';
+                    connection.query(query, [username, new Date('2000-01-01'), 'abc@gmail.com'], (err, results, fields) => {});
+                    return res.json({result: 'success'});
+                }
             });
     });
 });
