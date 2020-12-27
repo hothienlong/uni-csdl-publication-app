@@ -1,9 +1,5 @@
 use publication;
 
--- turn this alter table on if the table does not contain hashed_pass column
-ALTER TABLE scientist
-ADD HASHED_PASS TEXT NOT NULL;
-
 drop procedure if exists get_user_roles;
 drop procedure if exists create_user;
 drop procedure if exists get_hashed_password;
@@ -13,16 +9,14 @@ create procedure get_user_roles
 (userId varchar(45))
 begin
 	declare isAuthor boolean;
-    declare isContactAuthor boolean;
     declare isReviewer boolean;
     declare isEditor boolean;
     
     set isAuthor = (SELECT count(s_id) FROM author WHERE s_id = userId) = 1;
-    set isContactAuthor = (SELECT count(s_id) FROM contact_author WHERE s_id = userId) = 1;
     set isReviewer = (SELECT count(s_id) FROM reviewer WHERE s_id = userId) = 1;
     set isEditor = (SELECT count(s_id) FROM editor WHERE s_id = userId) = 1;
     
-    select isAuthor, isContactAuthor, isReviewer, isEditor;
+    select isAuthor, isReviewer, isEditor;
 end$$
 
 create procedure create_user
@@ -38,7 +32,6 @@ create procedure create_user
     hashed_pass text,
     work_email text,
     is_author int,
-    is_contact_author int,
     is_reviewer int,
     is_editor int
 )
@@ -60,14 +53,11 @@ begin
     if (is_author) then
         insert into author (s_id) values (user_id);
 	end if;
-    if (is_contact_author) then
-        insert into contact_author (s_id) values (user_id);
-	end if;
     if (is_reviewer) then
         insert into reviewer (s_id, work_email, collaboration_date) values (user_id, work_email, curdate());
 	end if;
     if (is_editor) then
-        insert into editor (s_id, appointed_date) values ('test', curdate());	
+        insert into editor (s_id, appointed_date) values (user_id, curdate());	
     end if;
     commit;
 end$$
