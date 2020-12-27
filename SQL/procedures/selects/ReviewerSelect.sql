@@ -8,8 +8,8 @@ create procedure reviewer_get_papers
 begin
 	select title, summary, associated_file, page_count, sent_by, sent_date from paper 
 		join review_assignment_detail on id = review_assignment_detail.p_id
-		join review_review_assignment on id = review_review_assignment.paper_id
-		where review_review_assignment.reviewer_id = reviewerId;
+		join reviewer_review_assignment on id = reviewer_review_assignment.paper_id
+		where reviewer_review_assignment.reviewer_id = reviewerId;
 end$$
 delimiter ;
 
