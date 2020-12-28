@@ -9,7 +9,7 @@ fetch.Promise = blueBird;
 router.use(express.static('public'));
 
 router.get('/', (req, res) => {
-    return res.render('editorDashboard');
+    return res.render('editor/DashBoard');
 });
 
 router.get('/addPaper', (req, res) => {

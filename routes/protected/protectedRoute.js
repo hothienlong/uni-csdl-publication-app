@@ -114,7 +114,6 @@ router.get('/',(req, res)=>{
 });
 
 // router.use('/author', require('./author'));
-router.use('/contactAuthor', require('./contactAuthor'));
 router.use('/reviewer', require('./reviewer'));
 router.use('/editor', (req, res, next) => {
     req.user = jwt.decode(req.headers.authorization).username;

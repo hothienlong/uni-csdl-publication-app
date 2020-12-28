@@ -1,0 +1,108 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <% if (active_bar == 'editorDashboard') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+        <% } %>
+        <a class="nav-link" href="/views/editor">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+    
+    
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Interface
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <% if (active_bar == 'editorAllPapers') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/editor/paper">
+            <i class="fas fa-fw fa-book"></i>
+            <span>All Papers</span></a>
+    </li>
+
+    <% if (active_bar == 'editorPaperAssigned') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/editor/paperAssigned">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Paper Assigned</span></a>
+    </li>
+
+    <% if (active_bar == 'assignReview') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/editor/assignReviewBefore">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Assign Review</span></a>
+    </li>
+
+    <% if (active_bar == 'editorPapresByType') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/editor/papersByTypeAndStatus">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Papers By Type</span></a>
+    </li>    
+
+
+    <% if (active_bar == 'PaperPostedByTypeAndYear') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/editor/papersPostedByTypeAndYears">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Papers By Type / Years</span></a>
+    </li>  
+
+
+    <% if (active_bar == 'PaperByAuthorAndStatus') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/editor/PapersByAuthorAndStatus">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Papers By Author / Status</span></a>
+    </li>  
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">    
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+    
+</ul>

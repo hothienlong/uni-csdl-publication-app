@@ -1,21 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const jwt = require("jsonwebtoken");
-const bcrypt = require('bcrypt');
-const mysql      = require('mysql');
 const fetch = require('node-fetch');
 const blueBird = require('bluebird');
 const { json } = require('body-parser');
 fetch.Promise = blueBird;
-const saltRounds = 10;
-const connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'authentication',
-    password : 'authentication_password',
-    database : 'publication'
-});
-connection.connect();
+
 var {validationResult, check} = require('express-validator');
 const { response } = require('express');
 
@@ -25,7 +15,7 @@ router.get('/signup', (req, res) => {
 });
 
 
-router.post('/signup', [check('name').notEmpty().withMessage('Name cannot be empty'),
+router.post('/signup', [check('fname').notEmpty().withMessage('Name cannot be empty'),
                         check('username').notEmpty().withMessage('Username cannot be empty'),
                         check('password').isLength({min: 6}).withMessage('Password has to be at least 6 characters'),
                         check('email').isEmail().withMessage('Email is not correct form'),
@@ -37,6 +27,16 @@ router.post('/signup', [check('name').notEmpty().withMessage('Name cannot be emp
             alert
         })
         return;
+    }
+
+    if (req.body.position == 'editor') {
+        req.body.is_editor = true;
+    }
+    else if (req.body.position == 'author') {
+        req.body.is_author = true;
+    }
+    else {
+        req.body.is_reviewer = true;
     }
 
     fetch('http://localhost:3000/authenticate/signup', {
@@ -64,7 +64,8 @@ router.post('/signup', [check('name').notEmpty().withMessage('Name cannot be emp
                 else {
                     res.redirect('/user/signin');
                 }                
-            });
+            })
+            .catch(err => console.log("err: ", err));
 
 });
 
@@ -111,26 +112,8 @@ router.post('/signin', [check('username').notEmpty().withMessage('Username canno
                     return;                    
                 }
                 else {
-                    if (result.auth == 'editor') {                        
-                        res.cookie('authorization', result.token);
-                        console.log("editor");
-                        return res.redirect('/views/editor');
-                    }
-                    else if (result.auth == 'reviewer') {                        
-                        res.cookie('authorization', result.token);
-                        console.log("editor");
-                        return res.redirect('/views/reviewer');
-                    }
-                    else if (result.auth == 'contact_author') {                        
-                        res.cookie('authorization', result.token);
-                        console.log("contact_author");
-                        return res.redirect('/views/contactAuthor');
-                    }
-                    else if (result.auth == 'author') {                        
-                        res.cookie('authorization', result.token);
-                        console.log("author");
-                        return res.redirect('/views/author');
-                    }
+                    res.cookie('authorization', result.token);
+                    return res.redirect('/views/dashboard');                
                 }
             });
     });

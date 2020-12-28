@@ -8,11 +8,19 @@ const saltRounds = 10;
 
 const connection = mysql.createConnection({
     host     : 'localhost',
-    user     : 'authentication',
-    password : 'authentication_password',
+    user     : 'nodejs_application',
+    password : 'nodejs_application_password',
     database : 'publication'
 });
 connection.connect();
+
+
+router.use((req, res, next) => {
+    console.log("middleware");
+    req.username = jwt.decode(req.headers.authorization).username;
+    next();
+})
+
 
 router.post('/signup', (req, res)=>{
     const password = req.body.password;
@@ -29,18 +37,27 @@ router.post('/signup', (req, res)=>{
     const is_editor = req.body.is_editor;
     const is_reviewer = req.body.is_reviewer;
 
-    bcrypt.hash(password, saltRounds, function(err, hash) {
+    bcrypt.hash(password, saltRounds,async function(err, hash) {
         if(err)
             return res.sendStatus(500);
-        var query = 'call create_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-        connection.query(
-            query,
-            [username, fname, address, email, company, job, degree, profession, hash, work_email, is_author, is_reviewer, is_editor], 
-            (err, results, fields)=>{
-                if(err) return res.status(500).json({result: 'fail'});
-                res.sendStatus(200);
-            }
-        );
+        var create_user_query = 'call create_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+        await new Promise((resolve, reject) => {
+            connection.query(
+                create_user_query,
+                [username, fname, address, email, company, job, degree, profession, work_email, is_author, is_reviewer, is_editor],
+                (err, results, fields) => {
+                    if (err) reject(err);
+                    resolve(res);
+                })
+        })
+
+        var insert_password_query = 'call insert_password(?,?)';
+        connection.query(insert_password_query,
+            [username, hash],
+            (err, results, fields) => {
+                if (err) res.sendStatus(500);
+                res.json({result: 'success'});
+            })        
     });
 });
 
@@ -52,9 +69,9 @@ router.post('/signup', (req, res)=>{
         'call get_hashed_password(?);',
         [username], 
          (err, results, fields)=>{
-            if(err) return res.status(500).json({result: 'fail', token: ''});
+            if(err) return res.status(500).json({result: 'fail', token: ''});           
             if(results.length == 0) return res.json({result: 'fail', token: ''});
-            bcrypt.compare(password, results[0].HASHED_PASS,async function(err, result) {
+            bcrypt.compare(password, results[0][0].hashed_pass, function(err, result) {
                 if(err) return res.status(500).json({result: 'fail', token: ''});
                 if(!result) return res.status(500).json({result: 'fail', token: ''});
                 const token_value = jwt.sign({username:username}, 'JWR-TOKEN-SECRET-SHOULD-BE-STORED-IN-PROCESS-ENV');
@@ -62,5 +79,17 @@ router.post('/signup', (req, res)=>{
             });
         });
 });
+
+
+router.get('/getAuthorization', (req, res) => {
+    let query = 'call get_user_roles(?)';
+    connection.query(query, [req.username], (err, results, fields) => {
+        if (err) res.sendStatus(500);
+        console.log('role: ', results[0][0]);
+        return res.json(results[0][0]);
+    })
+});
+
+
 
 module.exports = router;
