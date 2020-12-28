@@ -138,10 +138,9 @@ router.get('/papers', (req, res)=>{
         [s_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
- 
 });
 
 
