@@ -8,4 +8,5 @@ const path = require('path');
 
 
 router.use('/editor', require('./editor'));
+router.use('/contactAuthor', require('./contactAuthor'));
 module.exports = router;
