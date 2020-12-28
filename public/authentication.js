@@ -1,3 +1,5 @@
+// const validateRegisterUser = require("../routes/validator");
+
 const authenticationPanel = $('#authentication-panel');
 const authenticationForm = $('#authentication-form');
 const signupBtn = $('#sign-up');
@@ -25,7 +27,7 @@ authenticationForm.submit(function(event){
     event.preventDefault();
 });
 
-signupBtn.click(function(event){
+signupBtn.click(function(event){    
     const authInfo = getAuthenticationInfo();
     if(!authInfo) return;
     console.log('sign up');
@@ -74,4 +76,5 @@ signinBtn.click(function(event){
         }
     });
 });
+
 
