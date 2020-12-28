@@ -12,6 +12,8 @@ const connection = mysql.createConnection({
 connection.connect();
 
 router.post('/submit_research_paper', (req, res)=>{
+    console.log(req.user.username);
+    console.log("lalal");
     if(!req.privilege.paperSubmission) return res.sendStatus(401);
 
     var p_id = req.body.p_id;
@@ -320,6 +322,20 @@ router.get('/list_publication_paper', (req, res)=>{
     );
 });
 
+router.get('/papers_result', (req, res)=>{
+    if(!req.privilege.getPaper) return res.sendStatus(401);
+    var s_id = req.user.username;
+
+    var query = 'call get_papers_result(?);';
+    connection.query(
+        query,
+        [s_id], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results[0]);
+        }
+    );
+});
 router.get('/papers_worst_result', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var s_id = req.user.username;
@@ -330,7 +346,7 @@ router.get('/papers_worst_result', (req, res)=>{
         [s_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });

@@ -8,11 +8,11 @@ create procedure contact_author_get_papers
 )
 begin
 
-	select title, summary, associated_file, page_count, sent_by, sent_date
+	select *
     from paper
     where sent_by = s_id;
     
 end$$
 delimiter ;
 
-call contact_author_get_papers('longauthor');
+call contact_author_get_papers('longcontact');

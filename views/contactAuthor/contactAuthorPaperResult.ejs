@@ -29,7 +29,7 @@
     <div id="wrapper">
         <!-- Sidebar -->
 
-        <%- include('../layout/contactAuthorSidebar', {"sidebarItem" : "papers"}); %>
+        <%- include('../layout/contactAuthorSidebar', {"sidebarItem" : "paperResult"}); %>
 
         <!-- end side bar -->
 
@@ -45,32 +45,6 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
                             <div>
-                                <a href="/views/editor/addpaper" class="btn btn-primary btn-icon-split">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">Add paper</span>
-                                </a>
-                                <form action="/views/contactAuthor/paper_in_x_years" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Get all papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="x" name="x" placeholder="Enter x"/>                         
-                                    </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
-                                <form action="/views/contactAuthor/posted_paper_in_x_years" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Get all posted papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="x" name="x" placeholder="Enter x"/>                         
-                                    </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
-                                <form action="/views/contactAuthor/publication_papers" method="GET">
-                                    <div class="form-group">
-                                        <label><b>Get all publication papers:</b></label> <br>
-                                        <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                    </div>
-                                </form>
                                 <form action="/views/contactAuthor/papers_worst_result" method="GET">
                                     <div class="form-group">
                                         <label><b>Get all reject papers:</b></label> <br>
@@ -88,11 +62,9 @@
                                             <th>ID</th>
                                             <th>Title</th>
                                             <th>Summary</th>
-                                            <th>Associated file</th>
-                                            <!-- <th>Page number</th> -->
-                                            <th>Author contact</th>
-                                            <th>Send date</th>
+                                            <th>Sent date</th>
                                             <th>Status</th>
+                                            <th>Result</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -110,16 +82,13 @@
                                                     <%= data[i].SUMMARY %>
                                                 </td>
                                                 <td>
-                                                    <%= data[i].ASSOCIATED_FILE %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].PAGE_COUNT %>
-                                                </td>
-                                                <td>
                                                     <%= data[i].SENT_DATE.substring(0, 10) %>
                                                 </td>
                                                 <td>
                                                     <%= data[i].STATUS %>
+                                                </td>
+                                                <td>
+                                                    <%= data[i].RESULT %>
                                                 </td>
                                                 <td>
                                                     <a href="/views/contactAuthor/paper/<%=data[i].id%>" class="btn btn-block"><i

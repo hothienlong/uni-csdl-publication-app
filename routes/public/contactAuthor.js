@@ -10,37 +10,38 @@ fetch.Promise = blueBird;
 
 router.use(express.static('public'));
 
+//---------------- Paper status ----------------
 router.get('/', (req, res) => {
     return res.render('contactAuthor/contactAuthorDashboard');
 });
 
-router.get('/addPaper', (req, res) => {
-    fetch('http://localhost:3000/api/contactAuthor/getContactAuthor')
-        .then(response => response.json())
-        .then(authors => res.render('contactAuthor/addPaper', {authors}))
+// router.get('/addPaper', (req, res) => {
+//     fetch('http://localhost:3000/api/contactAuthor/getContactAuthor')
+//         .then(response => response.json())
+//         .then(authors => res.render('contactAuthor/addPaper', {authors}))
     
-});
+// });
 
 
-router.post('/addPaper', (req, res) => {
-    // console.log("type: ", typeof(req.body));
-    fetch('http://localhost:3000/api/editor/addPaper', {
-        method: 'POST', // or 'PUT'
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': req.cookies.authorization
-        },
-        body: JSON.stringify(req.body)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    res.redirect('/views/contactAuthor/paper')
-});
+// router.post('/addPaper', (req, res) => {
+//     // console.log("type: ", typeof(req.body));
+//     fetch('http://localhost:3000/api/editor/addPaper', {
+//         method: 'POST', // or 'PUT'
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'authorization': req.cookies.authorization
+//         },
+//         body: JSON.stringify(req.body)
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log('Success:', data);
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });
+//     res.redirect('/views/contactAuthor/paper')
+// });
 
 
 router.get('/paper', (req, res) => {
@@ -101,6 +102,53 @@ router.get('/publication_papers', (req, res) => {
     })
         .then(response => response.json())
         .then(data => res.render('contactAuthor/contactAuthorPaper', {data}))
+        .catch(err => console.log(err));
+
+});
+
+
+
+//---------------- Paper status ----------------
+router.get('/paper_status', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/contactAuthor/papers', {
+        method: 'GET',
+        headers: {
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(data => res.render('contactAuthor/contactAuthorPaperResult', {data}))
+        .catch(err => console.log(err));
+
+});
+
+router.get('/papers_result', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/contactAuthor/papers_result', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(data => res.render('contactAuthor/contactAuthorPaperResult', {data}))
+        .catch(err => console.log(err));
+
+});
+
+router.get('/papers_worst_result', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/contactAuthor/papers_worst_result', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(data => res.render('contactAuthor/contactAuthorPaperResult', {data}))
         .catch(err => console.log(err));
 
 });

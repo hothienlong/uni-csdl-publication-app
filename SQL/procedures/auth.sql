@@ -67,7 +67,7 @@ begin
         insert into reviewer (s_id, work_email, collaboration_date) values (user_id, work_email, curdate());
 	end if;
     if (is_editor) then
-        insert into editor (s_id, appointed_date) values ('test', curdate());	
+        insert into editor (s_id, appointed_date) values (user_id, curdate());	
     end if;
     commit;
 end$$

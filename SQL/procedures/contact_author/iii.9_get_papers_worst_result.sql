@@ -12,11 +12,11 @@ begin
     from paper p
     join review_assignment_detail rad on (p.id = rad.p_id)
     where p.sent_by = s_id
-		and rad.result = 'REJECT';
+		and rad.result = 'REJECTION';
 end$$
 delimiter ;
 
 grant execute on procedure get_papers_worst_result to contact_author@localhost;
 
-call get_papers_worst_result("longauthor");
+call get_papers_worst_result("longcontact");
 

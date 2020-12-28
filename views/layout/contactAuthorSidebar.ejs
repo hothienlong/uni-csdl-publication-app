@@ -51,12 +51,20 @@
                 </li>
             <% } %>
 
+            <% if(sidebarItem == "paperResult"){ %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/views/contactAuthor/papers_result">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers result</span></a>
+                </li>
+            <% }else{ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/views/contactAuthor/papers_result">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers result</span></a>
+                </li>
+            <% } %>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/views/editor/paperAssigned">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Paper assigned</span></a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="/views/editor/assignReviewBefore">
