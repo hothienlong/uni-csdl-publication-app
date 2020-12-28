@@ -146,58 +146,58 @@ router.get('/papers', (req, res)=>{
 
 // 12 chức năng contact_author
 
-router.put('/update_information', (req, res)=>{
-    if(!req.privilege.updateAccount) return res.sendStatus(401);
-    var s_id = req.user.username;
-    var fname = req.body.fname;
-    var address = req.body.address;
-    var email = req.body.email;
-    var company = req.body.company;
-    var job = req.body.job;
-    var degree = req.body.degree;
-    var profession = req.body.profession;
+// router.put('/update_information', (req, res)=>{
+//     if(!req.privilege.updateAccount) return res.sendStatus(401);
+//     var s_id = req.user.username;
+//     var fname = req.body.fname;
+//     var address = req.body.address;
+//     var email = req.body.email;
+//     var company = req.body.company;
+//     var job = req.body.job;
+//     var degree = req.body.degree;
+//     var profession = req.body.profession;
 
-    console.log(s_id);
+//     console.log(s_id);
 
-    var query = 'call update_information_contact_author(?,?,?,?,?,?,?,?);';
-    connection.query(
-        query,
-        [s_id, fname, address, email, company, job, degree, profession], 
-        (err, results, fields)=>{
-            if (err) return res.status(500).send(err);
-            return res.sendStatus(200);
-        }
-    );
-});
+//     var query = 'call update_information_contact_author(?,?,?,?,?,?,?,?);';
+//     connection.query(
+//         query,
+//         [s_id, fname, address, email, company, job, degree, profession], 
+//         (err, results, fields)=>{
+//             if (err) return res.status(500).send(err);
+//             return res.sendStatus(200);
+//         }
+//     );
+// });
 
-router.put('/edit_paper', (req, res)=>{
-    if(!req.privilege.paperEdit) return res.sendStatus(401);
-    var s_id = req.user.username;
-    var p_id = req.body.p_id;
-    var title = req.body.title;
-    var summary = req.body.summary;
-    var associated_file = req.body.associated_file;
-    var page_count = req.body.page_count;
-    var sent_by = req.user.username;
-    var sent_date = req.body.sent_date;
+// router.put('/edit_paper', (req, res)=>{
+//     if(!req.privilege.paperEdit) return res.sendStatus(401);
+//     var s_id = req.user.username;
+//     var p_id = req.body.p_id;
+//     var title = req.body.title;
+//     var summary = req.body.summary;
+//     var associated_file = req.body.associated_file;
+//     var page_count = req.body.page_count;
+//     var sent_by = req.user.username;
+//     var sent_date = req.body.sent_date;
 
-    var query = 'call edit_paper(?,?,?,?,?,?,?,?);';
-    connection.query(
-        query,
-        [s_id, p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
-        (err, results, fields)=>{
-            if (err) return res.status(500).send(err);
-            // paper = results[0];
-            // if(paper[0] != null) {
-            //     return res.send(paper);
-            // }       
-            // else {
-            //     return res.send("Bài báo bạn muốn cập nhật không tồn tại.");
-            // }
-            return res.send(results);
-        }
-    );
-});
+//     var query = 'call edit_paper(?,?,?,?,?,?,?,?);';
+//     connection.query(
+//         query,
+//         [s_id, p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
+//         (err, results, fields)=>{
+//             if (err) return res.status(500).send(err);
+//             // paper = results[0];
+//             // if(paper[0] != null) {
+//             //     return res.send(paper);
+//             // }       
+//             // else {
+//             //     return res.send("Bài báo bạn muốn cập nhật không tồn tại.");
+//             // }
+//             return res.send(results);
+//         }
+//     );
+// });
 
 router.delete('/delete_paper', (req, res)=>{
     if(!req.privilege.paperDelete) return res.sendStatus(401);
@@ -271,47 +271,51 @@ router.get('/review_summary', (req, res)=>{
     );
 });
 
-router.get('/list_paper_in_one_year', (req, res)=>{
+router.post('/list_paper_in_x_years', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var s_id = req.user.username;
+    var x = req.body.x;
+    if(x == '') x = null;
 
-    var query = 'call get_list_paper_in_one_year(?);';
+    var query = 'call get_list_paper_in_x_years(?,?);';
     connection.query(
         query,
-        [s_id], 
+        [s_id, x], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/list_posted_paper_in_one_year', (req, res)=>{
+router.post('/list_posted_paper_in_x_years', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var s_id = req.user.username;
+    var x= req.body.x;
+    if(x == '') x = null;
 
-    var query = 'call get_list_posted_paper_in_one_year(?);';
+    var query = 'call get_list_posted_paper_in_x_years(?,?);';
     connection.query(
         query,
-        [s_id], 
+        [s_id, x], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/list_publication_paper_in_one_year', (req, res)=>{
+router.get('/list_publication_paper', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var s_id = req.user.username;
 
-    var query = 'call get_list_publication_paper_in_one_year(?);';
+    var query = 'call get_list_publication_paper(?);';
     connection.query(
         query,
         [s_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
@@ -331,14 +335,15 @@ router.get('/papers_worst_result', (req, res)=>{
     );
 });
 
-router.get('/total_papers_in_5_years', (req, res)=>{
+router.get('/total_papers_in_x_years', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var s_id = req.user.username;
+    var x = req.body.x;
 
-    var query = 'call get_total_papers_in_5_years(?);';
+    var query = 'call get_total_papers_in_x_years(?,?);';
     connection.query(
         query,
-        [s_id], 
+        [s_id, x], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
             return res.send(results);
@@ -346,14 +351,15 @@ router.get('/total_papers_in_5_years', (req, res)=>{
     );
 });
 
-router.get('/total_research_papers_in_5_years', (req, res)=>{
+router.get('/total_research_papers_in_x_years', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var s_id = req.user.username;
+    var x = req.body.x;
 
-    var query = 'call get_total_research_papers_in_5_years(?);';
+    var query = 'call get_total_research_papers_in_x_years(?,?);';
     connection.query(
         query,
-        [s_id], 
+        [s_id, x], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
             return res.send(results);
@@ -361,14 +367,15 @@ router.get('/total_research_papers_in_5_years', (req, res)=>{
     );
 });
 
-router.get('/total_overview_papers_in_5_years', (req, res)=>{
+router.get('/total_overview_papers_in_x_years', (req, res)=>{
     if(!req.privilege.getPaper) return res.sendStatus(401);
     var s_id = req.user.username;
+    var x = req.body.x;
 
-    var query = 'call get_total_overview_papers_in_5_years(?);';
+    var query = 'call get_total_overview_papers_in_x_years(?,?);';
     connection.query(
         query,
-        [s_id], 
+        [s_id, x], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
             return res.send(results);

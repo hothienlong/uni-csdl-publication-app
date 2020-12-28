@@ -4,24 +4,24 @@ drop procedure if exists edit_paper;
 drop procedure if exists delete_paper;
 
 delimiter $$
-create procedure edit_paper
-(
-	s_id varchar(45), p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), sent_date date
-)
-begin
-	update paper p
-    set p.title = title, 
-		p.summary = summary, 
-        p.associated_file = associated_file, 
-        p.page_count = page_count, 
-        p.sent_by = sent_by,
-        p.sent_date = sent_date
-    where id = p_id and p.sent_by = s_id;
+-- create procedure edit_paper
+-- (
+-- 	s_id varchar(45), p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), sent_date date
+-- )
+-- begin
+-- 	update paper p
+--     set p.title = title, 
+-- 		p.summary = summary, 
+--         p.associated_file = associated_file, 
+--         p.page_count = page_count, 
+--         p.sent_by = sent_by,
+--         p.sent_date = sent_date
+--     where id = p_id and p.sent_by = s_id;
     
-	select *
-    from paper
-    where id = p_id and sent_by = s_id;
-end$$
+-- 	select *
+--     from paper
+--     where id = p_id and sent_by = s_id;
+-- end$$
 
 create procedure delete_paper
 (
