@@ -66,11 +66,19 @@
             <% } %>
 
 
-            <li class="nav-item">
-                <a class="nav-link" href="/views/editor/assignReviewBefore">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Assign review</span></a>
-            </li>
+            <% if(sidebarItem == "paperStatistic"){ %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/views/contactAuthor/papers_statistic">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers statistic</span></a>
+                </li>
+            <% }else{ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/views/contactAuthor/papers_statistic">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers statistic</span></a>
+                </li>
+            <% } %>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">

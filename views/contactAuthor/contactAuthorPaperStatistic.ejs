@@ -29,7 +29,7 @@
     <div id="wrapper">
         <!-- Sidebar -->
 
-        <%- include('../layout/contactAuthorSidebar', {"sidebarItem" : "papers"}); %>
+        <%- include('../layout/contactAuthorSidebar', {"sidebarItem" : "paperStatistic"}); %>
 
         <!-- end side bar -->
 
@@ -45,31 +45,26 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
                             <div>
-                                <a href="/views/editor/addpaper" class="btn btn-primary btn-icon-split">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">Add paper</span>
-                                </a>
-                                <form action="/views/contactAuthor/paper_in_x_years" method="POST">
+                                <form action="/views/contactAuthor/total_papers_in_x_years" method="POST">
                                     <div class="form-group">
-                                        <label><b>Get all papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="x" name="x" placeholder="Enter x"/>                         
+                                        <label><b>Statistic papers in x years:</b></label>
+                                        <input type="text" class="form-control" id="x" name="x" placeholder="Enter x"/> 
                                     </div>
                                     <button class="btn btn-info me-md-2" type="submit">Submit</button>
                                 </form>
-                                <form action="/views/contactAuthor/posted_paper_in_x_years" method="POST">
+                                <form action="/views/contactAuthor/total_research_papers_in_x_years" method="POST">
                                     <div class="form-group">
-                                        <label><b>Get all posted papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="x" name="x" placeholder="Enter x"/>                         
+                                        <label><b>Statistic research papers in x years:</b></label>
+                                        <input type="text" class="form-control" id="x" name="x" placeholder="Enter x"/> 
                                     </div>
                                     <button class="btn btn-info me-md-2" type="submit">Submit</button>
                                 </form>
-                                <form action="/views/contactAuthor/publication_papers" method="GET">
+                                <form action="/views/contactAuthor/total_overview_papers_in_x_years" method="POST">
                                     <div class="form-group">
-                                        <label><b>Get all publication papers:</b></label> <br>
-                                        <button class="btn btn-info me-md-2" type="submit">Submit</button>
+                                        <label><b>Statistic overview papers in x years:</b></label>
+                                        <input type="text" class="form-control" id="x" name="x" placeholder="Enter x"/> 
                                     </div>
+                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -79,13 +74,8 @@
                                 <table class="table table-bordered" id="paperTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Title</th>
-                                            <th>Summary</th>
-                                            <th>Associated file</th>
-                                            <th>Page number</th>
-                                            <th>Send date</th>
-                                            <th>Status</th>
+                                            <th>Sent year</th>
+                                            <th>Paper amount</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -93,26 +83,10 @@
                                         <% for (var i=0; i < data.length; i++) { %>
                                             <tr>
                                                 <td>
-                                                    <%= data[i].ID %>
-                                                    <% console.log(data[i].ID) %>
+                                                    <%= data[i].sent_year %>
                                                 </td>
                                                 <td>
-                                                    <%= data[i].TITLE %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].SUMMARY %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].ASSOCIATED_FILE %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].PAGE_COUNT %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].SENT_DATE.substring(0, 10) %>
-                                                </td>
-                                                <td>
-                                                    <%= data[i].STATUS %>
+                                                    <%= data[i].total_paper %>
                                                 </td>
                                                 <td>
                                                     <a href="/views/contactAuthor/paper/<%=data[i].id%>" class="btn btn-block"><i

@@ -108,21 +108,7 @@ router.get('/publication_papers', (req, res) => {
 
 
 
-//---------------- Paper status ----------------
-router.get('/paper_status', (req, res) => {
-    // console.log(req.cookies.authorization);
-    fetch('http://localhost:3000/api/contactAuthor/papers', {
-        method: 'GET',
-        headers: {
-            'authorization': req.cookies.authorization
-        }
-    })
-        .then(response => response.json())
-        .then(data => res.render('contactAuthor/contactAuthorPaperResult', {data}))
-        .catch(err => console.log(err));
-
-});
-
+//---------------- Paper result ----------------
 router.get('/papers_result', (req, res) => {
     // console.log(req.cookies.authorization);
     fetch('http://localhost:3000/api/contactAuthor/papers_result', {
@@ -153,6 +139,69 @@ router.get('/papers_worst_result', (req, res) => {
 
 });
 
+//---------------- Paper statistic ----------------
+router.get('/papers_statistic', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/contactAuthor/total_papers_in_5_years', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(data => res.render('contactAuthor/contactAuthorPaperStatistic', {data}))
+        .catch(err => console.log(err));
+
+});
+
+router.post('/total_papers_in_x_years', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/contactAuthor/total_papers_in_x_years', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body : JSON.stringify(req.body)
+    })
+        .then(response => response.json())
+        .then(data => res.render('contactAuthor/contactAuthorPaperStatistic', {data}))
+        .catch(err => console.log(err));
+
+});
+
+router.post('/total_research_papers_in_x_years', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/contactAuthor/total_research_papers_in_x_years', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body : JSON.stringify(req.body)
+    })
+        .then(response => response.json())
+        .then(data => res.render('contactAuthor/contactAuthorPaperStatistic', {data}))
+        .catch(err => console.log(err));
+
+});
+
+router.post('/total_overview_papers_in_x_years', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/contactAuthor/total_overview_papers_in_x_years', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body : JSON.stringify(req.body)
+    })
+        .then(response => response.json())
+        .then(data => res.render('contactAuthor/contactAuthorPaperStatistic', {data}))
+        .catch(err => console.log(err));
+
+});
 // router.get('/paperAssigned', (req, res) => {
 //     console.log(req.headers.cookie);
 //     fetch('http://localhost:3000/api/editor/allPapersAssigned', {
