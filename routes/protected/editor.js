@@ -9,16 +9,15 @@ const mysql = require('mysql');
 
 const connection = mysql.createConnection({
     host     : 'localhost',
-    user     : 'editor',
-    password : 'editor_password',
-    database : 'publication'
+    user     : 'nodejs_application',
+    password : 'nodejs_application_password',
+    database : 'publication',
+    timezone: 'gmt'
 });
 connection.connect();
 router.use(express.static('public'));
 
-router.get('/papers', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-
+router.get('/papers', (req, res)=>{    
     connection.query(
         'call editor_get_papers(?);',
         [req.user.username],
@@ -29,15 +28,11 @@ router.get('/papers', (req, res)=>{
     )
 });
 
-router.get('/allPapers', (req,res)=>{
-    if(!req.privilege.getPaperAll) {
-        return res.sendStatus(401);
-    }    
+router.get('/allPapers', (req,res)=>{    
     connection.query(
         'call editor_get_all_papers();',
         [],
-        (err, results, fieldInfo)=>{
-            //console.log("abc: ",results[0][0]);
+        (err, results, fieldInfo)=>{        
             if(err) return res.status(500).send(err);
             res.json(results[0]);
         }
@@ -45,10 +40,7 @@ router.get('/allPapers', (req,res)=>{
 });
 
 
-router.get('/allPapersAssigned', (req,res)=>{
-    if(!req.privilege.getPaper) {
-        return res.sendStatus(401);
-    }
+router.get('/allPapersAssigned', (req,res)=>{    
     connection.query(
         'call editor_get_papers(?);',
         [req.user],
@@ -65,18 +57,21 @@ router.get('/allPapersAssigned', (req,res)=>{
 
 router.get('/paper/:paperId', (req, res) => {
     connection.query(
-        'call get_paper(?);',
+        'call get_paper_by_id(?);',
         [req.params.paperId],
         (err, results, fieldInfo) => {
-            if (err) return res.status(500).send(err);
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+            console.log("posted: ", results[0]);
             res.json(results[0]);
         }
     )
 });
 
 
-router.post('/addPaper', (req, res) => {
-    // console.log(req.body);
+router.post('/addPaper', (req, res) => {    
     connection.query(
         'call add_paper(?,?,?,?,?,?,?,?);',
         [req.body.id, req.body.title, req.body.summary, req.body.file, req.body.pagenums, req.body.author, req.body.date, req.body.type_paper],
@@ -88,25 +83,22 @@ router.post('/addPaper', (req, res) => {
 });
 
 
-router.post('/assignReview', (req, res) => {
-    if (!req.privilege.reviewEditorAssignment || !req.privilege.reviewReviewerAssignment){
-        return res.sendStatus(401);
-    }
+router.post('/assignReview', (req, res) => {    
     connection.query(
         'call assign_review(?,?,?,?);',
-        [req.body.editorId, req.body.reviewerId, req.body.paperId, req.body.reviewDate],
+        [req.user, req.body.reviewerId, req.body.paperId, req.body.reviewDate],
         (err, results, fieldInfo) => {
-            if (err) return res.status(500).send(err);
+            if (err){
+                console.log('err: ', err);
+                return res.status(500).send(err);
+            } 
             res.sendStatus(200);            
         }
     )
 });
 
 
-router.post('/updatePaperStatus', (req, res) => {
-    if (!req.privilege.updateResult) {
-        return res.sendStatus(401);
-    }
+router.post('/updatePaperStatus', (req, res) => {    
     connection.query(
         'call update_paper_status(?,?);',
         [req.body.paperId, req.body.status],
@@ -118,10 +110,7 @@ router.post('/updatePaperStatus', (req, res) => {
 });
 
 
-router.post('/updateResultAfterReview', (req, res) => {
-    if (!req.privilege.updateResult) {
-        return res.sendStatus(401);
-    }
+router.post('/updateResultAfterReview', (req, res) => {    
     connection.query(
         'call update_result_after_review(?,?,?);',
         [req.body.paperId, req.body.result, req.body.informDate],
@@ -134,11 +123,10 @@ router.post('/updateResultAfterReview', (req, res) => {
 
 
 
-router.get('/getPaperByTypeAndStatus', (req, res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401);
+router.get('/getPaperByTypeAndStatus/:typePaper/:statusPaper', (req, res) => {    
     connection.query(
         'call get_paper_by_type_and_status(?,?);',
-        [req.body.typePaper, req.body.statusPaper],
+        [req.params.typePaper, req.params.statusPaper],
         (err, results, fieldInfo) => {
             if (err) return res.status(500).send(err);
             res.json(results[0]);
@@ -147,21 +135,40 @@ router.get('/getPaperByTypeAndStatus', (req, res) => {
 });
 
 
-router.get('/getPostedPaperByTypeAndYears/:typePaper', (req, res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401);
+router.get('/getPostedPaperByTypeAndYears/:typePaper/:distantYear', (req, res) => {    
     connection.query(
-        'call get_posted_paper_by_type_and_years(?);',
-        [req.body.typePaper, req.body.year],
+        'call get_posted_paper_by_type_and_years(?,?);',
+        [req.params.typePaper, parseInt(req.params.distantYear)],
         (err, results, fieldInfo) => {
-            if (err) return res.status(500).send(err);
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+            console.log("posted: ", results[0]);
             res.json(results[0]);
         }
     )
 });
 
 
-router.get('/getPublishedPaper/:authorId', (req, res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401);
+router.get('/getPapersByAuthorAndStatus/:authorId/:statusPaper', (req, res) => {    
+    connection.query(
+        'call get_papers_by_author_and_status(?,?);',
+        [req.params.authorId, req.params.statusPaper],
+        (err, results, fieldInfo) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+            console.log("posted: ", results[0]);
+            res.json(results[0]);
+        }
+    )
+});
+
+
+
+router.get('/getPublishedPaper/:authorId', (req, res) => {    
     connection.query(
         'call get_published_paper_by_author(?);',
         [req.params.authorId],
@@ -172,8 +179,7 @@ router.get('/getPublishedPaper/:authorId', (req, res) => {
     )
 });
 
-router.get('/getPostedPaper/:authorId', (req, res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401);
+router.get('/getPostedPaper/:authorId', (req, res) => {    
     connection.query(
         'call get_posted_paper_by_author(?);',
         [req.params.authorId],
@@ -185,8 +191,7 @@ router.get('/getPostedPaper/:authorId', (req, res) => {
 });
 
 
-router.get('/getNumsPaper/:statusPaper', (req, res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401);
+router.get('/getNumsPaper/:statusPaper', (req, res) => {    
     connection.query(
         'call count_paper_by_status(?);',
         [req.params.statusPaper],
@@ -196,6 +201,68 @@ router.get('/getNumsPaper/:statusPaper', (req, res) => {
         }
     )
 });
+
+
+router.get('/getReviewerByPaper/:paperId', (req, res) => {    
+    connection.query(
+        'call get_reviewer_by_paper(?)',
+        [req.params.paperId],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            res.json(results[0]);
+        }
+    )
+});
+
+
+router.get('/getReivewingDetailByPaper/:paperId', (req, res) => {    
+    connection.query(
+        'call get_reivewing_detail_by_paper(?)',
+        [req.params.paperId],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            console.log("date: ", results[0]);
+            res.json(results[0]);
+        }
+    )
+});
+
+router.get('/getAllReviewers', (req, res) => {    
+    connection.query(
+        'call get_all_reviewers()',
+        [],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            res.json(results[0]);
+        }
+    )
+});
+
+
+router.get('/papersByType', (req, res) => {    
+    connection.query(
+        'call get_all_reviewers()',
+        [],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            res.json(results[0]);
+        }
+    )
+});
+
+
+router.get('/getAuthors', (req, res) => {    
+    connection.query(
+        'call get_author()',
+        [],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            console.log("date: ", results[0]);
+            res.json(results[0]);
+        }
+    )
+});
+
 
 
 

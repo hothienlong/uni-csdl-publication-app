@@ -92,7 +92,7 @@ router.post('/signin', [check('username').notEmpty().withMessage('Username canno
         fetch('http://localhost:3000/authenticate/signin', {
             method: 'POST', // or 'PUT'
             headers: {
-                'Content-Type': 'application/json',                
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(req.body)
         })
@@ -109,13 +109,18 @@ router.post('/signin', [check('username').notEmpty().withMessage('Username canno
                     res.render('signin', {
                         alert
                     });
-                    return;                    
+                    return;
                 }
                 else {
                     res.cookie('authorization', result.token);
-                    return res.redirect('/views/dashboard');                
+                    return res.redirect('/views/dashboard');
                 }
             });
     });
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('authorization');
+    res.render('signin');
+});
 
 module.exports = router

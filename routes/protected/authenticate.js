@@ -15,13 +15,6 @@ const connection = mysql.createConnection({
 connection.connect();
 
 
-router.use((req, res, next) => {
-    console.log("middleware");
-    req.username = jwt.decode(req.headers.authorization).username;
-    next();
-})
-
-
 router.post('/signup', (req, res)=>{
     const password = req.body.password;
     const username = req.body.username;
@@ -44,7 +37,7 @@ router.post('/signup', (req, res)=>{
         await new Promise((resolve, reject) => {
             connection.query(
                 create_user_query,
-                [username, fname, address, email, company, job, degree, profession, work_email, is_author, is_reviewer, is_editor],
+                [username, fname, address, email, company, job, degree, profession, 'default_email@gmail.com', is_author, is_reviewer, is_editor],
                 (err, results, fields) => {
                     if (err) reject(err);
                     resolve(res);
@@ -82,8 +75,9 @@ router.post('/signup', (req, res)=>{
 
 
 router.get('/getAuthorization', (req, res) => {
+    let username = jwt.decode(req.headers.authorization).username;
     let query = 'call get_user_roles(?)';
-    connection.query(query, [req.username], (err, results, fields) => {
+    connection.query(query, [username], (err, results, fields) => {
         if (err) res.sendStatus(500);
         console.log('role: ', results[0][0]);
         return res.json(results[0][0]);

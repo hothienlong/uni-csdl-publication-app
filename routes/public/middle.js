@@ -8,6 +8,9 @@ const { json } = require('body-parser');
 fetch.Promise = blueBird;
 router.use(express.static('public/'));
 
+router.get('/', (req, res) => {
+    res.render('DashBoard');
+}) ;
 
 router.get('/dashboard', (req, res) => {
     return res.render('DashBoard');
@@ -74,4 +77,5 @@ router.use('/author', (req, res, next) => {
             }
         });
 }, require('./author'));
+
 module.exports = router;
