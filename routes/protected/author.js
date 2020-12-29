@@ -12,13 +12,11 @@ const connection = mysql.createConnection({
 connection.connect();
 
 router.post('/submit_research_paper', (req, res)=>{
-    console.log("research");
     var p_id = req.body.p_id;
     var title = req.body.title;
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    console.log(req.user);
     var sent_by = req.user;
 
     var num_author = req.body.num_author;
@@ -249,6 +247,7 @@ router.post('/status_paper', (req, res)=>{
         [s_id, p_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
+            console.log(results);
             return res.send(results[0]);
         }
     );

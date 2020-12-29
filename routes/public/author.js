@@ -204,4 +204,25 @@ router.post('/total_overview_papers_in_x_years', (req, res) => {
         .catch(err => console.log(err));
 
 });
+
+//---------------- Paper detail ----------------
+router.get('/papers_detail', (req, res) => {
+    return res.render('author/authorPaperDetail', {username : req.username});
+});
+
+router.post('/papers_detail', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/author/status_paper', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body : JSON.stringify(req.body)
+    })
+        .then(response => response.json())
+        .then(paper_status_result => res.render('author/authorPaperDetail', {paper_status_result, username : req.username}))
+        .catch(err => console.log(err));
+
+});
 module.exports = router;
