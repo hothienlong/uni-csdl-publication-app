@@ -12,7 +12,10 @@ const connection = mysql.createConnection({
 connection.connect();
 
 
-// router.use('/author', require('./author'));
+router.use('/author', (req,res,next) => {
+    req.user = jwt.decode(req.headers.authorization).username
+    next()
+} , require('./author') );
 router.use('/reviewer', (req,res,next) => {
     req.user = jwt.decode(req.headers.authorization).username
     next()
