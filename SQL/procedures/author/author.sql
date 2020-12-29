@@ -272,13 +272,12 @@ create procedure get_papers_with_result
 )
 begin
 	if result is null then
-    	select id, title, summary, associated_file, page_count, sent_by, sent_date, status, result
+    	select ID, TITLE, SUMMARY, SENT_DATE, STATUS, rad.RESULT
 		from paper p
 		join review_assignment_detail rad on (p.id = rad.p_id)
-		where p.sent_by = s_id
-			and rad.result = result;
+		where p.sent_by = s_id;
 	else
-		select id, title, summary, associated_file, page_count, sent_by, sent_date, status, result
+		select ID, TITLE, SUMMARY, SENT_DATE, STATUS, rad.RESULT
 		from paper p
 		join review_assignment_detail rad on (p.id = rad.p_id)
 		where p.sent_by = s_id
@@ -289,7 +288,7 @@ delimiter ;
 
 grant execute on procedure get_papers_with_result to nodejs_application@localhost;
 
--- call get_papers_with_result("longauthor", 'REJECT');
+-- call get_papers_with_result("longcontact", 'REJECTION');
 
 -- 10 get total papers in 5 years
 

@@ -306,6 +306,7 @@ router.get('/papers_worst_result', (req, res)=>{
         [s_id, 'REJECTION'], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
+            console.log(results);
             return res.send(results[0]);
         }
     );
