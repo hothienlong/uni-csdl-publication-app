@@ -93,12 +93,41 @@ router.post('/submit_book_review', (req, res)=>{
 
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
+  
+    var book_page_count = req.body.book_page_count;
+    var publish_year = req.body.publish_year;
+    var book_title = req.body.book_title;
+    var publisher = req.body.publisher;
+    
+    var num_book_author = req.body.num_book_author;
+    var book_author_name = req.body.book_author_name;
+
+    var subsubquery = 'call add_book(?,?,?,?,?);';
+    connection.query(
+        subsubquery,
+        [ISBN, book_page_count, publish_year, book_title, publisher], 
+        (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+
+            for(var i = 0; i<num_book_author; i++){
+                var subquery = 'call add_book_author_name(?,?);'
+                connection.query(
+                    subquery,
+                    [ISBN, book_author_name[i]],
+                    (err, results, fields)=>{
+                        if (err) return res.status(500).send(err);
+                    }
+                );
+            }
+        }
+    );
+
+
 
     var query = 'call submit_book_review(?,?,?,?,?,?,?);';
     connection.query(
         query,
-        [p_id, title, summary, associated_file, page_count, sent_by,
-        ISBN], 
+        [p_id, title, summary, associated_file, page_count, sent_by, ISBN], 
         (err, results, fields)=>{
             if (err) return res.status(500).send(err);
 

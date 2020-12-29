@@ -36,6 +36,7 @@ begin
         values (p_id);
     commit;
 end$$
+grant execute on procedure publication.submit_overview_paper to nodejs_application@localhost;
 
 create procedure submit_research_paper
 (p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45))
@@ -53,9 +54,30 @@ begin
         values (p_id);
     commit;
 end$$
+grant execute on procedure publication.submit_research_paper to nodejs_application@localhost;
 
 drop procedure if exists submit_book_review;
+drop procedure if exists add_book;
+drop procedure if exists add_book_author_name;
 delimiter $$
+create procedure add_book
+(
+	ISBN varchar(45), book_page_count varchar(45), publish_year year, book_title text, publisher text
+)
+begin
+	insert into book (ISBN, page_count, publish_year, title, publisher)
+        values (ISBN, book_page_count, publish_year, book_title, publisher);
+end$$
+
+create procedure add_book_author_name
+(
+	ISBN varchar(45), author_name varchar(45)
+)
+begin
+	insert into book_author
+		values (ISBN, author_name);
+end$$
+
 create procedure submit_book_review
 (
 	p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), ISBN varchar(45)
@@ -68,19 +90,28 @@ begin
     END;
     
     start transaction;
+-- 	insert ignore into book (ISBN, page_count, publish_year, title, publisher)
+--         values (ISBN, book_page_count, publish_year, book_title, publisher);
+--         
+-- 	insert into book_author
+-- 		values (ISBN, author_name);
+
 	insert into paper (id, title, summary, associated_file, page_count, sent_by, sent_date)
-        values (p_id, title, summary, associated_file, page_count, sent_by, current_date());
+        values (p_id, title, summary, associated_file, page_count, sent_by, current_date());  
         
     insert into book_review
         values (p_id, ISBN);
     commit;
 end$$
 delimiter ;
-
-grant execute on procedure publication.submit_overview_paper to nodejs_application@localhost;
-grant execute on procedure publication.submit_research_paper to nodejs_application@localhost;
 grant execute on procedure publication.submit_book_review to nodejs_application@localhost;
+grant execute on procedure publication.add_book to nodejs_application@localhost;
+grant execute on procedure publication.add_book_author_name to nodejs_application@localhost;
 
+-- call add_book("ISBN14", "5", '2000', 'booktitle14', 'NXB Kim Dong');
+-- call add_book_author_name("ISBN14", 'quanthanhtho');
+-- call add_book_author_name("ISBN14", 'ledinhthuan');
+-- call submit_book_review(14, "title14", null, "file14", "5", "longcontact", "ISBN14");
 -- 1 update personal information
 
 drop procedure if exists update_information_contact_author ;
