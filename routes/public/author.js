@@ -207,7 +207,7 @@ router.post('/total_overview_papers_in_x_years', (req, res) => {
 
 //---------------- Paper detail ----------------
 router.get('/papers_detail', (req, res) => {
-    return res.render('author/authorPaperDetail', {username : req.username});
+    return res.render('author/authorPaperDetail', {paper_status_result : "Unknown", username : req.username});
 });
 
 router.post('/papers_detail', (req, res) => {
