@@ -12,14 +12,14 @@ const connection = mysql.createConnection({
 connection.connect();
 
 router.post('/submit_research_paper', (req, res)=>{
-    if(!req.privilege.paperSubmission) return res.sendStatus(401);
-
+    console.log("research");
     var p_id = req.body.p_id;
     var title = req.body.title;
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    var sent_by = req.user.username;
+    console.log(req.user);
+    var sent_by = req.user;
 
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
@@ -49,14 +49,12 @@ router.post('/submit_research_paper', (req, res)=>{
 
 
 router.post('/submit_overview_paper', (req, res)=>{
-    if(!req.privilege.paperSubmission) return res.sendStatus(401);
-
     var p_id = req.body.p_id;
     var title = req.body.title;
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    var sent_by = req.user.username;
+    var sent_by = req.user;
 
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
@@ -85,13 +83,12 @@ router.post('/submit_overview_paper', (req, res)=>{
 });
 
 router.post('/submit_book_review', (req, res)=>{
-    if(!req.privilege.paperSubmission) return res.sendStatus(401);
     var p_id = req.body.p_id;
     var title = req.body.title;
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    var sent_by = req.user.username;
+    var sent_by = req.user;
     var ISBN = req.body.ISBN;
 
     var num_author = req.body.num_author;
@@ -122,16 +119,16 @@ router.post('/submit_book_review', (req, res)=>{
 });
 
 router.get('/papers', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+    var s_id = req.user;
 
-    var query = 'call contact_author_get_papers(?);';
+    var query = 'call get_list_paper_in_for_years(?,?);';
     connection.query(
         query,
-        [s_id], 
+        [s_id, null], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            console.log(results);
+            return res.send(results[0]);
         }
     );
  
@@ -140,8 +137,7 @@ router.get('/papers', (req, res)=>{
 
 // 12 chức năng author
 router.put('/update_information', (req, res)=>{
-    if(!req.privilege.updateAccount) return res.sendStatus(401);
-    var s_id = req.user.username;
+    var s_id = req.user;
     var fname = req.body.fname;
     var address = req.body.address;
     var email = req.body.email;
@@ -164,8 +160,7 @@ router.put('/update_information', (req, res)=>{
 });
 
 router.put('/edit_paper', (req, res)=>{
-    if(!req.privilege.paperEdit) return res.sendStatus(401);
-    var s_id = req.user.username;
+    var s_id = req.user;
     var p_id = req.body.p_id;
     var title = req.body.title;
     var summary = req.body.summary;
@@ -186,8 +181,7 @@ router.put('/edit_paper', (req, res)=>{
 });
 
 router.delete('/delete_paper', (req, res)=>{
-    if(!req.privilege.paperDelete) return res.sendStatus(401);
-    var s_id = req.user.username;
+    var s_id = req.user;
     var p_id = req.body.p_id;
 
     var query = 'call delete_paper(?,?);';
@@ -201,9 +195,8 @@ router.delete('/delete_paper', (req, res)=>{
     );
 });
 
-router.get('/info_book_authors', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.post('/info_book_authors', (req, res)=>{
+    var s_id = req.user;
     var p_id = req.body.p_id;
 
     var query = 'call get_information_book_authors(?,?);';
@@ -212,14 +205,13 @@ router.get('/info_book_authors', (req, res)=>{
         [s_id, p_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/status_paper', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.post('/status_paper', (req, res)=>{
+    var s_id = req.user;
     var p_id = req.body.p_id;
 
     var query = 'call get_status_paper(?,?);';
@@ -228,13 +220,12 @@ router.get('/status_paper', (req, res)=>{
         [s_id, p_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
 router.get('/review_summary', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
     var p_id = req.body.p_id;
 
     var query = 'call get_review_summary(?);';
@@ -243,14 +234,13 @@ router.get('/review_summary', (req, res)=>{
         [p_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/list_paper_in_years', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.post('/list_paper_in_years', (req, res)=>{
+    var s_id = req.user;
     var years = req.body.years;
 
     var query = 'call get_list_paper_in_for_years(?, ?);';
@@ -259,46 +249,56 @@ router.get('/list_paper_in_years', (req, res)=>{
         [s_id, years], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/list_posted_paper_in_years', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.post('/list_posted_paper_in_years', (req, res)=>{
+    var s_id = req.user;
     var years = req.body.years;
 
-    var query = 'call get_list_paper_with_status_for_years(?);';
+    var query = 'call get_list_paper_with_status_for_years(?,?,?);';
     connection.query(
         query,
         [s_id, years, 'POSTED'], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/list_publication_paper_in_year', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.post('/list_publication_paper_in_year', (req, res)=>{
+    var s_id = req.user;
     var years = req.body.years;
 
-    var query = 'call get_list_paper_with_status_for_years(?);';
+    var query = 'call get_list_paper_with_status_for_years(?,?,?);';
     connection.query(
         query,
         [s_id, years, 'PUBLICATION'], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
+router.get('/papers_result', (req, res)=>{
+    var s_id = req.user;
+
+    var query = 'call get_papers_with_result(?,?);';
+    connection.query(
+        query,
+        [s_id, null], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            return res.send(results[0]);
+        }
+    );
+});
 router.get('/papers_worst_result', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+    var s_id = req.user;
 
     var query = 'call get_papers_with_result(?,?);';
     connection.query(
@@ -306,14 +306,28 @@ router.get('/papers_worst_result', (req, res)=>{
         [s_id, 'REJECTION'], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/total_papers_in_years', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.get('/papers_statistic', (req, res)=>{
+    console.log("alo");
+    var s_id = req.user;
+
+    var query = 'call get_total_papers_in_years(?,?);';
+    connection.query(
+        query,
+        [s_id, 10], 
+            (err, results, fields)=>{
+            if (err) return res.status(500).send(err);
+            console.log(results[0]);
+            return res.send(results[0]);
+        }
+    );
+});
+router.post('/total_papers_in_years', (req, res)=>{
+    var s_id = req.user;
     var years = req.body.years;
 
     var query = 'call get_total_papers_in_years(?, ?);';
@@ -322,14 +336,13 @@ router.get('/total_papers_in_years', (req, res)=>{
         [s_id, years], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/total_research_papers_in_years', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.post('/total_research_papers_in_years', (req, res)=>{
+    var s_id = req.user;
     var years = req.body.years;
 
     var query = 'call get_total_papers_of_type_in_years(?,?,?);';
@@ -338,14 +351,14 @@ router.get('/total_research_papers_in_years', (req, res)=>{
         [s_id, 'Research', years], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            console.log("research : ",results);
+            return res.send(results[0]);
         }
     );
 });
 
-router.get('/total_overview_papers_in_years', (req, res)=>{
-    if(!req.privilege.getPaper) return res.sendStatus(401);
-    var s_id = req.user.username;
+router.post('/total_overview_papers_in_years', (req, res)=>{
+    var s_id = req.user;
     var years = req.body.years;
 
     var query = 'call get_total_papers_of_type_in_years(?,?,?);';
@@ -354,7 +367,7 @@ router.get('/total_overview_papers_in_years', (req, res)=>{
         [s_id, 'OverviewPaper', years], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            return res.send(results);
+            return res.send(results[0]);
         }
     );
 });
