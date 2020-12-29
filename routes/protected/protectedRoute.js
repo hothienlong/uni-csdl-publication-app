@@ -13,7 +13,10 @@ connection.connect();
 
 
 // router.use('/author', require('./author'));
-router.use('/reviewer', require('./reviewer'));
+router.use('/reviewer', (req,res,next) => {
+    req.user = jwt.decode(req.headers.authorization).username
+    next()
+} , require('./reviewer') );
 router.use('/editor', (req, res, next) => {
     req.user = jwt.decode(req.headers.authorization).username;
     next();

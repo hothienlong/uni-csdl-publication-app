@@ -44,6 +44,7 @@ begin
 end$$
 delimiter ;
 
+delimiter $$
 create procedure get_hashed_password
 (
     user_id varchar(45)
