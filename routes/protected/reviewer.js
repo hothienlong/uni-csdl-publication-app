@@ -11,11 +11,13 @@ const connection = mysql.createConnection({
     database : 'publication'
 });
 connection.connect();
+router.use(express.static('public'));
+
 
 // ----------------procedure ------------------------------------------//
 router.put('/update_info_reviewer', (req,res) => {
     if(!req.privilege.updateAccount) return res.sendStatus(401)
-    const s_id                  = req.user.username
+    const s_id                  = req.user
     const collaboration_day     = req.body.collaboration_day
     const work_email            = req.body.work_email
     const fname                 = req.body.work_email
@@ -41,7 +43,7 @@ router.put('/update_info_reviewer', (req,res) => {
 
 router.put('/reviewer_update_review_summary',(req,res)=> {
     if(!req.privilege.review) return res.sendStatus(401)
-    const s_id                  = req.user.username
+    const s_id                  = req.user
     const p_id                  = req.body.p_id
     const note_for_author       = req.body.note_for_author
     const note_for_paper        = req.body.note_for_paper
@@ -60,9 +62,9 @@ router.put('/reviewer_update_review_summary',(req,res)=> {
 
 
 
-router.get('/reviewer_get_paper_by_type', (req,res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401)
-    const s_id          = req.user.username
+router.post('/reviewer_get_paper_by_type', (req,res) => {
+    // if(!req.privilege.getPaper) return res.sendStatus(401)
+    const s_id          = req.user
     const type_paper    = req.body.type_paper
 
     const query = 'call get_paper_by_type(?,?)'
@@ -77,9 +79,9 @@ router.get('/reviewer_get_paper_by_type', (req,res) => {
 })
 
 
-router.get('/get_reviewed_paper_by_type_in_years', (req,res) => {
-    if (!req.privilege.getPaper) return res.sendStatus(401)
-    const s_id          = req.user.username;
+router.post('/get_reviewed_paper_by_type_in_years', (req,res) => {
+    // if (!req.privilege.getPaper) return res.sendStatus(401)
+    const s_id          = req.user;
     const type_paper    = req.body.type_paper;
     const years         = req.body.years;
 
@@ -95,9 +97,9 @@ router.get('/get_reviewed_paper_by_type_in_years', (req,res) => {
 })
 
 
-router.get('/reviewer_get_paper_of_author', (req,res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401)
-    const s_id      = req.user.username
+router.post('/reviewer_get_paper_of_author', (req,res) => {
+    // if(!req.privilege.getPaper) return res.sendStatus(401)
+    const s_id      = req.user
     const author_id = req.body.author_id
 
     const query = 'call get_paper_of_author(?,?)'
@@ -112,9 +114,9 @@ router.get('/reviewer_get_paper_of_author', (req,res) => {
 })
 
 
-router.get('/get_paper_of_author_in_years', (req,res) => {
-    if (!req.privilege.getPaper) return res.sendStatus(401)
-    const s_id      = req.user.username
+router.post('/get_paper_of_author_in_years', (req,res) => {
+    // if (!req.privilege.getPaper) return res.sendStatus(401)
+    const s_id      = req.user
     const author_id = req.body.author_id
     const years     = req.body.years
 
@@ -131,8 +133,8 @@ router.get('/get_paper_of_author_in_years', (req,res) => {
 
 
 router.get('/reviewer_get_author_had_reviewed_most', (req,res) => {
-    if(!req.privilege.getPaper) return res.sendStatus(401)
-    const s_id = req.user.username
+    // if(!req.privilege.getPaper) return res.sendStatus(401)
+    const s_id = req.user
 
     const query = 'call get_author_had_reviewed_most_by_reviewer(?)'
     connection.query(
@@ -147,9 +149,9 @@ router.get('/reviewer_get_author_had_reviewed_most', (req,res) => {
 
 
 
-router.get('/get_result_review_in_years' , (req,res) => {
-    if(!req.privilege.review) return res.sendStatus(401)
-    const s_id = req.user.username
+router.post('/get_result_review_in_years' , (req,res) => {
+    // if(!req.privilege.review) return res.sendStatus(401)
+    const s_id = req.user
     const years = req.body.years
 
     const query = 'call get_result_review_in_years(?,?)'
@@ -165,9 +167,9 @@ router.get('/get_result_review_in_years' , (req,res) => {
 
 
 
-router.get('/get_top_reviewed_paper_count_years' , (req,res) => {
-    if(!req.privilege.review) return res.sendStatus(401)
-    const s_id = req.user.username
+router.post('/get_top_reviewed_paper_count_years' , (req,res) => {
+    // if(!req.privilege.review) return res.sendStatus(401)
+    const s_id = req.user
     const years = req.body.years
 
     const query = 'call get_top_reviewed_paper_count_years(?,?)'
@@ -184,8 +186,8 @@ router.get('/get_top_reviewed_paper_count_years' , (req,res) => {
 
 
 router.get('/reviewer_get_best_result_paper' , (req,res) => {
-    if(!req.privilege.review) return res.sendStatus(401)
-    const s_id = req.user.username
+    // if(!req.privilege.review) return res.sendStatus(401)
+    const s_id = req.user
 
     const query = 'call get_best_result_paper(?)'
     connection.query(
@@ -201,8 +203,8 @@ router.get('/reviewer_get_best_result_paper' , (req,res) => {
 
 
 router.get('/reviewer_get_worst_result_paper' , (req,res) => {
-    if(!req.privilege.review) return res.sendStatus(401)
-    const s_id = req.user.username
+    // if(!req.privilege.review) return res.sendStatus(401)
+    const s_id = req.user
 
     const query = 'call get_worst_result_paper(?)'
     connection.query(
@@ -218,9 +220,9 @@ router.get('/reviewer_get_worst_result_paper' , (req,res) => {
 
 
 
-router.get('/get_avg_reviewed_paper_count_per_year' , (req,res) => {
-    if(!req.privilege.review) return res.sendStatus(401)
-    const s_id = req.user.username
+router.post('/get_avg_reviewed_paper_count_per_year' , (req,res) => {
+    // if(!req.privilege.review) return res.sendStatus(401)
+    const s_id = req.user
     const years = req.body.years
 
     const query = 'call get_avg_reviewed_paper_count_per_year(?,?)'
