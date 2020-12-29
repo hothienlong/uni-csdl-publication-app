@@ -142,6 +142,7 @@
     const printTable =(data) => {
         rows = ``
         data.map((row) => {
+            rows+=`<tr>`
             rows+= `<td>${row['id']}</td>`
             rows+= `<td>${row['title']}</td>`
             rows+= `<td>${row['summary']}</td>`
@@ -151,7 +152,7 @@
             rows+= `<td>${row['sent_date']}</td>`
             rows+= `<td>${row['status']}</td>`
             rows+= `<td>${row['result']}</td>`
-
+            rows+=`</tr>`
         })
 
         $("tbody").html(rows)

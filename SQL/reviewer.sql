@@ -394,7 +394,7 @@ create procedure get_worst_result_paper
 	reviewer_id varchar(45)
 )
 begin
-	select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, result
+	select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, p.status ,result
     from review_assignment_detail join paper p on p_id = p.id
     where p_id in (
 		select paper_id
@@ -429,7 +429,9 @@ begin
 		select r.paper_id
         from reviewer_review_assignment r
         where r.reviewer_id = reviewer_id
-    );
+    )
+    and result is not null
+    and TIMESTAMPDIFF(YEAR,reviewing_date,CURDATE()) <= number_of_years;
     
 	select year(reviewing_date) as year , count(year(reviewing_date)) / total_paper_had_reviewed as avg_paper_of_year_per_years
     from review_assignment_detail
@@ -438,9 +440,10 @@ begin
         from reviewer_review_assignment r
         where r.reviewer_id = reviewer_id
     )
+    and result is not null
+    and TIMESTAMPDIFF(YEAR,reviewing_date,CURDATE()) <= number_of_years
     group by year(reviewing_date)
-    order by year(reviewing_date) desc
-    limit number_of_years;
+    order by year(reviewing_date) desc;
 end$$
 delimiter ;
 

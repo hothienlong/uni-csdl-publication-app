@@ -58,7 +58,7 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">All papers</h6>                            
+                            <h6 class="m-0 font-weight-bold text-primary">All Years</h6>                            
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -136,8 +136,10 @@
     const printTable =(data) => {
         rows = ``
         data.map((row) => {
+            rows+=`<tr>`
             rows+= `<td>${row['year']}</td>`
             rows+=  `<td>${row['avg_paper_of_year_per_years']}</td>`
+            rows+=`</tr>`
         })
 
         $("tbody").html(rows)

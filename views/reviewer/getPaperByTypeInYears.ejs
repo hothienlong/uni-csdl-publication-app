@@ -39,20 +39,24 @@
                             
                     <form>   
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-8">
                                 <div class="form-group">
-                                    <label for="papers">Select type:</label>    
                                     <div class="form-row">
-                                        <div class="col">
-                                            <select name="typePaper" id="typePaper" style="width: 100%">
+                                        <div class="col-4">
+                                            <label for="papers">Select type:</label>    
+                                            <select name="typePaper" id="typePaper" style="width: 100%" class="custom-select">
                                                 <option value="-1">Please choose type of paper</option>
                                                 <option value="RESEARCH_OVERVIEW_PAPER">RESEARCH_OVERVIEW_PAPER</option>
                                                 <option value="BOOK_REVIEW">BOOK_REVIEW</option>
                                                 <option value="RESEARCH_PAPER">RESEARCH_PAPER</option>                                                                                                                                                                                                                               
                                             </select>
                                         </div>
-                                        <div class="col">
-                                            <button id='selectPaperBtn' class="btn btn-info me-md-2" type="button">Select</button>                                        
+                                        <div class="col-3">
+                                            <label for="papers">Select Num Of Years:</label>    
+                                            <input type="number" name="input-year" id="input-year" class="form-control">
+                                        </div>
+                                        <div class="col-1 d-flex align-items-end" >
+                                            <button id='selectPaperBtn' class="btn btn-info me-md-2 " type="button">Select</button>                                        
                                         </div>  
                                     </div>                                                    
                                 </div>      
@@ -133,7 +137,7 @@
                 url: './getPaperByTypeInYears',
                 data: {
                     type_paper: $("#typePaper").val(),
-                    years: 3
+                    years: $("#input-year").val()
                 },
                 success: function(data) {
                     // console.log(data)
@@ -147,6 +151,7 @@
     const printTable =(data) => {
         rows = ``
         data.map((row) => {
+            rows+= `<tr>`
             rows+= `<td>${row['id']}</td>`
             rows+= `<td>${row['title']}</td>`
             rows+= `<td>${row['summary']}</td>`
@@ -160,7 +165,7 @@
                 rows+= `<td></td>`
             }
             rows+= `<td>${row['status']}</td>`
-
+            rows+= `</tr>`
         })
 
         $("tbody").html(rows)

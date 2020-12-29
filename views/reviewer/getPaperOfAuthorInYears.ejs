@@ -39,14 +39,19 @@
                             
                     <form>   
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-8">
                                 <div class="form-group">
-                                    <label for="papers">Input Author ID:</label>    
+                                        
                                     <div class="form-row">
-                                        <div class="col">
+                                        <div class="col-4">
+                                            <label for="papers">Input Author ID:</label>
                                             <input type="text" class="form-control" id="input-author_id">
                                         </div>
-                                        <div class="col">
+                                        <div class="col-3">
+                                            <label for="papers">Select Num Of Years</label>
+                                            <input type="number" name="" id="input-year" class="form-control">
+                                        </div>
+                                        <div class="col-1 d-flex align-items-end">
                                             <button id='selectPaperBtn' class="btn btn-info me-md-2" type="button">Select</button>                                        
                                         </div>  
                                     </div>                                                    
@@ -128,7 +133,7 @@
                 url: './getPaperOfAuthorInYears',
                 data: {
                     author_id: $("#input-author_id").val(),
-                    years: 3,
+                    years: $("#input-year").val(),
                 },
                 success: function(data) {
                     // console.log(data)
@@ -142,6 +147,7 @@
     const printTable =(data) => {
         rows = ``
         data.map((row) => {
+            rows+=`<tr>`
             rows+= `<td>${row['id']}</td>`
             rows+= `<td>${row['title']}</td>`
             rows+= `<td>${row['summary']}</td>`
@@ -155,7 +161,7 @@
                 rows+= `<td></td>`
             }
             rows+= `<td>${row['status']}</td>`
-
+            rows+=`</tr>`
         })
 
         $("tbody").html(rows)

@@ -44,7 +44,7 @@
                                     <label for="papers">Select type:</label>    
                                     <div class="form-row">
                                         <div class="col">
-                                            <select name="typePaper" id="typePaper" style="width: 100%">
+                                            <select name="typePaper" id="typePaper" style="width: 100%" class="custom-select">
                                                 <option value="-1">Please choose type of paper</option>
                                                 <option value="RESEARCH_OVERVIEW_PAPER">RESEARCH_OVERVIEW_PAPER</option>
                                                 <option value="BOOK_REVIEW">BOOK_REVIEW</option>
@@ -146,6 +146,7 @@
     const printTable =(data) => {
         rows = ``
         data.map((row) => {
+            rows+= `<tr>`
             rows+= `<td>${row['id']}</td>`
             rows+= `<td>${row['title']}</td>`
             rows+= `<td>${row['summary']}</td>`
@@ -159,7 +160,7 @@
                 rows+= `<td></td>`
             }
             rows+= `<td>${row['status']}</td>`
-
+            rows+= `</tr>`
         })
 
         $("tbody").html(rows)
