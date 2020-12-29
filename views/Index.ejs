@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+
 
 </head>
 
@@ -39,51 +41,12 @@
             <hr class="sidebar-divider my-0">
         
             <!-- Nav Item - Dashboard -->
-          
-            <li class="nav-item">        
-                <a class="nav-link" href="/views/dashboard">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-            
-            
-        
+
             <!-- Divider -->
-            <hr class="sidebar-divider">
-        
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-        
-            <!-- Nav Item - Pages Collapse Menu -->
-            
-            <li class="nav-item">            
-                <a class="nav-link" href="/views/editor">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Editor</span></a>
-            </li>
-                   
-            <li class="nav-item">            
-                <a class="nav-link" href="/views/author">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Author</span></a>
-            </li>
-        
-            
-            <li class="nav-item">           
-                <a class="nav-link" href="/views/reviewer">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Reviewer</span></a>
-            </li>
-        
-        
            
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
         
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
+            <div class="text-center d-none d-md-inline" style="margin-top: 10px;">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
             
@@ -92,7 +55,23 @@
         <!-- end side bar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <%- include('./layout/topbar'); %>
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>                    
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">                        
+                        <a class="btn btn-link" href="/user/signin"><button type="button" class="btn btn-link">Sign in</button></a>                                                
+                        <div class="topbar-divider d-none d-sm-block"></div>                                                              
+                        <!-- <a class="btn btn-link" href="/user/signup">Sign up</a>         -->
+                        <a class="btn btn-link" href="/user/signup"><button type="button" class="btn btn-link">Sign up</button></a>
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
             </div>
             
 

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fetch = require('node-fetch');
+const jwt = require("jsonwebtoken");
 const blueBird = require('bluebird');
 const { json } = require('body-parser');
 fetch.Promise = blueBird;
@@ -113,6 +114,7 @@ router.post('/signin', [check('username').notEmpty().withMessage('Username canno
                 }
                 else {
                     res.cookie('authorization', result.token);
+                    // let username = jwt.decode(result.token).username;
                     return res.redirect('/views/dashboard');
                 }
             });

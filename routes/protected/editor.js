@@ -34,6 +34,7 @@ router.get('/allPapers', (req,res)=>{
         [],
         (err, results, fieldInfo)=>{        
             if(err) return res.status(500).send(err);
+            console.log("all papers: ", results[0]);
             res.json(results[0]);
         }
     )    
@@ -47,7 +48,7 @@ router.get('/allPapersAssigned', (req,res)=>{
         (err, results, fieldInfo)=>{
             //console.log("abc: ",results[0][0]);
             if(err) return res.status(500).send(err);
-            console.log("result: ", results[0]);
+            console.log("all papers assigned: ", results[0]);
             res.json(results[0]);
         }
     )    

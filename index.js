@@ -20,6 +20,8 @@ app.use('/api', require('./routes/protected/protectedRoute'));
 app.use('/authenticate', require('./routes/protected/authenticate'));
 app.use ('/user', require('./routes/public/account'))
 app.use('/views', require('./routes/public/middle'));
-
+app.get('/', (req, res) =>{
+    res.render('Index');
+});
 
 app.listen(PORT, ()=>{console.log(`Server has started on port ${PORT}`)})

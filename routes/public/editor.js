@@ -9,14 +9,15 @@ fetch.Promise = blueBird;
 
 router.use(express.static('public'));
 
+
 router.get('/', (req, res) => {
-    return res.render('editor/DashBoard');
+    return res.render('editor/DashBoard', {username: req.username});
 });
 
 router.get('/addPaper', (req, res) => {
     fetch('http://localhost:3000/api/editor/getContactAuthor')
         .then(response => response.json())
-        .then(authors => res.render('editor/AddPaper', {authors}))
+        .then(authors => res.render('editor/AddPaper', {authors: authors, username: req.username}))
 });
 
 
@@ -31,7 +32,7 @@ router.get('/paper/:paperId', (req, res) => {
         params: {paperId: paperId}
     })
         .then(response => response.json())
-        .then(paper =>  res.render('editor/Paper', {paper}))
+        .then(paper =>  res.render('editor/Paper', {paper: paper, username: req.username}))
         .catch((error) => {
             console.error('Error:', error);
         });    
@@ -65,7 +66,7 @@ router.get('/allPapers', (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(data => res.render('editor/AllPapers', {data}))
+        .then(data => res.render('editor/AllPapers', {data: data, username: req.username}))
         .catch(err => console.log(err));  
 });
 
@@ -79,7 +80,7 @@ router.get('/paperAssigned', (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(data => res.render('editor/PaperAssigned', {data}))
+        .then(data => res.render('editor/PaperAssigned', {data: data, username: req.username}))
         .catch(err => console.log(err));
 });
 
@@ -92,7 +93,7 @@ router.get('/assignReviewBefore', (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(papers => res.render('editor/AssignReviewBefore', {papers}))
+        .then(papers => res.render('editor/AssignReviewBefore', {papers: papers, username: req.username}))
         .catch(err => console.log(err));
 });
 
@@ -127,8 +128,8 @@ router.get('/assignReviewAfter', (req, res) => {
                     })
                     .then(response => response.json())
                 ]).then(result => {
-                    console.log("res: ", result);
-                    res.render('editor/AssignReviewAfter', {result, paperId})
+                    console.log("assignReviewAfter: ", result);
+                    res.render('editor/AssignReviewAfter', {result: result, paperId: paperId, username: req.username})
                 })  
 });
 
@@ -182,7 +183,7 @@ router.post('/assignReviewAfter', (req, res) => {
 
 
 router.get('/papersByTypeAndStatus', (req, res) => {    
-    res.render('editor/PapersByTypeAndStatus');
+    res.render('editor/PapersByTypeAndStatus', {username: req.username});
 });
 
 
@@ -210,7 +211,7 @@ router.get('/papersByTypeAndStatusResult', (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(data => res.render('editor/PapersByTypeAndStatusResult', {data}))
+        .then(data => res.render('editor/PapersByTypeAndStatusResult', {data: data, username: req.username}))
         .catch(err => console.log(err));
 });
 
@@ -218,7 +219,7 @@ router.get('/papersByTypeAndStatusResult', (req, res) => {
 
 
 router.get('/papersPostedByTypeAndYears', (req, res) => {    
-    res.render('editor/PapersPostedByTypeAndYear');
+    res.render('editor/PapersPostedByTypeAndYear', {username: req.username});
 });
 
 
@@ -244,7 +245,7 @@ router.get('/papersPostedByTypeAndYearsResult', (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(data => res.render('editor/PapersPostedByTypeAndYearResult', {data}))
+        .then(data => res.render('editor/PapersPostedByTypeAndYearResult', {data: data, username: req.username}))
         .catch(err => console.log(err));
 });
 
@@ -258,7 +259,7 @@ router.get('/papersByAuthorAndStatus', (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(authors => res.render('editor/PapersByAuthorAndStatus', {authors}))
+        .then(authors => res.render('editor/PapersByAuthorAndStatus', {authors: authors, username: req.username}))
         .catch(err => console.log(err));    
 });
 
@@ -285,7 +286,7 @@ router.get('/papersByAuthorAndStatusResult', (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(data => res.render('editor/PapersByAuthorAndStatusResult', {data}))
+        .then(data => res.render('editor/PapersByAuthorAndStatusResult', {data: data, username: req.username}))
         .catch(err => console.log(err));
 });
 

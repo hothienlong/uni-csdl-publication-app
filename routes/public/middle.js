@@ -5,15 +5,24 @@ const path = require('path');
 const fetch = require('node-fetch');
 const blueBird = require('bluebird');
 const { json } = require('body-parser');
+const { route } = require('../protected/editor');
 fetch.Promise = blueBird;
 router.use(express.static('public/'));
 
-router.get('/', (req, res) => {
-    res.render('DashBoard');
+router.use((req, res, next) => {
+    if (req.cookies['authorization'] == undefined) {
+        return res.redirect('/');
+    }
+    req.username = jwt.decode(req.cookies['authorization']).username;
+    next();
+});
+
+router.get('/', (req, res) => {    
+    res.render('DashBoard', {username :req.username});
 }) ;
 
-router.get('/dashboard', (req, res) => {
-    return res.render('DashBoard');
+router.get('/dashboard', (req, res) => {    
+    res.render('DashBoard', {username :req.username});
 })
 
 router.use('/editor', (req, res, next) => {

@@ -11,7 +11,7 @@ begin
 		update review_assignment_detail set reviewing_date = review_date where p_id = paper_id;
 	end if;
     if (reviewer_id != '') then
-		insert into review_review_assignment (reviewer_id, paper_id) values (reviewer_id, paper_id);
+		insert into reviewer_review_assignment (reviewer_id, paper_id) values (reviewer_id, paper_id);
     end if;
     if ((select count(*) from editor_review_assignment as e where e.editor_id = editor_id and e.paper_id = paper_id) = 0) then
 		insert into editor_review_assignment (editor_id, paper_id) values (editor_id, paper_id);
@@ -140,7 +140,7 @@ delimiter |
 create procedure get_reviewer_by_paper(paperId varchar(45))
 begin
 	select r.reviewer_id
-    from review_review_assignment as r where r.paper_id  = paperId;
+    from reviewer_review_assignment as r where r.paper_id  = paperId;
 end |
 delimiter ;
 grant execute on procedure publication.get_reviewer_by_paper to nodejs_application@localhost;
@@ -203,6 +203,7 @@ begin
 		where editor_review_assignment.editor_id = editorId;
 end$$
 
+drop procedure if exists editor_get_all_papers;
 create procedure editor_get_all_papers
 ()
 begin
