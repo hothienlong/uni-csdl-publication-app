@@ -20,9 +20,19 @@ router.post('/signup', [check('fname').notEmpty().withMessage('Name cannot be em
                         check('username').notEmpty().withMessage('Username cannot be empty'),
                         check('password').isLength({min: 6}).withMessage('Password has to be at least 6 characters'),
                         check('email').isEmail().withMessage('Email is not correct form'),
-                        check('position').isLength({min: 1}).withMessage('You must choose 1 position')] , (req, res) => {    
+                        check('position').isLength({min: 1}).withMessage('You must choose at least 1 position')] , (req, res) => {    
     
-    const alert= validationResult(req).array();    
+    let temp_errs = validationResult(req).array();    
+
+    if (req.body.position != undefined && req.body.position.length >= 2 && req.body.position.includes('editor') && req.body.position.includes('author')) {
+        temp_errs.push({
+            value: '',
+            msg: 'You cannot choose Editor and Author at them same time!',
+            param: 'wrong',
+            location: 'body'
+        });
+    }
+    const alert = temp_errs;
     if(alert.length > 0) {        
         res.render('signup', {
             alert
@@ -30,13 +40,13 @@ router.post('/signup', [check('fname').notEmpty().withMessage('Name cannot be em
         return;
     }
 
-    if (req.body.position == 'editor') {
+    if (req.body.position.includes('editor')) {
         req.body.is_editor = true;
     }
-    else if (req.body.position == 'author') {
+    if (req.body.position.includes('author')){
         req.body.is_author = true;
     }
-    else {
+    if (req.body.position.includes('reviewer')){
         req.body.is_reviewer = true;
     }
 

@@ -19,3 +19,4 @@ begin
     
     select isAuthor, isReviewer, isEditor;
 end$$
+
