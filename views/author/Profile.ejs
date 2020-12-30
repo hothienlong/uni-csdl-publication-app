@@ -58,12 +58,6 @@
 
 
 
-
-
-
-
-
-
             <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -74,7 +68,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="/views/author/update_profile" method="POST">
+                            <form id="profile_form" action="/views/author/update_profile" method="POST">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">FName:</label>
                                     <input type="text" class="form-control" name="fname"  id="update_fname">
@@ -103,12 +97,12 @@
                                     <label for="exampleInputEmail1">Profession:</label>
                                     <input type="text" class="form-control" name="profession"  id="update_profession">
                                 </div>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="update-profile">Update</button>
+
                             </form>
                         </div>
                         <div class="modal-footer">
-
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" form="profile_form">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="update-profile" form="profile_form">Update</button>
                         </div>
                     </div>
                 </div>
