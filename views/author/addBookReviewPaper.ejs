@@ -53,18 +53,19 @@
                             <div class="card-header py-3 d-flex">
                                 <div class="container vertical-center-register" style="margin-bottom: 20px;">                    
 
+                                    <!-- Choose type -->
                                     <fieldset style="margin-bottom: 2px;">
                                         <legend style="margin-bottom: 5px;">Choose type of paper</legend>
                                         <div>
                                             <form action="/views/author/addResearchPaper" method="GET">
-                                                <input type="radio" onchange="this.form.submit()" id="research_paper" name="type_paper" value="research_paper" checked="checked">
+                                                <input type="radio" onchange="this.form.submit()" id="research_paper" name="type_paper" value="research_paper">
                                                 <label for="research_paper">Research paper</label>
                                             </form>
 
                                         </div>
                                         <div>
                                             <form action="/views/author/addBookReviewPaper" method="GET">
-                                                <input type="radio" onchange="this.form.submit()" id="book_review" name="type_paper" value="book_review">
+                                                <input type="radio" onchange="this.form.submit()" id="book_review" name="type_paper" value="book_review" checked="checked">
                                                 <label for="book_review">Book Review</label>
                                             </form>
                                         </div>
@@ -84,12 +85,14 @@
                                             <% } %>
                                         <% } %>
                                     </fieldset>
+                                    <!-- End choose type -->
 
+                                    <!-- Fill in information paper -->
                                     <hr class="sidebar-divider d-none d-md-block">
                                     <h3 style="margin-bottom: 1em;">Fill in inforamation of paper</h3>
 
                                     <div>
-                                        <form action="/views/author/addResearchPaper" method="POST">
+                                        <form action="/views/author/addBookReviewPaper" method="POST">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
@@ -131,10 +134,7 @@
                                                         <label for="date">Date:</label>
                                                         <input type="text" class="form-control" id="date" name="date"
                                                             placeholder="Enter date" />
-                                                    </div>  -->
-
-
-                                
+                                                    </div>  --> 
                                                     
                                                 </div>
                                             
@@ -194,10 +194,103 @@
                                                                             <% } %>
                                                     </div>                                                    
                                                 </div>
-                                                  
-                                                
+                                                                         
                                             </div>
                                             
+                                            <!-- Informatinon of review book -->
+                                            <hr class="sidebar-divider d-none d-md-block">
+                                            <h3 style="margin-bottom: 1em;">Fill in inforamation of review book</h3>
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="id">ISBN:</label>
+                                                        <input type="text" class="form-control" id="id" name="ISBN"
+                                                            placeholder="Enter ISBN" />
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='id' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="title">Title:</label>
+                                                        <input type="text" class="form-control" id="title"
+                                                            name="book_title" placeholder="Enter number of book title" />
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='title' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                    </div>
+                                                   
+                                                    <div class="form-group">
+                                                        <label for="pagenums">Number of pages:</label>
+                                                        <input type="text" class="form-control" id="pagenums" name="book_page_count"
+                                                            placeholder="Enter number of pages" />
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='page_count' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="file">Publish year:</label>
+                                                        <input type="text" class="form-control" id="file"
+                                                            name="publish_year" placeholder="Enter publish year" />
+                                                    </div>
+
+                                                    <!-- <div class="form-group">
+                                                        <label for="date">Date:</label>
+                                                        <input type="text" class="form-control" id="date" name="date"
+                                                            placeholder="Enter date" />
+                                                    </div>  --> 
+                                                    
+                                                </div>
+                                            
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="pagenums">Publisher:</label>
+                                                        <input type="text" class="form-control" id="pagenums" name="publisher"
+                                                            placeholder="Enter publisher" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="pagenums">Number of book authors:</label>
+                                                        <input type="text" class="form-control" id="pagenums" name="num_book_author"
+                                                            placeholder="Enter number of book authors" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="author">Book authors:</label> <br>                                                     
+                                                        
+                                                        <!-- name là input của api, id là CSS-->
+                                                        <select name="book_author_name" id="author" class="selectpicker" multiple>
+                                                            <!-- <option value="-1">Please choose paper authors</option> -->
+                                                            <%  authors.forEach(function (au) { %>
+                                                                <option value=<%= au.S_ID %>> <%= au.S_ID %> </option>
+                                                            <% }) %> 
+                                                        </select>                                                          
+                                                    </div>
+                                                                                                                                                 
+                                                </div>
+                                                                         
+                                            </div>
+                                            <!-- End fill in information review book -->
+
                                             <br>
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                                                 <button id='add-paper' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Submit paper</button>
@@ -205,6 +298,7 @@
                                             </div>
                                         </form>
                                     </div>
+                                    <!-- End fill in information paper -->
 
                                 </div>
                             </div>

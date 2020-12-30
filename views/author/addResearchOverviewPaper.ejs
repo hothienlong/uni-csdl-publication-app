@@ -57,7 +57,7 @@
                                         <legend style="margin-bottom: 5px;">Choose type of paper</legend>
                                         <div>
                                             <form action="/views/author/addResearchPaper" method="GET">
-                                                <input type="radio" onchange="this.form.submit()" id="research_paper" name="type_paper" value="research_paper" checked="checked">
+                                                <input type="radio" onchange="this.form.submit()" id="research_paper" name="type_paper" value="research_paper">
                                                 <label for="research_paper">Research paper</label>
                                             </form>
 
@@ -70,7 +70,7 @@
                                         </div>
                                         <div>
                                             <form action="/views/author/addResearchOverviewPaper" method="GET">
-                                                <input type="radio" onchange="this.form.submit()" id="research_overview_paper" name="type_paper" value="research_overview_paper">
+                                                <input type="radio" onchange="this.form.submit()" id="research_overview_paper" name="type_paper" value="research_overview_paper" checked="checked">
                                                 <label for="research_overview_paper">Research overview paper</label>
                                             </form>
                                         </div>                                                        
@@ -89,7 +89,7 @@
                                     <h3 style="margin-bottom: 1em;">Fill in inforamation of paper</h3>
 
                                     <div>
-                                        <form action="/views/author/addResearchPaper" method="POST">
+                                        <form action="/views/author/addResearchOverviewPaper" method="POST">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
@@ -197,7 +197,7 @@
                                                   
                                                 
                                             </div>
-                                            
+
                                             <br>
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                                                 <button id='add-paper' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Submit paper</button>

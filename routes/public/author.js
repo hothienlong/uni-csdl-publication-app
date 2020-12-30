@@ -14,59 +14,7 @@ router.get('/', (req, res) => {
     return res.render('author/DashBoard', {username : req.username});
 });
 
-router.get('/addResearchPaper', (req, res) => {
-    fetch('http://localhost:3000/api/author/authors', {
-        method: 'GET',
-        headers: {
-            'authorization': req.cookies.authorization
-        }
-    })
-        .then(response => response.json())
-        .then(authors => res.render('author/addResearchPaper', {authors, username : req.username}))
-        .catch(err => console.log(err));
-});
-
-router.post('/addResearchPaper', (req, res) => {
-    // console.log("add research");
-    fetch('http://localhost:3000/api/author/submit_research_paper', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': req.cookies.authorization
-        },
-        body: JSON.stringify(req.body)
-    })
-        .then(response => console.log("Success : ",response.status))
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    res.redirect('/views/author/addResearchPaper');
-});
-
-
-// router.post('/addPaper', (req, res) => {
-//     // console.log("type: ", typeof(req.body));
-//     fetch('http://localhost:3000/api/editor/addPaper', {
-//         method: 'POST', // or 'PUT'
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'authorization': req.cookies.authorization
-//         },
-//         body: JSON.stringify(req.body)
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log('Success:', data);
-//         })
-//         .catch((error) => {
-//             console.error('Error:', error);
-//         });
-//     res.redirect('/views/contactAuthor/paper')
-// });
-
-
 router.get('/paper', (req, res) => {
-    confirm("dc ko");
     // console.log(req.cookies.authorization);
     console.log("get paper");
     fetch('http://localhost:3000/api/author/papers', {
@@ -130,7 +78,97 @@ router.post('/publication_papers', (req, res) => {
 
 });
 
+//---------------- Submit paper ----------------
+router.get('/addResearchPaper', (req, res) => {
+    fetch('http://localhost:3000/api/author/authors', {
+        method: 'GET',
+        headers: {
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(authors => res.render('author/addResearchPaper', {authors, username : req.username}))
+        .catch(err => console.log(err));
+});
 
+router.post('/addResearchPaper', (req, res) => {
+    // console.log("add research");
+    fetch('http://localhost:3000/api/author/submit_research_paper', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+        .then(response => console.log("Success : ",response.status))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    res.redirect('/views/author/addResearchPaper');
+});
+
+router.get('/addBookReviewPaper', (req, res) => {
+    fetch('http://localhost:3000/api/author/authors', {
+        method: 'GET',
+        headers: {
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(authors => res.render('author/addBookReviewPaper', {authors, username : req.username}))
+        .catch(err => console.log(err));
+});
+
+router.get('/addResearchOverviewPaper', (req, res) => {
+    console.log("get research overview");
+    fetch('http://localhost:3000/api/author/authors', {
+        method: 'GET',
+        headers: {
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(authors => res.render('author/addResearchOverviewPaper', {authors, username : req.username}))
+        .catch(err => console.log(err));
+});
+
+router.post('/addResearchOverviewPaper', (req, res) => {
+    console.log("add research overview");
+    fetch('http://localhost:3000/api/author/submit_overview_paper', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+        .then(response => console.log("Success : ",response.status))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    res.redirect('/views/author/addResearchOverviewPaper');
+});
+
+// router.post('/addPaper', (req, res) => {
+//     // console.log("type: ", typeof(req.body));
+//     fetch('http://localhost:3000/api/editor/addPaper', {
+//         method: 'POST', // or 'PUT'
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'authorization': req.cookies.authorization
+//         },
+//         body: JSON.stringify(req.body)
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log('Success:', data);
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });
+//     res.redirect('/views/contactAuthor/paper')
+// });
 
 //---------------- Paper result ----------------
 router.get('/papers_result', (req, res) => {

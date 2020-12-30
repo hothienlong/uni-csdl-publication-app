@@ -57,6 +57,8 @@ router.post('/submit_overview_paper', (req, res)=>{
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
 
+    console.log(req.body);
+
     var query = 'call submit_overview_paper(?,?,?,?,?,?);';
     connection.query(
         query,
@@ -65,7 +67,7 @@ router.post('/submit_overview_paper', (req, res)=>{
             if (err) return res.status(500).send(err);
 
             for(var i = 0; i < num_author; i++){
-                var subquery = 'call write_paper(?,?);'
+                var subquery = 'call add_author(?,?);'
                 connection.query(
                     subquery,
                     [p_id, write_authors_id[i]],
@@ -87,14 +89,15 @@ router.post('/submit_book_review', (req, res)=>{
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
     var sent_by = req.user;
-    var ISBN = req.body.ISBN;
-
+    
     var num_author = req.body.num_author;
     var write_authors_id = req.body.write_authors_id;
   
+    var ISBN = req.body.ISBN;
+    var book_title = req.body.book_title;
     var book_page_count = req.body.book_page_count;
     var publish_year = req.body.publish_year;
-    var book_title = req.body.book_title;
+    
     var publisher = req.body.publisher;
     
     var num_book_author = req.body.num_book_author;
@@ -131,7 +134,7 @@ router.post('/submit_book_review', (req, res)=>{
             if (err) return res.status(500).send(err);
 
             for(var i = 0; i < num_author; i++){
-                // not duplicate if submit_book_review susscessful
+                // not duplicate (not error) if submit_book_review susscessful
                 var subquery = 'call add_author(?,?);'
                 connection.query(
                     subquery,
