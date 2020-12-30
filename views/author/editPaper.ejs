@@ -124,21 +124,6 @@
                                                                             <% } %>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label for="pagenums">Sent date:</label>
-                                                        <input type="date" class="form-control" id="pagenums" name="sent_date"
-                                                            placeholder="Enter number of pages" />
-                                                        <% if(typeof alert !='undefined' ) { %>
-                                                            <% for (var i=0; i < alert.length; i++) { %>
-                                                                <% if (alert[i].param=='page_count' ) { %>
-                                                                    <p style="color: red; margin-top: 5px;">
-                                                                        <%= alert[i].msg %>
-                                                                    </p>
-                                                                    <% } %>
-                                                                        <% } %>
-                                                                            <% } %>
-                                                    </div>
-
 
                                                                                                     
                                                     <div class="form-group w-100">

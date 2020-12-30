@@ -144,7 +144,7 @@ drop procedure if exists delete_paper;
 delimiter $$
 create procedure edit_paper
 (
-	s_id varchar(45), p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), sent_date date
+	s_id varchar(45), p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45)
 )
 begin
 	update paper p
@@ -152,8 +152,7 @@ begin
 		p.summary = summary, 
         p.associated_file = associated_file, 
         p.page_count = page_count, 
-        p.sent_by = sent_by,
-        p.sent_date = sent_date
+        p.sent_by = sent_by
     where id = p_id and p.sent_by = s_id;
     
 	select *

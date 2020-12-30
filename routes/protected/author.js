@@ -223,13 +223,13 @@ router.post('/edit_paper', (req, res)=>{
     var associated_file = req.body.associated_file;//
     var page_count = req.body.page_count;//
     // var sent_by = req.user;//
-    var sent_date = req.body.sent_date;
+    // var sent_date = req.body.sent_date;
 
 
-    var query = 'call edit_paper(?,?,?,?,?,?,?,?);';
+    var query = 'call edit_paper(?,?,?,?,?,?,?);';
     connection.query(
         query,
-        [s_id, p_id, title, summary, associated_file, page_count, s_id, sent_date], 
+        [s_id, p_id, title, summary, associated_file, page_count, s_id], 
         (err, results, fields)=>{
             if (err) return res.status(500).send(err);
             return res.send(results);
