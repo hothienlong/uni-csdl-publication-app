@@ -23,147 +23,78 @@
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta/dist/css/bootstrap-select.min.css"> -->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta/dist/js/bootstrap-select.min.js"></script> -->
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta/dist/js/i18n/defaults-*.min.js"></script> -->
+
 </head>
 
 <body id="page-top">
     <div id="wrapper">
+
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="/views/editor">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-
-            <li class="nav-item active">
-                <a class="nav-link" href="/views/editor/paper">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Paper</span></a>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components,
-                    and more!
-                </p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to
-                    Pro!</a>
-            </div>
-
-        </ul>
+        <%- include('./sidebar', {"sidebarItem" : "papers"}); %>
+            
+        <!-- end side bar -->
 
 
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <%- include('./layout/topbar'); %>
+                <%- include('../layout/topbar'); %>
                     <div class="container-fluid">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 d-flex">
-                                <div class="container vertical-center-register" style="margin-bottom: 20px;">
+                                <div class="container vertical-center-register" style="margin-bottom: 20px;">                    
 
-                                    <h3 style="margin-bottom: 1em;">Add paper</h3>
+                                    <fieldset style="margin-bottom: 2px;">
+                                        <legend style="margin-bottom: 5px;">Choose type of paper</legend>
+                                        <div>
+                                            <form action="/views/author/addResearchPaper" method="GET">
+                                                <input type="radio" onchange="this.form.submit()" id="research_paper" name="type_paper" value="research_paper" checked="checked">
+                                                <label for="research_paper">Research paper</label>
+                                            </form>
+
+                                        </div>
+                                        <div>
+                                            <form action="/views/author/addBookReviewPaper" method="GET">
+                                                <input type="radio" onchange="this.form.submit()" id="book_review" name="type_paper" value="book_review">
+                                                <label for="book_review">Book Review</label>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form action="/views/author/addResearchOverviewPaper" method="GET">
+                                                <input type="radio" onchange="this.form.submit()" id="research_overview_paper" name="type_paper" value="research_overview_paper">
+                                                <label for="research_overview_paper">Research overview paper</label>
+                                            </form>
+                                        </div>                                                        
+                                        <% if(typeof alert != 'undefined') { %>
+                                            <% for (var i = 0; i < alert.length; i++) { %>
+                                                <% if (alert[i].param == 'type_paper') { %>
+                                                    <p style="color: red; margin-top: 5px;">
+                                                        <%= alert[i].msg  %>
+                                                    </p>                        
+                                                <% } %>                                            
+                                            <% } %>
+                                        <% } %>
+                                    </fieldset>
+
+                                    <hr class="sidebar-divider d-none d-md-block">
+                                    <h3 style="margin-bottom: 1em;">Fill in inforamation of paper</h3>
 
                                     <div>
-                                        <form action="/views/editor/addPaper" method="POST">
+                                        <form action="/views/author/addResearchPaper" method="POST">
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="id">ID:</label>
-                                                        <input type="text" class="form-control" id="id" name="id"
+                                                        <input type="text" class="form-control" id="id" name="p_id"
                                                             placeholder="Enter id" />
                                                         <% if(typeof alert !='undefined' ) { %>
                                                             <% for (var i=0; i < alert.length; i++) { %>
@@ -190,54 +121,32 @@
                                                                             <% } %>
                                                     </div>
                                                    
-
                                                     <div class="form-group">
+                                                        <label for="file">File:</label>
+                                                        <input type="text" class="form-control" id="file"
+                                                            name="associated_file" placeholder="Enter file" />
+                                                    </div>
+
+                                                    <!-- <div class="form-group">
                                                         <label for="date">Date:</label>
                                                         <input type="text" class="form-control" id="date" name="date"
                                                             placeholder="Enter date" />
-                                                    </div> 
+                                                    </div>  -->
 
 
-                                                    <fieldset style="margin-bottom: 2px;">
-                                                        <legend style="margin-bottom: 5px;">Choose type of paper</legend>
-                                                        <div>
-                                                            <input type="radio" id="research_paper" name="type_paper" value="research_paper">
-                                                            <label for="research_paper">Research paper</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="book_review" name="type_paper" value="book_review">
-                                                            <label for="book_review">Book Review</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="research_overview_paper" name="type_paper" value="research_overview_paper">
-                                                            <label for="research_overview_paper">Research overview paper</label>
-                                                        </div>                                                        
-                                                        <% if(typeof alert != 'undefined') { %>
-                                                            <% for (var i = 0; i < alert.length; i++) { %>
-                                                                <% if (alert[i].param == 'type_paper') { %>
-                                                                    <p style="color: red; margin-top: 5px;">
-                                                                        <%= alert[i].msg  %>
-                                                                    </p>                        
-                                                                <% } %>                                            
-                                                            <% } %>
-                                                        <% } %>
-                                                    </fieldset>
+                                
                                                     
                                                 </div>
                                             
                                                 <div class="col-6">
+
                                                     <div class="form-group">
-                                                        <label for="file">File:</label>
-                                                        <input type="text" class="form-control" id="file"
-                                                            name="file" placeholder="Enter file" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="pagenums">Page numbers:</label>
-                                                        <input type="text" class="form-control" id="pagenums" name="pagenums"
-                                                            placeholder="Enter page numbers" />
+                                                        <label for="pagenums">Number of pages:</label>
+                                                        <input type="text" class="form-control" id="pagenums" name="page_count"
+                                                            placeholder="Enter number of pages" />
                                                         <% if(typeof alert !='undefined' ) { %>
                                                             <% for (var i=0; i < alert.length; i++) { %>
-                                                                <% if (alert[i].param=='pagenums' ) { %>
+                                                                <% if (alert[i].param=='page_count' ) { %>
                                                                     <p style="color: red; margin-top: 5px;">
                                                                         <%= alert[i].msg %>
                                                                     </p>
@@ -247,13 +156,27 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="author">Contact author:</label>                                                        
-                                                        <select name="author" id="author" style="width: 100%">
+                                                        <label for="pagenums">Number of authors:</label>
+                                                        <input type="text" class="form-control" id="pagenums" name="num_author"
+                                                            placeholder="Enter number of authors" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="author">Paper authors:</label> <br>                                                     
+                                                        <!-- <select name="author" id="author" style="width: 100%">
                                                             <option value="-1">Please choose a contact author</option>
                                                             <%  authors.forEach(function (au) { %>
                                                                 <option value=<%= au.S_ID %>> <%= au.S_ID %> </option>
                                                             <% }) %>                                                                                                                                                                                    
-                                                        </select>
+                                                        </select><br> -->
+                                                        
+                                                        <!-- name là input của api, id là CSS-->
+                                                        <select name="write_authors_id" id="author" class="selectpicker" multiple>
+                                                            <!-- <option value="-1">Please choose paper authors</option> -->
+                                                            <%  authors.forEach(function (au) { %>
+                                                                <option value=<%= au.S_ID %>> <%= au.S_ID %> </option>
+                                                            <% }) %> 
+                                                        </select>                                                          
                                                     </div>
                                                                                                     
                                                     <div class="form-group w-100">
@@ -274,9 +197,11 @@
                                                   
                                                 
                                             </div>
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button id='add-paper' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Add paper</button>
-                                                <button class="btn btn-primary" type="button">Go back</button>
+                                            
+                                            <br>
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                                <button id='add-paper' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Submit paper</button>
+                                                <a class="btn btn-primary" type="button" href="/views/author/paper">Go back</a>
                                             </div>
                                         </form>
                                     </div>
@@ -289,7 +214,7 @@
 
 
                     <footer class="sticky-footer bg-white">
-                        <%- include('./layout/footer') %>
+                        <%- include('../layout/footer') %>
                     </footer>
             </div>
         </div>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Scientist - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <%- include('./sidebar', {sidebarItem: 'Profile'}) %>
+
+        <!-- end side bar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <%- include('../layout/topbar'); %>
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex align-items-center flex-column">
+                            <img src="/img/ContactAva.jpg" alt="" class="img-fluid" style="width:300px;height:300px;border-radius: 50%;">
+                        </div>
+
+                        <div class="col-md-6 d-flex flex-column justify-content-start">
+                            <table class="table">
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <button class="btn btn-info" id="button-update" data-toggle="modal" data-target="#staticBackdrop">Update Profile</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="sticky-footer bg-white">
+                <%- include('../layout/footer') %>
+            </footer>
+        </div>
+    </div>
+
+
+
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="staticBackdropLabel">Update Profile</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="profile_form" action="/views/author/update_profile" method="POST">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">FName:</label>
+                                    <input type="text" class="form-control" name="fname"  id="update_fname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Address</label>
+                                    <input type="text" class="form-control" name="address" id="update_address" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email:</label>
+                                    <input type="email" class="form-control" name="email" id="update_email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Company:</label>
+                                    <input type="text" class="form-control" name="company"  id="update_company">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Job:</label>
+                                    <input type="text" class="form-control" name="job"  id="update_job">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Degree:</label>
+                                    <input type="text" class="form-control" name="degree"  id="update_degree">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Profession:</label>
+                                    <input type="text" class="form-control" name="profession"  id="update_profession">
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" form="profile_form">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="update-profile" form="profile_form">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script>
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script> -->
+
+</body>
+
+<script>
+
+
+
+
+
+
+
+    $(".modal").on("click", "#update-profile" , function() {
+        let fname = $("#update_fname").val()
+        let address = $("#update_address").val()
+        let email = $("#update_email").val()
+        let work_email = $("#update_work_email").val()
+        let company = $("#update_company").val()
+        let job = $("#update_job").val()
+        let degree = $("#update_degree").val()
+        let profession = $("#update_profession").val()
+
+        // console.log(fname,address,email,work_email,company,job,degree,profession)
+        $.ajax({
+            dataType: 'json',
+            type: 'post',
+            url: './updateProfile',
+            data: {
+                fname: fname,
+                address: address,
+                email: email,
+                work_email: work_email,
+                company: company,
+                job: job,
+                degree: degree,
+                profession: profession
+            },
+            success: function(data) {
+                // console.log(data)
+                getProfile()
+                $(".modal").modal('hide')
+            }
+        })
+
+    })
+
+
+    const getProfile = () => {
+        $.ajax({
+            dataType:'json',
+            type:'get',
+            url:'./getProfile',
+            success: function(data) {
+                printTable(data[0][0])
+                let fname = $("#fname").text()
+                let address = $("#address").text()
+                let email = $("#email").text()
+                let work_email = $("#work_email").text()
+                let company = $("#company").text()
+                let job = $("#job").text()
+                let degree = $("#degree").text()
+                let profession = $("#profession").text()
+
+
+                $("#update_fname").val(fname)
+                $("#update_address").val(address)
+                $("#update_email").val(email)
+                $("#update_work_email").val(work_email)
+                $("#update_company").val(company)
+                $("#update_job").val(job)
+                $("#update_degree").val(degree)
+                $("#update_profession").val(profession)
+
+            }
+        })
+    }
+
+    getProfile()
+
+
+
+    const printTable = (data) => {
+        let rows = ``
+        rows += `<tr>`
+        rows += `<th scope="row">FName</th>`
+        rows += `<td id="fname">${data.fname}</td>`
+        rows += `</tr>`
+        rows += `<tr>`
+        rows += `<th scope="row">Address</th>`
+        rows += `<td id="address">${data['address']}</td>`
+        rows += `</tr>`
+        rows += `<tr>`
+        rows += `<th scope="row">Email</th>`
+        rows += `<td id="email">${data['email']}</td>`
+        rows += `</tr>`
+        rows += `<tr>`
+        rows += `<th scope="row">Work Email</th>`
+        rows += `<td id="work_email">${data['work_email']}</td>`
+        rows += `</tr>`
+        rows += `<tr>`
+        rows += `<th scope="row">Company</th>`
+        rows += `<td id="company">${data['company']}</td>`
+        rows += `</tr>`
+        rows += `<tr>`
+        rows += `<th scope="row">Job</th>`
+        rows += `<td id="job">${data['job']}</td>`
+        rows += `</tr>`
+        rows += `<tr>`
+        rows += `<th scope="row">Degree</th>`
+        rows += `<td id="degree">${data['degree']}</td>`
+        rows += `</tr>`
+        rows += `<tr>`
+        rows += `<th scope="row">Profession</th>`
+        rows += `<td id="profession">${data['profession']}</td>`
+
+        $("tbody").html(rows)
+
+
+    }
+
+
+</script>
+
+</html>
