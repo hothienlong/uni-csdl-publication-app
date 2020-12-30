@@ -15,7 +15,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_profile_reviewer to reviewer@localhost
+grant execute on procedure publication.get_profile_reviewer to nodejs_application@localhost;
 
 
 
@@ -46,11 +46,11 @@ end$$
 delimiter ;
 
 
-grant execute on procedure publication.update_information_reviewer to reviewer@localhost;
+grant execute on procedure publication.update_information_reviewer to nodejs_application@localhost;
 
 -- 2 update reviews
-grant select, insert, update, delete on review_summary to reviewer@localhost;
-grant select, insert, update, delete on criteria_review to reviewer@localhost;
+grant select, insert, update, delete on review_summary to nodejs_application@localhost;
+grant select, insert, update, delete on criteria_review to nodejs_application@localhost;
 
 -- 3 get paper by type
 -- drop procedure if exists get_paper_by_type;
@@ -139,7 +139,7 @@ end$$
 delimiter ;
 
 
-grant execute on procedure publication.get_paper_by_type to reviewer@localhost;
+grant execute on procedure publication.get_paper_by_type to nodejs_application@localhost;
 
 -- 4 get paper reviewed by this viewer in 3 year
 -- drop procedure if exists get_reviewed_paper_by_type_in_years;
@@ -231,7 +231,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_reviewed_paper_by_type_in_years to reviewer@localhost;
+grant execute on procedure publication.get_reviewed_paper_by_type_in_years to nodejs_application@localhost;
 
 -- 5 get paper of authors
 drop procedure if exists get_paper_of_author ;
@@ -259,7 +259,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_paper_of_author to reviewer@localhost;
+grant execute on procedure publication.get_paper_of_author to nodejs_application@localhost;
 -- call get_paper_of_author('nnhhaadd_sci','vutrongphung');
 
 -- 6 get paper of authors in 3 years
@@ -289,7 +289,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_paper_of_author_in_years to reviewer@localhost;
+grant execute on procedure publication.get_paper_of_author_in_years to nodejs_application@localhost;
 -- call get_paper_of_author_in_3_year('nnhhaadd_sci','vutrongphung');
 
 -- 7 get author has been reviewed the most
@@ -325,7 +325,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_author_had_reviewed_most_by_reviewer to reviewer@localhost;
+grant execute on procedure publication.get_author_had_reviewed_most_by_reviewer to nodejs_application@localhost;
 -- call get_author_had_reviewed_most_by_reviewer('nnhhaadd_sci');
 
 -- 8 get review result in x years
@@ -351,7 +351,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_result_review_in_years to reviewer@localhost;
+grant execute on procedure publication.get_result_review_in_years to nodejs_application@localhost;
 -- call get_result_review_in_1_year('nnhhaadd_sci');
 
 -- 9 get 3 years with the most reviewed paper count
@@ -377,7 +377,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_top_reviewed_paper_count_years to reviewer@localhost;
+grant execute on procedure publication.get_top_reviewed_paper_count_years to nodejs_application@localhost;
 -- call get_3_year_on_top_review('nnhhaadd_sci');
 
 -- 10 papers with best results
@@ -400,7 +400,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_best_result_paper to reviewer@localhost;
+grant execute on procedure publication.get_best_result_paper to nodejs_application@localhost;
 
 -- call get_best_result_paper('nnhhaadd_sci')
 
@@ -424,7 +424,7 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_worst_result_paper to reviewer@localhost;
+grant execute on procedure publication.get_worst_result_paper to nodejs_application@localhost;
 
 -- call get_worst_result_paper('nnhhaadd_sci')
 
@@ -465,8 +465,139 @@ begin
 end$$
 delimiter ;
 
-grant execute on procedure publication.get_avg_reviewed_paper_count_per_year to reviewer@localhost;
+grant execute on procedure publication.get_avg_reviewed_paper_count_per_year to nodejs_application@localhost;
 -- call get_avg_reviewed_paper_count_per_year('nnhhaadd_sci');
+
+
+
+-- drop trigger if exists after_assign_by_editor;
+-- delimiter $$
+-- create trigger after_assign_by_editor
+-- after insert 
+-- on reviewer_review_assignment for each row
+-- begin
+
+-- end$$
+-- delimiter ;
+
+drop procedure if exists get_criteria;
+delimiter $$
+create procedure get_criteria
+(
+
+)
+begin
+    select id, cr_description
+    from criteria;
+end$$
+delimiter ;
+grant execute on procedure publication.get_criteria to nodejs_application@localhost;
+
+
+
+
+drop procedure if exists reviewer_insert_review_criteria;
+delimiter $$
+create procedure reviewer_insert_review_criteria
+(
+    reviewer_id varchar(45),paper_id varchar(45),criteria_id int,review_content text, review_score int
+)
+begin
+    insert into criteria_review
+    values (paper_id,reviewer_id,criteria_id,CURDATE(),review_content,review_score);
+end $$
+
+delimiter ;
+grant execute on procedure publication.reviewer_insert_review_criteria to nodejs_application@localhost;
+
+
+
+
+drop procedure if exists reviewer_update_review_criteria;
+delimiter $$
+create procedure reviewer_update_review_criteria
+(
+    reviewer_id varchar(45),paper_id varchar(45),criteria_id int,review_content text, review_score int
+)
+begin
+    update criteria_review c
+    set  
+        c.review_content = review_content , 
+        c.review_score = review_score,
+        c.sent_date = CURDATE()
+    where c.p_id = paper_id and  c.reviewer_id = reviewer_id and c.criteria_id = criteria_id;
+end$$
+
+delimiter ;
+grant execute on procedure publication.reviewer_update_review_criteria to nodejs_application@localhost;
+
+
+
+drop procedure if exists reviewer_get_review_criteria;
+delimiter $$
+create procedure reviewer_get_review_criteria
+(
+    paper_id varchar(45), reviewer_id varchar(45),criteria_id int
+)
+begin
+    select c.review_content,c.review_score
+    from criteria_review c
+    where c.p_id = paper_id and c.reviewer_id = reviewer_id and  c.criteria_id = criteria_id;
+end$$
+
+delimiter ;
+grant execute on procedure publication.reviewer_get_review_criteria to nodejs_application@localhost;
+
+
+
+drop procedure if exists update_summary_review;
+delimiter $$
+create procedure update_summary_review
+(
+   reviewer_id varchar(45), paper_id varchar(45),  note_for_author text, note_about_paper text
+)
+begin
+    update review_summary r
+    set r.note_for_author  = note_for_author , r.note_about_paper = note_about_paper
+    where r.p_id = paper_id and r.reviewer_id = reviewer_id;
+end$$
+
+delimiter ;
+grant execute on procedure publication.update_summary_review to nodejs_application@localhost;
+
+
+
+drop procedure if exists insert_summary_review;
+delimiter $$
+create procedure insert_summary_review
+(
+    reviewer_id varchar(45),paper_id varchar(45), note_for_author text, note_about_paper text
+)
+begin
+    insert into review_summary
+    values (paper_id,reviewer_id,note_for_author,note_about_paper);
+end $$
+
+delimiter ;
+grant execute on procedure publication.insert_summary_review to nodejs_application@localhost;
+
+
+drop procedure if exists get_summary_review;
+delimiter $$
+create procedure get_summary_review
+(
+    reviewer_id varchar(45), paper_id varchar(45)
+)
+begin
+    select r.note_for_author, r.note_about_paper
+    from review_summary r
+    where r.p_id = paper_id and r.reviewer_id = reviewer_id;
+end$$
+
+delimiter ;
+grant execute on procedure publication.get_summary_review to nodejs_application@localhost;
+
+
 
 
 

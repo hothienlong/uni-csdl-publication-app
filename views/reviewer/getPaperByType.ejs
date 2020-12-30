@@ -79,6 +79,7 @@
                                             <th>Send date</th>
                                             <th>ISBN</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -91,9 +92,122 @@
                     </div>
             </div>                                                           
         </div>
+
         <footer class="sticky-footer bg-white">
             <%- include('../layout/footer') %>
         </footer>
+    </div>
+
+
+
+
+
+<!-- 
+    <div class="modal fade" id="criteria_review" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="reviewLabel">Review Paper</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="" class="criteria_id">
+                    <input type="hidden" name="" class="paper_id">
+                    <form >
+                        <div class="form-group">
+                            <label for="">Description Criteria</label>
+                            <textarea class="form-control" id="description_criteria" cols="10" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Review Content</label>
+                            <textarea class="form-control" id="review_content"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Review Score</label>
+                            <input type="number" class="form-control" id="review_score">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-review-criteria">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+    <div class="modal fade" id="criteria_update" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="reviewLabel">Review Paper</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="" class="criteria_id_edit">
+                    <input type="hidden" name="" class="paper_id_edit">
+                    <form >
+                        <div class="form-group">
+                            <label for="">Description Criteria</label>
+                            <textarea class="form-control" id="description_criteria_edit" cols="10" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Review Content</label>
+                            <textarea class="form-control" id="review_content_edit"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Review Score</label>
+                            <input type="number" class="form-control" id="review_score_edit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-update-criteria">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="modal fade" id="summary_review" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="reviewLabel">Review Paper</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="" class="paper_id">
+                    <form >
+                        <div class="form-group">
+                            <label for="">Note About Author</label>
+                            <textarea class="form-control" id="note_author" cols="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Note About Paper</label>
+                            <textarea class="form-control" id="note_paper"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="update_summary_review">Submit</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -125,7 +239,6 @@
 
 <script>
     $(document).ready(function () {
-    
         $("body").on("click" , "#selectPaperBtn", function(e) {
             $.ajax({
                 dataType: 'json',
@@ -135,7 +248,7 @@
                     type_paper: $("#typePaper").val()
                 },
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                     printTable(data[0])
                 }
             })
@@ -160,11 +273,270 @@
                 rows+= `<td></td>`
             }
             rows+= `<td>${row['status']}</td>`
+            rows+=`<td class="criteria-review" paper-id=${row['id']}></td>`
             rows+= `</tr>`
         })
-
+        getCriteria()
         $("tbody").html(rows)
     }
+
+
+
+    // $(".modal").on('click', '#submit-review-criteria', function() {
+    //     let criteria_id = $("#criteria_review .criteria_id").val()
+    //     let paper_id = $("#criteria_review .paper_id").val()
+    //     let review_content = $("#review_content").val()
+    //     let review_score = $("#review_score").val()
+
+    //     $.ajax({
+    //         dataType: 'json',
+    //         type: 'post',
+    //         url: './insertCriteria',
+    //         data: {
+    //             criteria_id: criteria_id,
+    //             p_id: paper_id,
+    //             review_content: review_content,
+    //             review_score: review_score
+    //         },
+    //         success: function(data) {
+    //             // console.log(data)
+    //             if (data.code) {
+    //                 alert("Cannot insert, please edit the review of paper")
+    //             } else {
+    //                 $(`[criteria-id=${criteria_id}]`).hide()
+    //             }
+    //             $(".modal").modal('hide')
+    //         }
+    //     })
+    // })
+
+
+    $(".modal").on('click', '#submit-update-criteria' , function() {
+        let criteria_id = $("#criteria_update .criteria_id_edit").val()
+        let paper_id = $("#criteria_update .paper_id_edit").val()
+        let review_content = $("#review_content_edit").val()
+        let review_score = $("#review_score_edit").val()
+
+        // console.log(criteria_id,paper_id,review_content,review_score)
+
+        $.ajax({
+            dataType: 'json',
+            type: 'post',
+            url: './getCriteria',
+            data: {
+                criteria_id: criteria_id,
+                p_id: paper_id
+            },
+            success: function(data) {
+                // console.log(data[0])
+                if (data[0].length === 0) {
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'post',
+                        url: './insertCriteria',
+                        data: {
+                            criteria_id: criteria_id,
+                            p_id: paper_id,
+                            review_content: review_content,
+                            review_score: review_score
+                        },
+                        success: function(data) {
+                            // console.log(data)
+                            if (data.code) {
+                                alert("Cannot insert, please edit the review of paper")
+                            }
+                            $(".modal").modal('hide')
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'post',
+                        url: './updateCriteria',
+                        data: {
+                            criteria_id: criteria_id,
+                            p_id: paper_id,
+                            review_content: review_content,
+                            review_score: review_score
+                        },
+                        success: function(data) {
+                            // console.log(data)
+                            $(".modal").modal('hide')
+
+                        }
+                    })
+                }
+
+            }
+        })
+
+    })
+
+
+
+
+
+
+
+    const getCriteria = () => {
+        $.ajax({
+            dataType: 'json',
+            type: 'get',
+            url: './getCriteria',
+            success: function(data) {
+                rows = ``
+                data[0].map((row) => {
+                    // rows += `<div class="row">`
+                    // rows += `<button class="btn btn-info m-2 btn-criteria" description-criteria=${row['cr_description']} criteria-id=${row['id']} data-toggle="modal" data-target="#criteria_review">Review criteria: ${row['id']}</button>`
+                    rows += `<button class="btn btn-primary m-2 btn-edit-criteria" description-criteria=${row['cr_description']} criteria-id=${row['id']} data-toggle="modal" data-target="#criteria_update">Review criteria: ${row['id']} </button>`
+                    // rows +=`</div>`
+                })
+                // rows += `<div class="row">`
+                rows += `<button class="btn btn-info m-2 btn-summary" data-toggle="modal" data-target="#summary_review">Review Summary</button>`
+                // rows += `<button class="btn btn-primary m-2 btn-summary" data-toggle="modal" data-target="#summary_update">Edit Summary</button>`
+                // rows +=`</div>`
+                $(".criteria-review").html(rows)
+                // console.log(rows)
+            }
+        })
+    }
+
+    // $("body").on('click' ,  ".btn-criteria" , function() {
+    //     let criteria_id = $(this).attr("criteria-id")
+    //     let paper_id = $(this).parent().parent().attr("paper-id")
+    //     let description = $(this).attr("description-criteria")
+    //     // console.log(description)
+    //     $(".criteria_id").val(criteria_id)
+    //     $(".paper_id").val(paper_id)
+    //     $("#description_criteria").val(description)
+    // })
+
+    $("body").on('click', ".btn-edit-criteria", function() {
+        let criteria_id = $(this).attr("criteria-id")
+        let paper_id = $(this).parent().attr("paper-id")
+        let description = $(this).attr("description-criteria")
+
+        // console.log(criteria_id,paper_id,description)
+
+
+        $(".criteria_id_edit").val(criteria_id)
+        $(".paper_id_edit").val(paper_id)
+        $("#description_criteria_edit").val(description)
+
+        $.ajax({
+            dataType: 'json',
+            type: 'post',
+            url: './getCriteria',
+            data: {
+                criteria_id: criteria_id,
+                p_id: paper_id
+            },
+            success: function(data) {
+                // console.log(data[0])
+                if (data[0].length === 0) {
+                    $("#review_content_edit").val('')
+                    $("#review_score_edit").val('')
+                } else {
+                    $("#review_content_edit").val(data[0][0].review_content)
+                    $("#review_score_edit").val(data[0][0].review_score)
+                }
+
+            }
+        })
+
+
+
+    })
+
+    $("body").on('click' , ".btn-summary", function() {
+        let paper_id = $(this).parent().attr("paper-id")
+        $(".paper_id").val(paper_id)
+
+
+        $.ajax({
+            dataType: 'json',
+            type: 'post',
+            url: './getSummary',
+            data: {
+                p_id: paper_id
+            },
+            success: function(data) {
+                // console.log(data[0])
+                if (data[0].length === 0) {
+                    $("#note_author").val('')
+                    $("#note_paper").val('')
+                } else {
+                    $("#note_author").val(data[0][0].note_for_author)
+                    $("#note_paper").val(data[0][0].note_about_paper)
+                }
+            }
+        })
+
+    })
+
+
+
+    $(".modal").on('click', "#update_summary_review", function() {
+        let paper_id = $("#summary_review .paper_id").val()
+        let note_for_author = $("#note_author").val()
+        let note_about_paper = $("#note_paper").val()
+        // console.log(paper_id)
+        // console.log(criteria_id,paper_id,review_content,review_score)
+
+        $.ajax({
+            dataType: 'json',
+            type: 'post',
+            url: './getSummary',
+            data: {
+                p_id: paper_id
+            },
+            success: function(data) {
+                // console.log(data[0])
+                if (data[0].length === 0) {
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'post',
+                        url: './insertSummary',
+                        data: {
+                            p_id: paper_id,
+                            note_for_author: note_for_author,
+                            note_about_paper: note_about_paper
+                        },
+                        success: function(data) {
+                            // console.log(data)
+                            if (data.code) {
+                                alert("Cannot insert, please edit the review of paper")
+                            }
+                            $(".modal").modal('hide')
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'post',
+                        url: './updateSummary',
+                        data: {
+                            p_id: paper_id,
+                            note_for_author: note_for_author,
+                            note_about_paper: note_about_paper
+                        },
+                        success: function(data) {
+                            // console.log(data)
+                            $(".modal").modal('hide')
+
+                        }
+                    })
+                }
+
+            }
+        })
+
+    })
+
+
+
+
+
 
 </script>
 

@@ -14,6 +14,20 @@ router.get('/', (req, res) => {
 });
 
 
+router.get('/getCriteria', (req,res) => {
+    fetch('http://localhost:3000/api/reviewer/get_criteria', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
+
+
 
 router.get('/getPaperByType', (req,res) => {
     return res.render('reviewer/getPaperByType', {username: req.username})
@@ -32,8 +46,103 @@ router.post('/getPaperByType' ,(req,res) => {
     })
     .then(res => res.json())
     .then(data => res.send(data))
-
 })
+
+
+
+router.post('/insertCriteria', (req,res) => {
+    fetch('http://localhost:3000/api/reviewer/reviewer_insert_review_criteria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+    // res.send(req.body)
+})
+
+
+router.post('/updateCriteria', (req,res)=> {
+    fetch('http://localhost:3000/api/reviewer/reviewer_update_review_criteria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
+
+
+
+router.post('/getCriteria', (req,res) => {
+    fetch('http://localhost:3000/api/reviewer/reviewer_get_review_criteria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body),
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
+
+router.post('/getSummary', (req,res) => {
+    fetch('http://localhost:3000/api/reviewer/reviewer_get_summary_review', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body),
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
+
+
+
+router.post('/insertSummary', (req,res) => {
+    fetch('http://localhost:3000/api/reviewer/reviewer_insert_summary_review', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+    // res.send(req.body)
+})
+
+
+
+router.post('/updateSummary', (req,res)=> {
+    fetch('http://localhost:3000/api/reviewer/reviewer_update_review_summary', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
+
+
+
 
 
 

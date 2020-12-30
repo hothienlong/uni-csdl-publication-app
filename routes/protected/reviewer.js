@@ -58,24 +58,131 @@ router.post('/update_info_reviewer', (req,res) => {
 })
 
 
-router.put('/reviewer_update_review_summary',(req,res)=> {
+router.get('/get_criteria', (req,res)=> {
+    const query = 'call get_criteria()'
+    connection.query(
+        query,
+        [],
+        (err,results,fields) => {
+            if (err) res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+
+router.post('/reviewer_insert_review_criteria', (req,res) => {
+    const p_id              = req.body.p_id
+    const s_id              = req.user
+    const criteria_id       = req.body.criteria_id
+    const review_content    = req.body.review_content
+    const review_score      = req.body.review_score
+
+    const query = 'call reviewer_insert_review_criteria(?,?,?,?,?)'
+    connection.query(
+        query,
+        [s_id,p_id,criteria_id,review_content,review_score],
+        (err,results,fields) => {
+            if (err) res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+
+
+router.post('/reviewer_get_review_criteria', (req,res) => {
+    const p_id              = req.body.p_id
+    const s_id              = req.user
+    const criteria_id       = req.body.criteria_id
+
+    const query = 'call reviewer_get_review_criteria(?,?,?)'
+    connection.query(
+        query,
+        [p_id,s_id,criteria_id],
+        (err,results,fields) => {
+            if (err) res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+router.post('/reviewer_update_review_criteria', (req,res)=> {
+    const p_id              = req.body.p_id
+    const s_id              = req.user
+    const criteria_id       = req.body.criteria_id
+    const review_content    = req.body.review_content
+    const review_score      = req.body.review_score
+
+    const query = 'call reviewer_update_review_criteria(?,?,?,?,?)'
+    connection.query(
+        query,
+        [s_id,p_id,criteria_id,review_content,review_score],
+        (err,results,fields) => {
+            if (err) res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+
+
+
+
+router.post('/reviewer_update_review_summary',(req,res)=> {
     // if(!req.privilege.review) return res.sendStatus(401)
     const s_id                  = req.user
     const p_id                  = req.body.p_id
     const note_for_author       = req.body.note_for_author
-    const note_for_paper        = req.body.note_for_paper
+    const note_for_paper        = req.body.note_about_paper
 
-    const query = 'call update_review_paper(?,?,?,?)'
+    const query = 'call update_summary_review(?,?,?,?)'
     connection.query(
         query,
         [s_id,p_id,note_for_author,note_for_paper],
         (err,results,fields) => {
             if (err) return res.status(500).send(err)
-            return res.sendStatus(200)
+            return res.send(results)
         }
     )
 })
-///
+
+router.post('/reviewer_get_summary_review' , (req,res) => {
+    const s_id                  = req.user
+    const p_id                  = req.body.p_id
+
+
+    const query = 'call get_summary_review(?,?)'
+    connection.query(
+        query,
+        [s_id,p_id],
+        (err,results,fields) => {
+            if (err) return res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+
+router.post('/reviewer_insert_summary_review' , (req,res)=> {
+    const p_id              = req.body.p_id
+    const s_id              = req.user
+    const note_for_author   = req.body.note_for_author
+    const note_about_paper  = req.body.note_about_paper
+
+    const query = 'call insert_summary_review(?,?,?,?)'
+    connection.query(
+        query,
+        [s_id,p_id,note_for_author,note_about_paper],
+        (err,results,fields) => {
+            if (err) res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+
+
 
 
 
