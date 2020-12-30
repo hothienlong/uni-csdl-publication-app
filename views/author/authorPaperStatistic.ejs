@@ -42,27 +42,37 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between">
                             <div>
-                                <form action="/views/author/total_papers_in_x_years" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Statistic papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/> 
+                                    <!-- 3 Function for paper statistic -->
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <form action="/views/author/total_papers_in_x_years" method="POST">
+                                                <div class="form-group">
+                                                    <label><b>Statistic papers in x years:</b></label>
+                                                    <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/> 
+                                                </div>
+                                                <button class="btn btn-info me-md-2" type="submit">Submit</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-5">
+                                            <form action="/views/author/total_research_papers_in_x_years" method="POST">
+                                                <div class="form-group">
+                                                    <label><b>Statistic research papers in x years:</b></label>
+                                                    <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/> 
+                                                </div>
+                                                <button class="btn btn-info me-md-2" type="submit">Submit</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-5">
+                                            <form action="/views/author/total_overview_papers_in_x_years" method="POST">
+                                                <div class="form-group">
+                                                    <label><b>Statistic overview papers in x years:</b></label>
+                                                    <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/> 
+                                                </div>
+                                                <button class="btn btn-info me-md-2" type="submit">Submit</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
-                                <form action="/views/author/total_research_papers_in_x_years" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Statistic research papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/> 
-                                    </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
-                                <form action="/views/author/total_overview_papers_in_x_years" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Statistic overview papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/> 
-                                    </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
+                                    <!-- End 3 function for paper statistic -->
                             </div>
                         </div>
 

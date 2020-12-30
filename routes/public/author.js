@@ -124,11 +124,31 @@ router.post('/addResearchPaper', [check('p_id').notEmpty().withMessage('Id canno
                                 check('write_authors_id').notEmpty().withMessage('Paper authors cannot be empty')],
     (req, res) => {
 
-        const errors = validationResult(req);
+        
+        let errors = validationResult(req).array(); 
 
-        if (!errors.isEmpty()) {
+        if (req.body.page_count < 10 || req.body.page_count > 20) {
+            errors.push({
+                value: '',
+                msg: 'Research paper must have 10 to 20 pages!',
+                param: 'wrong_page_count',
+                location: 'body'
+            });
+        }
 
-            const alert = errors.array()
+        if (req.body.num_author != req.body.write_authors_id.length) {
+            errors.push({
+                value: '',
+                msg: 'Paper authors not same number of authors!',
+                param: 'wrong_num_author',
+                location: 'body'
+            });
+        }
+
+        const alert = errors;
+
+        if (alert.length > 0) {
+
             // console.log(alert);
             fetch('http://localhost:3000/api/author/authors', {
                 method: 'GET',
@@ -141,6 +161,9 @@ router.post('/addResearchPaper', [check('p_id').notEmpty().withMessage('Id canno
                 .catch(err => console.log(err));
             return;
         }
+
+        // console.log(document.getElementsByName('page_count').value);
+        // if(document.getElementsByName('page_count').value == )
 
         console.log("add research");
         fetch('http://localhost:3000/api/author/submit_research_paper', {
@@ -190,12 +213,30 @@ router.post('/addResearchOverviewPaper', [check('p_id').notEmpty().withMessage('
                                         check('num_author').notEmpty().withMessage('Number of authors cannot be empty'),
                                         check('write_authors_id').notEmpty().withMessage('Paper authors cannot be empty')],
      (req, res) => {
+        let errors = validationResult(req).array(); 
 
-        const errors = validationResult(req);
+        if (req.body.page_count < 3 || req.body.page_count > 10) {
+            errors.push({
+                value: '',
+                msg: 'Research paper must have 10 to 20 pages!',
+                param: 'wrong_page_count',
+                location: 'body'
+            });
+        }
 
-        if (!errors.isEmpty()) {
+        if (req.body.num_author != req.body.write_authors_id.length) {
+            errors.push({
+                value: '',
+                msg: 'Paper authors not same number of authors!',
+                param: 'wrong_num_author',
+                location: 'body'
+            });
+        }
 
-            const alert = errors.array()
+        const alert = errors;
+
+        if (alert.length > 0) {
+
             // console.log(alert);
             fetch('http://localhost:3000/api/author/authors', {
                 method: 'GET',
