@@ -304,5 +304,44 @@ router.get('/getAuthors', (req, res) => {
 
 
 
+router.get('/get_profile',(req,res)=> {
+    const s_id = req.user
+
+    const query = 'call get_profile_editor(?)'
+    connection.query(
+        query,
+        [s_id],
+        (err,results,fields) => {
+            if (err) return res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+
+
+
+router.post('/update_profile', (req,res) => {
+    const s_id                  = req.user       
+    const fname                 = req.body.fname
+    const address               = req.body.address
+    const email                 = req.body.email
+    const company               = req.body.company
+    const job                   = req.body.job
+    const degree                = req.body.degree
+    const profession            = req.body.profession
+
+
+    const query = 'call update_information_editor(?,?,?,?,?,?,?,?)'
+    connection.query(
+        query,
+        [s_id,fname,address,email,company,job,degree,profession],
+        (err,results,fields) => {
+            if (err) return res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
 
 module.exports = router;
