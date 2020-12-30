@@ -23,5 +23,8 @@ app.use('/views', require('./routes/public/middle'));
 app.get('/', (req, res) =>{
     res.render('Index');
 });
+app.get('/403', (req, res) =>{
+    res.render('403');
+});
 
 app.listen(PORT, ()=>{console.log(`Server has started on port ${PORT}`)})

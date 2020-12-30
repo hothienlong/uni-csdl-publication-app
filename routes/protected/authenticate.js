@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const mysql      = require('mysql');
-const { reject } = require('bluebird');
 const saltRounds = 10;
 
 const connection = mysql.createConnection({
@@ -34,15 +33,21 @@ router.post('/signup', (req, res)=>{
         if(err)
             return res.sendStatus(500);
         var create_user_query = 'call create_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-        await new Promise((resolve, reject) => {
-            connection.query(
-                create_user_query,
-                [username, fname, address, email, company, job, degree, profession, 'default_email@gmail.com', is_author, is_reviewer, is_editor],
-                (err, results, fields) => {
-                    if (err) reject(err);
-                    resolve(res);
-                })
-        })
+        try {
+            await new Promise((resolve, reject) => {
+                connection.query(
+                    create_user_query,
+                    [username, fname, address, email, company, job, degree, profession, 'default_email@gmail.com', is_author, is_reviewer, is_editor],
+                    (err, results, fields) => {
+                        if (err) reject(err);
+                        resolve(res);
+                    })
+            })
+        }
+        catch(err) {
+            return res.status(400).json({result: 'fail'});
+            
+        }
 
         var insert_password_query = 'call insert_password(?,?)';
         connection.query(insert_password_query,

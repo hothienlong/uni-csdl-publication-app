@@ -53,7 +53,7 @@ router.post('/signup', [check('fname').notEmpty().withMessage('Name cannot be em
                     const alert = [{
                         value: '',
                         msg: 'Username already exists!',
-                        param: 'wrong',
+                        param: 'username',
                         location: 'body'
                     }];
 
