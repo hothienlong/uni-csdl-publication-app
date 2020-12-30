@@ -65,7 +65,7 @@ create procedure add_book
 	ISBN varchar(45), book_page_count varchar(45), publish_year year, book_title text, publisher text
 )
 begin
-	insert into book (ISBN, page_count, publish_year, title, publisher)
+	insert ignore into book (ISBN, page_count, publish_year, title, publisher)
         values (ISBN, book_page_count, publish_year, book_title, publisher);
 end$$
 
@@ -74,7 +74,7 @@ create procedure add_book_author_name
 	ISBN varchar(45), author_name varchar(45)
 )
 begin
-	insert into book_author
+	insert ignore into book_author
 		values (ISBN, author_name);
 end$$
 
@@ -144,7 +144,7 @@ drop procedure if exists delete_paper;
 delimiter $$
 create procedure edit_paper
 (
-	s_id varchar(45), p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45), sent_date date
+	s_id varchar(45), p_id varchar(45), title text, summary text, associated_file text, page_count int, sent_by varchar(45)
 )
 begin
 	update paper p
@@ -152,8 +152,7 @@ begin
 		p.summary = summary, 
         p.associated_file = associated_file, 
         p.page_count = page_count, 
-        p.sent_by = sent_by,
-        p.sent_date = sent_date
+        p.sent_by = sent_by
     where id = p_id and p.sent_by = s_id;
     
 	select *
@@ -209,6 +208,7 @@ delimiter ;
 
 grant execute on procedure get_information_book_authors to nodejs_application@localhost;
 
+call get_information_book_authors("longcontact", 3);
 -- 4 get paper status
 drop procedure if exists get_status_paper;
 

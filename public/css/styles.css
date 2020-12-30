@@ -33,6 +33,6 @@
 }
 
 
-.form-control {
+.form-group .form-control {
     height: 40px !important;
 }

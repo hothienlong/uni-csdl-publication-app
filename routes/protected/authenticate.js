@@ -37,7 +37,7 @@ router.post('/signup', (req, res)=>{
             await new Promise((resolve, reject) => {
                 connection.query(
                     create_user_query,
-                    [username, fname, address, email, company, job, degree, profession, 'default_email@gmail.com', is_author, is_reviewer, is_editor],
+                    [username, fname, address, email, company, job, degree, profession, work_email, is_author, is_reviewer, is_editor],
                     (err, results, fields) => {
                         if (err) reject(err);
                         resolve(res);

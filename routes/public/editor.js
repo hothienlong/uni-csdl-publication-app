@@ -19,22 +19,95 @@ router.get('/', (req, res) => {
 
 router.get('/paper/:paperId', (req, res) => {
     let paperId = req.params.paperId;
-    fetch('http://localhost:3000/api/editor/paper/' + paperId, {
-        method: 'GET', // or 'PUT'
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': req.cookies.authorization
-        },        
-        params: {paperId: paperId}
-    })
-        .then(response => response.json())
-        .then(paper =>  res.render('editor/Paper', {paper: paper[0], username: req.username}))
-        .catch((error) => {
-            console.error('Error:', error);
-        });    
+    let username = req.username;
+    Promise.all([
+        fetch('http://localhost:3000/api/editor/paper/' + paperId, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': req.cookies.authorization
+            },        
+            params: {paperId: paperId}
+        })
+        .then(response => response.json()),   
+        fetch('http://localhost:3000/api/editor/authors/' + paperId, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': req.cookies.authorization
+            },        
+            params: {paperId: paperId}
+        })
+        .then(response => response.json()),
+        fetch('http://localhost:3000/api/editor/getReviewingDetailByPaper/' + paperId, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': req.cookies.authorization
+            },        
+            params: {paperId: paperId}
+        })
+        .then(response => response.json())     
+    ])
+    .then(results => {
+        console.log('paper and authors: ', results[2]);
+        res.render('editor/Paper', {paper: results[0][0], authors: results[1], paper_result: results[2][0], username: username});
+    });    
 });
 
-router.post('/updatePaper', (req, res) => {    
+router.post('/updatePaper',  [check('inform_date').notEmpty().withMessage("Inform date must not be empty!")]  ,(req, res) => {
+    var validator_error= validationResult(req).array();    
+    let username = req.username;
+    if (new Date(req.body.inform_date).getTime() < new Date().getTime()) {
+        validator_error.push ({
+            value: '',
+            msg: 'The inform date must be greater than current day!',
+            param: 'inform_date',
+            location: 'body'
+        })
+    }
+    const alert = validator_error;
+    if(req.body.status == 'COMPLETE_REVIEW' && alert.length > 0) { 
+        paperId = req.body.id;
+
+        Promise.all([
+            fetch('http://localhost:3000/api/editor/paper/' + paperId, {
+                method: 'GET', // or 'PUT'
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': req.cookies.authorization
+                },        
+                params: {paperId: paperId}
+            })
+            .then(response => response.json()),   
+            fetch('http://localhost:3000/api/editor/authors/' + paperId, {
+                method: 'GET', // or 'PUT'
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': req.cookies.authorization
+                },        
+                params: {paperId: paperId}
+            })
+            .then(response => response.json()),
+            fetch('http://localhost:3000/api/editor/getReviewingDetailByPaper/' + paperId, {
+                method: 'GET', // or 'PUT'
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': req.cookies.authorization
+                },        
+                params: {paperId: paperId}
+            })
+            .then(response => response.json())     
+        ])
+        .then(results => {
+            console.log('paper and authors: ', results[2], results[0][0]);
+            res.render('editor/Paper', {paper: results[0][0], authors: results[1], paper_result: results[2][0], username: username, alert: alert});
+        });   
+        return;     
+    }
+        
+
+
     fetch('http://localhost:3000/api/editor/updatePaper', {
         method: 'POST', // or 'PUT'
         headers: {
@@ -46,11 +119,11 @@ router.post('/updatePaper', (req, res) => {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+            res.redirect('/views/editor/paperAssigned')
         })
         .catch((error) => {
             console.error('Error:', error);
-        });
-    res.redirect('/views/editor/paperAssigned')
+        });    
 });
 
 
@@ -116,29 +189,36 @@ router.get('/assignReviewAfter', (req, res) => {
                             }
                         })
                         .then(response => response.json()),
-                fetch('http://localhost:3000/api/editor/getReivewingDetailByPaper/' + paperId, {
+                fetch('http://localhost:3000/api/editor/getReviewingDetailByPaper/' + paperId, {
                     method: 'GET',
                     headers: {
                         'authorization': req.cookies.authorization
                         }
                     })
-                    .then(response => response.json())
+                    .then(response => response.json()),
+                fetch('http://localhost:3000/api/editor/paper/' + paperId, {
+                        method: 'GET',
+                        headers: {
+                            'authorization': req.cookies.authorization
+                            }
+                        })
+                        .then(response => response.json())                    
                 ]).then(result => {
-                    console.log("assignReviewAfter: ", result);
-                    res.render('editor/AssignReviewAfter', {result: result, paperId: paperId, username: req.username})
+                    console.log("assignReviewAfter: ", result[3]);
+                    res.render('editor/AssignReviewAfter', {result: result, paperId: paperId, username: req.username, paper: result[3][0]})
                 })  
 });
 
-router.post('/assignReviewAfter', [check('reviewing_date').notEmpty().withMessage("Date must not be empty!")] ,(req, res) => {  
+router.post('/assignReviewAfter', [check('reviewing_date').notEmpty().withMessage("Reviewing date must not be empty!")] ,(req, res) => {  
     var validator_error= validationResult(req).array();    
     if (new Date(req.body.reviewing_date).getTime() < new Date().getTime()) {
         validator_error.push ({
             value: '',
-            msg: 'The date must be greater than current day!',
-            param: 'wrong_date',
+            msg: 'The reviewing date must be greater than current day!',
+            param: 'reviewing_date',
             location: 'body'
         })
-    }
+    }   
     const alert = validator_error;
     if(alert.length > 0) { 
         paperId = req.body.paperId;
@@ -157,16 +237,23 @@ router.post('/assignReviewAfter', [check('reviewing_date').notEmpty().withMessag
                             }
                         })
                         .then(response => response.json()),
-                fetch('http://localhost:3000/api/editor/getReivewingDetailByPaper/' + paperId, {
+                fetch('http://localhost:3000/api/editor/getReviewingDetailByPaper/' + paperId, {
                     method: 'GET',
                     headers: {
                         'authorization': req.cookies.authorization
                         }
                     })
-                    .then(response => response.json())
+                    .then(response => response.json()),
+                    fetch('http://localhost:3000/api/editor/paper/' + paperId, {
+                        method: 'GET',
+                        headers: {
+                            'authorization': req.cookies.authorization
+                            }
+                        })
+                        .then(response => response.json())                    
                 ]).then(result => {
                     console.log("assignReviewAfter: ", alert);
-                    res.render('editor/AssignReviewAfter', {result: result, paperId: paperId, username: req.username,  alert: alert});                    
+                    res.render('editor/AssignReviewAfter', {result: result, paperId: paperId, username: req.username,  alert: alert, paper: result[3][0]});                    
                 })         
         return;
     }
@@ -192,7 +279,7 @@ router.post('/assignReviewAfter', [check('reviewing_date').notEmpty().withMessag
                     'Content-Type': 'application/json',
                     'authorization': req.cookies.authorization
                 },
-                body: JSON.stringify({reviewerId: reviewers, paperId: req.body.paperId, reviewDate: req.body.reviewing_date})
+                body: JSON.stringify({reviewerId: reviewers, paperId: req.body.paperId, reviewDate: req.body.reviewing_date, informDate: req.body.inform_date})
             })                
                 .catch(err => console.log(err));  
     }
@@ -205,14 +292,14 @@ router.post('/assignReviewAfter', [check('reviewing_date').notEmpty().withMessag
                         'Content-Type': 'application/json',
                         'authorization': req.cookies.authorization
                     },
-                    body: JSON.stringify({reviewerId: reviewers[i], paperId: req.body.paperId, reviewDate: req.body.reviewing_date})
+                    body: JSON.stringify({reviewerId: reviewers[i], paperId: req.body.paperId, reviewDate: req.body.reviewing_date, informDate: req.body.inform_date})
                 })                
                     .catch(err => console.log(err));  
             }
         }
     }
 
-    return res.redirect('/views/editor');
+    return res.redirect('/views/editor/assignReviewBefore');
 });
 
 

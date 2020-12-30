@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Scientist - Paper</title>
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta/dist/css/bootstrap-select.min.css"> -->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta/dist/js/bootstrap-select.min.js"></script> -->
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta/dist/js/i18n/defaults-*.min.js"></script> -->
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+
+        <%- include('./sidebar', {"sidebarItem" : "papers"}); %>
+            
+        <!-- end side bar -->
+
+
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <%- include('../layout/topbar'); %>
+                    <div class="container-fluid">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex">
+                                <div class="container vertical-center-register" style="margin-bottom: 20px;">                    
+
+                                    <fieldset style="margin-bottom: 2px;">
+                                        <legend style="margin-bottom: 5px;">Choose type of paper</legend>
+                                        <div>
+                                            <form action="/views/author/addResearchPaper" method="GET">
+                                                <input type="radio" onchange="this.form.submit()" id="research_paper" name="type_paper" value="research_paper">
+                                                <label for="research_paper">Research paper</label>
+                                            </form>
+
+                                        </div>
+                                        <div>
+                                            <form action="/views/author/addBookReviewPaper" method="GET">
+                                                <input type="radio" onchange="this.form.submit()" id="book_review" name="type_paper" value="book_review">
+                                                <label for="book_review">Book Review</label>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form action="/views/author/addResearchOverviewPaper" method="GET">
+                                                <input type="radio" onchange="this.form.submit()" id="research_overview_paper" name="type_paper" value="research_overview_paper" checked="checked">
+                                                <label for="research_overview_paper">Research overview paper</label>
+                                            </form>
+                                        </div>                                                        
+                                    </fieldset>
+
+                                    <hr class="sidebar-divider d-none d-md-block">
+                                    <h3 style="margin-bottom: 1em;">Fill in inforamation of paper</h3>
+
+                                    <div>
+                                        <form action="/views/author/addResearchOverviewPaper" method="POST">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="id">ID:</label>
+                                                        <input type="text" class="form-control" id="id" name="p_id"
+                                                            placeholder="Enter id" />
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='p_id' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="title">Title:</label>
+                                                        <input type="text" class="form-control" id="title"
+                                                            name="title" placeholder="Enter title" />
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='title' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                    </div>
+                                                   
+                                                    <div class="form-group">
+                                                        <label for="file">File:</label>
+                                                        <input type="text" class="form-control" id="file"
+                                                            name="associated_file" placeholder="Enter file" />
+                                                    </div>
+                                                    <% if(typeof alert !='undefined' ) { %>
+                                                        <% for (var i=0; i < alert.length; i++) { %>
+                                                            <% if (alert[i].param=='associated_file' ) { %>
+                                                                <p style="color: red; margin-top: 5px;">
+                                                                    <%= alert[i].msg %>
+                                                                </p>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% } %>
+
+                                                    
+                                                </div>
+                                            
+                                                <div class="col-6">
+
+                                                    <div class="form-group">
+                                                        <label for="pagenums">Number of pages:</label>
+                                                        <input type="text" class="form-control" id="pagenums" name="page_count"
+                                                            placeholder="Enter number of pages" />
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='page_count' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="pagenums">Number of authors:</label>
+                                                        <input type="text" class="form-control" id="pagenums" name="num_author"
+                                                            placeholder="Enter number of authors" />
+                                                    </div>
+                                                    <% if(typeof alert !='undefined' ) { %>
+                                                        <% for (var i=0; i < alert.length; i++) { %>
+                                                            <% if (alert[i].param=='num_author' ) { %>
+                                                                <p style="color: red; margin-top: 5px;">
+                                                                    <%= alert[i].msg %>
+                                                                </p>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% } %>
+
+                                                    <div class="form-group">
+                                                        <label for="author">Paper authors:</label> <br>                                                     
+                                                        <!-- <select name="author" id="author" style="width: 100%">
+                                                            <option value="-1">Please choose a contact author</option>
+                                                            <%  authors.forEach(function (au) { %>
+                                                                <option value=<%= au.S_ID %>> <%= au.S_ID %> </option>
+                                                            <% }) %>                                                                                                                                                                                    
+                                                        </select><br> -->
+                                                        
+                                                        <!-- name là input của api, id là CSS-->
+                                                        <select name="write_authors_id" id="author" class="selectpicker" multiple>
+                                                            <!-- <option value="-1">Please choose paper authors</option> -->
+                                                            <%  authors.forEach(function (au) { %>
+                                                                <option value=<%= au.S_ID %>> <%= au.S_ID %> </option>
+                                                            <% }) %> 
+                                                        </select>  
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='write_authors_id' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>                                                        
+                                                    </div>
+                                                                                                    
+                                                    <div class="form-group w-100">
+                                                        <label for="summary">Summary:</label>
+                                                        <textarea type="summary" class="form-control" id="summary"
+                                                            name="summary" placeholder="Enter summary" rows="5"></textarea>
+                                                    </div>                                                    
+                                                </div>
+                                                  
+                                                
+                                            </div>
+
+                                            <br>
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                                <button id='add-paper' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Submit paper</button>
+                                                <a class="btn btn-primary" type="button" href="/views/author/paper">Go back</a>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <footer class="sticky-footer bg-white">
+                        <%- include('../layout/footer') %>
+                    </footer>
+            </div>
+        </div>
+
+
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+        
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+        <script>
+            $('#author').select2();
+        </script>
+
+        <!-- <script src="vendor/chart.js/Chart.min.js"></script>
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script> -->
+
+</body>
+
+</html>
