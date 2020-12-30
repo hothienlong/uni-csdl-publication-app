@@ -94,6 +94,34 @@
                 </li>
             <% } %>
 
+            <% if(sidebarItem == "paperReviewResult"){ %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/views/author/papers_review_result">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers review result</span></a>
+                </li>
+            <% }else{ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/views/author/papers_review_result">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers review result</span></a>
+                </li>
+            <% } %>
+            
+            <% if(sidebarItem == "paperAuthor"){ %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/views/author/papers_author">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers author</span></a>
+                </li>
+            <% }else{ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/views/author/papers_author">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Papers author</span></a>
+                </li>
+            <% } %>
+
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>

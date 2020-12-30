@@ -30,7 +30,7 @@ router.post('/submit_research_paper', (req, res)=>{
         if (err) return res.status(500).send(err);
 
         for(var i = 0; i < num_author; i++){
-            var subquery = 'call write_paper(?,?);'
+            var subquery = 'call add_author(?,?);'
             connection.query(
                 subquery,
                 [p_id, write_authors_id[i]],
@@ -100,6 +100,7 @@ router.post('/submit_book_review', (req, res)=>{
     var num_book_author = req.body.num_book_author;
     var book_author_name = req.body.book_author_name;
 
+    // insert ignore add_book & add_book_author_name (if duplicate is no problem => nothing insert)
     var subsubquery = 'call add_book(?,?,?,?,?);';
     connection.query(
         subsubquery,
@@ -121,7 +122,7 @@ router.post('/submit_book_review', (req, res)=>{
     );
 
 
-
+    // transaction for procedure
     var query = 'call submit_book_review(?,?,?,?,?,?,?);';
     connection.query(
         query,
@@ -130,7 +131,8 @@ router.post('/submit_book_review', (req, res)=>{
             if (err) return res.status(500).send(err);
 
             for(var i = 0; i < num_author; i++){
-                var subquery = 'call write_paper(?,?);'
+                // not duplicate if submit_book_review susscessful
+                var subquery = 'call add_author(?,?);'
                 connection.query(
                     subquery,
                     [p_id, write_authors_id[i]],
@@ -193,7 +195,7 @@ router.put('/edit_paper', (req, res)=>{
     var summary = req.body.summary;
     var associated_file = req.body.associated_file;
     var page_count = req.body.page_count;
-    var sent_by = req.user.username;
+    var sent_by = req.user;
     var sent_date = req.body.sent_date;
 
     var query = 'call edit_paper(?,?,?,?,?,?,?,?);';
@@ -253,7 +255,7 @@ router.post('/status_paper', (req, res)=>{
     );
 });
 
-router.get('/review_summary', (req, res)=>{
+router.post('/review_summary', (req, res)=>{
     var p_id = req.body.p_id;
 
     var query = 'call get_review_summary(?);';

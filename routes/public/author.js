@@ -225,4 +225,34 @@ router.post('/papers_detail', (req, res) => {
         .catch(err => console.log(err));
 
 });
+
+//---------------- Paper review result ----------------
+// router.get('/papers_review_result', (req, res) => {
+//     // console.log(req.cookies.authorization);
+//     fetch('http://localhost:3000/api/author/papers_result', {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'authorization': req.cookies.authorization
+//         }
+//     })
+//         .then(response => response.json())
+//         .then(data => res.render('author/authorPaperReviewResult', {data, username : req.username}))
+//         .catch(err => console.log(err));
+// });
+
+//---------------- Paper review result ----------------
+// router.get('/papers_author', (req, res) => {
+//     // console.log(req.cookies.authorization);
+//     fetch('http://localhost:3000/api/author/papers_statistic', {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'authorization': req.cookies.authorization
+//         }
+//     })
+//         .then(response => response.json())
+//         .then(data => res.render('author/authorPaperReviewResult', {data, username : req.username}))
+//         .catch(err => console.log(err));
+// });
 module.exports = router;
