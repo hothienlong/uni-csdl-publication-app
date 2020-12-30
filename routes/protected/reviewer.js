@@ -15,12 +15,29 @@ router.use(express.static('public'));
 
 
 // ----------------procedure ------------------------------------------//
-router.put('/update_info_reviewer', (req,res) => {
-    if(!req.privilege.updateAccount) return res.sendStatus(401)
+router.get('/get_profile_reviewer',(req,res)=> {
+    const s_id = req.user
+
+    const query = 'call get_profile_reviewer(?)'
+    connection.query(
+        query,
+        [s_id],
+        (err,results,fields) => {
+            if (err) return res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
+
+
+
+
+router.post('/update_info_reviewer', (req,res) => {
+    // if(!req.privilege.updateAccount) return res.sendStatus(401)
     const s_id                  = req.user
-    const collaboration_day     = req.body.collaboration_day
+    // const collaboration_day     = req.body.collaboration_day
     const work_email            = req.body.work_email
-    const fname                 = req.body.work_email
+    const fname                 = req.body.fname
     const address               = req.body.address
     const email                 = req.body.email
     const company               = req.body.company
@@ -29,20 +46,20 @@ router.put('/update_info_reviewer', (req,res) => {
     const profession            = req.body.profession
 
 
-    const query = 'call update_information_reviewer(?,?,?,?,?,?,?,?,?,?)'
+    const query = 'call update_information_reviewer(?,?,?,?,?,?,?,?,?)'
     connection.query(
         query,
-        [s_id,collaboration_day,work_email,fname,address,email,company,job,degree,profession],
+        [s_id,work_email,fname,address,email,company,job,degree,profession],
         (err,results,fields) => {
             if (err) return res.status(500).send(err)
-            return res.sendStatus(200)
+            return res.send(results)
         }
     )
 })
 
 
 router.put('/reviewer_update_review_summary',(req,res)=> {
-    if(!req.privilege.review) return res.sendStatus(401)
+    // if(!req.privilege.review) return res.sendStatus(401)
     const s_id                  = req.user
     const p_id                  = req.body.p_id
     const note_for_author       = req.body.note_for_author
