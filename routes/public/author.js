@@ -9,17 +9,39 @@ fetch.Promise = blueBird;
 router.use(express.static('public'));
 
 
-//---------------- Paper status ----------------
+//---------------- Papers ----------------
 router.get('/', (req, res) => {
     return res.render('author/DashBoard', {username : req.username});
 });
 
-// router.get('/addPaper', (req, res) => {
-//     fetch('http://localhost:3000/api/contactAuthor/getContactAuthor')
-//         .then(response => response.json())
-//         .then(authors => res.render('contactAuthor/addPaper', {authors}))
-    
-// });
+router.get('/addResearchPaper', (req, res) => {
+    fetch('http://localhost:3000/api/author/authors', {
+        method: 'GET',
+        headers: {
+            'authorization': req.cookies.authorization
+        }
+    })
+        .then(response => response.json())
+        .then(authors => res.render('author/addResearchPaper', {authors, username : req.username}))
+        .catch(err => console.log(err));
+});
+
+router.post('/addResearchPaper', (req, res) => {
+    // console.log("add research");
+    fetch('http://localhost:3000/api/author/submit_research_paper', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+        .then(response => console.log("Success : ",response.status))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    res.redirect('/views/author/addResearchPaper');
+});
 
 
 // router.post('/addPaper', (req, res) => {
@@ -44,6 +66,7 @@ router.get('/', (req, res) => {
 
 
 router.get('/paper', (req, res) => {
+    confirm("dc ko");
     // console.log(req.cookies.authorization);
     console.log("get paper");
     fetch('http://localhost:3000/api/author/papers', {
@@ -210,21 +233,21 @@ router.get('/papers_detail', (req, res) => {
     return res.render('author/authorPaperDetail', {paper_status_result : "Unknown", username : req.username});
 });
 
-router.post('/papers_detail', (req, res) => {
-    // console.log(req.cookies.authorization);
-    fetch('http://localhost:3000/api/author/status_paper', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': req.cookies.authorization
-        },
-        body : JSON.stringify(req.body)
-    })
-        .then(response => response.json())
-        .then(paper_status_result => res.render('author/authorPaperDetail', {paper_status_result, username : req.username}))
-        .catch(err => console.log(err));
+// router.post('/papers_detail', (req, res) => {
+//     // console.log(req.cookies.authorization);
+//     fetch('http://localhost:3000/api/author/status_paper', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'authorization': req.cookies.authorization
+//         },
+//         body : JSON.stringify(req.body)
+//     })
+//         .then(response => response.json())
+//         .then(paper_status_result => res.render('author/authorPaperDetail', {paper_status_result, username : req.username}))
+//         .catch(err => console.log(err));
 
-});
+// });
 
 //---------------- Paper review result ----------------
 // router.get('/papers_review_result', (req, res) => {

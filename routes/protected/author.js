@@ -156,13 +156,35 @@ router.get('/papers', (req, res)=>{
         [s_id, null], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            console.log(results);
             return res.send(results[0]);
         }
     );
  
 });
 
+router.post('/addPaper', (req, res) => {
+    // console.log(req.body);
+    connection.query(
+        'call add_paper(?,?,?,?,?,?,?,?);',
+        [req.body.id, req.body.title, req.body.summary, req.body.file, req.body.pagenums, req.body.author, req.body.date, req.body.type_paper],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            res.sendStatus(200);
+        }
+    );
+});
+
+router.get('/authors', (req, res) => {
+    // console.log(req.body);
+    connection.query(
+        'SELECT S_ID FROM AUTHOR',
+        [],
+        (err, results, fieldInfo) => {
+            if (err) return res.status(500).send(err);
+            res.send(results);
+        }
+    );
+});
 
 // 12 chức năng author
 router.put('/update_information', (req, res)=>{
@@ -175,7 +197,7 @@ router.put('/update_information', (req, res)=>{
     var degree = req.body.degree;
     var profession = req.body.profession;
 
-    console.log(s_id);
+    // console.log(s_id);
 
     var query = 'call update_information_contact_author(?,?,?,?,?,?,?,?);';
     connection.query(
@@ -249,7 +271,7 @@ router.post('/status_paper', (req, res)=>{
         [s_id, p_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            console.log(results);
+            // console.log(results);
             return res.send(results[0]);
         }
     );
@@ -352,7 +374,7 @@ router.get('/papers_statistic', (req, res)=>{
         [s_id, 10], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            console.log(results[0]);
+            // console.log(results[0]);
             return res.send(results[0]);
         }
     );
@@ -382,7 +404,7 @@ router.post('/total_research_papers_in_years', (req, res)=>{
         [s_id, 'Research', years], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
-            console.log("research : ",results);
+            // console.log("research : ",results);
             return res.send(results[0]);
         }
     );
