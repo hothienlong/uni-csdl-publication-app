@@ -3,12 +3,12 @@ use publication;
 drop procedure if exists assign_review;
 delimiter |
 create procedure assign_review 
-(editor_id varchar(45), reviewer_id varchar(45), paper_id varchar(45), review_date date)
+(editor_id varchar(45), reviewer_id varchar(45), paper_id varchar(45), review_date date, inform_date date)
 begin
 	if ((select count(*) from review_assignment_detail as r where r.p_id = paper_id) = 0) then
 		insert into review_assignment_detail (p_id, reviewing_date) values (paper_id, review_date);
 	else 
-		update review_assignment_detail set reviewing_date = review_date where p_id = paper_id;
+		update review_assignment_detail as r set reviewing_date = review_date, r.inform_date = inform_date where p_id = paper_id;
 	end if;
     if (reviewer_id != '') then
 		insert into reviewer_review_assignment (reviewer_id, paper_id) values (reviewer_id, paper_id);
@@ -17,6 +17,7 @@ begin
 		insert into editor_review_assignment (editor_id, paper_id) values (editor_id, paper_id);
 	
     end if;
+    update paper set status = 'REVIEW' where id = paper_id;
 end |
 delimiter ;
 grant execute on procedure publication.assign_review to nodejs_application@localhost;
@@ -43,7 +44,7 @@ create procedure update_result_after_review
 (paper_id varchar(45), result varchar(45), inform_date date)
 begin
 	update paper 
-		set status = 'COMPLETED_REVIEW'
+		set status = 'COMPLETE_REVIEW'
 		where paper.id = paper_id;
     update review_assignment_detail as r
 		set r.inform_date = inform_date,
@@ -149,7 +150,7 @@ drop procedure if exists get_reivewing_detail_by_paper;
 delimiter |
 create procedure get_reivewing_detail_by_paper(paperId varchar(45))
 begin
-	select r.reviewing_date
+	select r.reviewing_date, r.inform_date, r.result
     from review_assignment_detail as r where r.p_id  = paperId;
 end |
 delimiter ;
@@ -188,6 +189,17 @@ end |
 delimiter ;
 grant execute on procedure publication.get_paper_by_id to nodejs_application@localhost;
 
+drop procedure if exists get_authors_by_paper;
+delimiter |
+create procedure get_authors_by_paper
+(paperId varchar(45))
+begin
+	select author_id
+	from paper_authors as p where p.p_id = paperId;	
+end |
+delimiter ;
+grant execute on procedure publication.get_authors_by_paper to nodejs_application@localhost;
+
 
 drop procedure if exists editor_get_papers;
 
@@ -222,13 +234,11 @@ title text,
 summary text,
 associated_file text,
 page_count int,
-sent_by varchar(45),
-sent_date date,
 status varchar(45)
 )
 begin
 	update paper as p set p.id = paperId, p.title = title, p.summary = summary, p.associated_file = associated_file,
-    p.page_count = page_count, p.sent_by = sent_by, p.sent_date = sent_date, p.status = status
+    p.page_count = page_count, p.status = status
     where p.id = paperId; 
 end |
 delimiter ;

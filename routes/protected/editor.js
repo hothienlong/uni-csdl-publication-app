@@ -6,6 +6,7 @@ const blueBird = require('bluebird');
 
 fetch.Promise = blueBird;
 const mysql = require('mysql');
+const { resolve, reject } = require('bluebird');
 
 const connection = mysql.createConnection({
     host     : 'localhost',
@@ -71,30 +72,66 @@ router.get('/paper/:paperId', (req, res) => {
     )
 });
 
-
-router.post('/updatePaper', (req, res) => {    
-    console.log("a");
+router.get('/authors/:paperId', (req, res) => {
     connection.query(
-        'call update_paper(?,?,?,?,?,?,?,?);',
-        [req.body.id, req.body.title, req.body.summary, req.body.file, req.body.pagenums, req.body.author, req.body.date , req.body.status],
+        'call get_authors_by_paper(?);',
+        [req.params.paperId],
         (err, results, fieldInfo) => {
-            if (err) return res.status(500).send(err);
-            res.sendStatus(200);
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+            console.log("authors:/paperId: ", results[0]);
+            res.json(results[0]);
         }
     )
 });
 
 
+router.post('/updatePaper',async (req, res) => {        
+    await new Promise((resolve, reject) => {
+        connection.query(
+            'call update_paper(?,?,?,?,?,?);',
+            [req.body.id, req.body.title, req.body.summary, req.body.file, req.body.pagenums, req.body.status],
+            (err, results, fieldInfo) => {
+                if (err){
+                    console.log("update paper: ", err);
+                    reject(err);
+                } 
+                resolve(results);
+            }
+        )
+    });    
+    let status = req.body.status;
+    if (status == 'COMPLETE_REVIEW') {
+        connection.query(
+            'call update_result_after_review(?,?,?);',
+            [req.body.id, req.body.paper_result, req.body.inform_date],
+            (err, results, fieldInfo) => {
+                if (err) {
+                    console.log("update result paper", err);
+                    return res.status(500).json(err);
+                }
+                return res.json({result: 'success'});
+            }
+        )
+    }
+    else{
+        return res.json({result: 'success'});
+    }
+});
+
+
 router.post('/assignReview', (req, res) => {    
     connection.query(
-        'call assign_review(?,?,?,?);',
-        [req.user, req.body.reviewerId, req.body.paperId, req.body.reviewDate],
+        'call assign_review(?,?,?,?,?);',
+        [req.user, req.body.reviewerId, req.body.paperId, req.body.reviewDate, req.body.informDate],
         (err, results, fieldInfo) => {
             if (err){
                 console.log('err: ', err);
                 return res.status(500).send(err);
             } 
-            res.sendStatus(200);            
+            return res.json({result: 'success'});            
         }
     )
 });
@@ -106,7 +143,7 @@ router.post('/updatePaperStatus', (req, res) => {
         [req.body.paperId, req.body.status],
         (err, results, fieldInfo) => {
             if (err) return res.status(500).send(err);
-            res.sendStatus(200);            
+            return res.json({result: 'success'});            
         }
     )
 });
@@ -118,7 +155,7 @@ router.post('/updateResultAfterReview', (req, res) => {
         [req.body.paperId, req.body.result, req.body.informDate],
         (err, results, fieldInfo) => {
             if (err) return res.status(500).send(err);
-            res.sendStatus(200);            
+            return res.json({result: 'success'});            
         }
     )
 });
@@ -217,7 +254,7 @@ router.get('/getReviewerByPaper/:paperId', (req, res) => {
 });
 
 
-router.get('/getReivewingDetailByPaper/:paperId', (req, res) => {    
+router.get('/getReviewingDetailByPaper/:paperId', (req, res) => {    
     connection.query(
         'call get_reivewing_detail_by_paper(?)',
         [req.params.paperId],
