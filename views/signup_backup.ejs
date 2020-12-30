@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sign up</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="container vertical-center-register" style="margin-bottom: 20px;">
+        <div class="col-sm-4">
+            <h3 style="margin-bottom: 1em;">Sign up</h3>
+            <div>                              
+                <form action="/user/signup" method ="POST">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="fname" placeholder="Enter name" />
+                        <% if(typeof alert != 'undefined') { %>
+                            <% for (var i = 0; i < alert.length; i++) { %>
+                                <% if (alert[i].param == 'name') { %>
+                                    <p style="color: red; margin-top: 5px;">
+                                        <%= alert[i].msg  %>
+                                    </p>                        
+                                <% } %>                                            
+                            <% } %>
+                        <% } %>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" />
+                        <% if(typeof alert != 'undefined') { %>
+                            <% for (var i = 0; i < alert.length; i++) { %>
+                                <% if (alert[i].param == 'username') { %>
+                                    <p style="color: red; margin-top: 5px;">
+                                        <%= alert[i].msg  %>
+                                    </p>                        
+                                <% } %>                                            
+                            <% } %>
+                        <% } %>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" />
+                        <% if(typeof alert != 'undefined') { %>
+                            <% for (var i = 0; i < alert.length; i++) { %>
+                                <% if (alert[i].param == 'password') { %>
+                                    <p style="color: red; margin-top: 5px;">
+                                        <%= alert[i].msg  %>
+                                    </p>                        
+                                <% } %>                                            
+                            <% } %>
+                        <% } %>
+                    </div>              
+                    
+                    <fieldset style="margin-bottom: 2px;">
+                        <legend style="margin-bottom: 5px;">Choose position</legend>
+                        <div>
+                            <input type="radio" id="editor" name="position" value="editor">
+                            <label for="editor">Editor</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="reviewer" name="position" value="reviewer">
+                            <label for="reviewer">Reviewer</label>
+                        </div>                       
+                        <div>
+                            <input type="radio" id="author" name="position" value="author">
+                            <label for="author">Author</label>
+                        </div>
+                        <% if(typeof alert != 'undefined') { %>
+                            <% for (var i = 0; i < alert.length; i++) { %>
+                                <% if (alert[i].param == 'position') { %>
+                                    <p style="color: red; margin-top: 5px;">
+                                        <%= alert[i].msg  %>
+                                    </p>                        
+                                <% } %>                                            
+                            <% } %>
+                        <% } %>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" />
+                        <% if(typeof alert != 'undefined') { %>
+                            <% for (var i = 0; i < alert.length; i++) { %>
+                                <% if (alert[i].param == 'email') { %>
+                                    <p style="color: red; margin-top: 5px;">
+                                        <%= alert[i].msg  %>
+                                    </p>                        
+                                <% } %>                                            
+                            <% } %>
+                        <% } %>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company:</label>
+                        <input type="text" class="form-control" id="company" name="company" placeholder="Enter company" />
+                    </div>
+                    <div class="form-group">
+                        <label for="job">Job:</label>
+                        <input type="text" class="form-control" id="job" name="job" placeholder="Enter job" />
+                    </div>
+                    <div class="form-group">
+                        <label for="degree">Degree:</label>
+                        <input type="text" class="form-control" id="degree" name="degree" placeholder="Enter degree" />
+                    </div>
+                    <div class="form-group">
+                        <label for="profession">Profession:</label>
+                        <input type="text" class="form-control" id="profession" name="profession" placeholder="Enter profession" />
+                    </div>                                                   
+
+                    <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button id='sign-up-1' class="btn btn-info me-md-2" type="submit">Create account</button>
+                        <a class="btn btn-primary" href="/user/signin">Go back</a>                       
+                    </div>
+                </form>
+            </div>            
+        </div>        
+    </div>
+   
+</body>
+
+</html>

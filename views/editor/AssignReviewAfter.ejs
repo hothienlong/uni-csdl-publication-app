@@ -40,7 +40,7 @@
                                 <div class="row">
                                 
                                     <% let currentDate=new Date(); %>
-                                    <% if (result[2].length> 0 && result[2][0].reviewing_date != '' && new Date(result[2][0].reviewing_date).getTime() < currentDate.getTime()) { %>
+                                    <% if (paper.status != 'UNSOLVED_REVIEW' || result[2].length> 0 && result[2][0].reviewing_date != '' && new Date(result[2][0].reviewing_date).getTime() < currentDate.getTime()) { %>
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="papers">Paper:</label>                                                        
@@ -55,14 +55,24 @@
                                                     <label for="reviewer<%= i %>">Reviewer <%= i %></label>                                                    
                                                     <input class="form-control" id="reviewerreadonly" style="width: 100%;" type="text" name="reviewer<%= i %>" value="<%= reviewer.reviewer_id %>" readonly/>
                                                 </div>
-                                            <% }) %>                                                                                            
+                                            <% }) %>  
+                                            <div class="d-grid gap-2 d-md-flex justify-content-center">
+                                                <a href="/views/editor/assignReviewBefore"><button id='selectPaperBtn' class="btn btn-info me-md-2" type="button"
+                                                        style="margin-right: 5px;">Back</button></a>
+                                            </div>                                                                                          
                                         </div>       
 
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <label for="reviewing-date">Reviewing date (YYYY-MM-DD)</label>  <br>                                                 
-                                                <input class="form-control" style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" value="<%= result[2][0].reviewing_date.substring(0, 10) %>" readonly/>                                                
-                                            </div>
+                                                <label for="reviewing-date">Reviewing date (YYYY-MM-DD)</label>  <br> 
+                                                <% if (result[2].length == 0 || result[2][0].reviewing_date == '' || result[2][0].reviewing_date == null) { %>   
+                                                    <input class="form-control" style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" value=""" readonly/>                                                
+                                                <% } else { %>
+                                                    <input class="form-control" style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" value="<%= result[2][0].reviewing_date.substring(0, 10) %>" readonly/>                                                
+                                                <% } %>
+                                            </div>   
+                                            
+                                            
                                         </div>      
                                         <% if(typeof alert != 'undefined') { console.log('abc');%>
                                             <% for (var i = 0; i < alert.length; i++) { %>                                               
@@ -115,13 +125,15 @@
                                                 <% } %>
 
                                                 <% if(typeof alert != 'undefined') { %>
-                                                    <% for (var i = 0; i < alert.length; i++) { console.log('cde');%>                                                        
-                                                            <p style="color: red; margin-top: 5px;">
-                                                                <%= alert[i].msg  %>
-                                                            </p>                                                                                
+                                                    <% for (var i = 0; i < alert.length; i++) { %> 
+                                                            <% if (alert[i].param == 'reviewing_date') { console.log('fff'); %>                                                       
+                                                                <p style="color: red; margin-top: 5px;">
+                                                                    <%= alert[i].msg  %>
+                                                                </p>
+                                                            <% } %>                                                                                
                                                     <% } %>
                                                 <% } %>
-                                            </div>
+                                            </div>                                            
                                         </div> 
                                     <% } %>                                                                               
                                 </div>

@@ -8,63 +8,109 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+
     <link rel="stylesheet" href="css/styles.css">
     <!-- <script src="/js/getrequest.js"></script>
   <script src="/js/postrequest.js"></script> -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Outline&display=swap" rel="stylesheet">
+    <style>
+        .wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+
+
+
+        }
+        
+        .login-form {
+            min-width: 350px;
+        }
+        
+        .form-group {
+            position: relative;
+            margin-top: 30px;
+        }
+        
+        .form-group label {
+            position: absolute;
+            margin-left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+            color: dimgray;
+            transition: all 200ms ease-in-out;
+        }
+        
+        .form-group input:valid+label,
+        .form-group input:focus+label {
+            color: black;
+            opacity: 1;
+            top: -15px;
+            font-size: 17px;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <div class="container vertical-center">
-            <div class="col-sm-4">
-                <h3 style="margin-bottom: 1em;">Signin</h3>
-                <div>                    
-                    <form action="/user/signin" method ="POST" novalidate>                    
-                        <div class="form-group">
-                            <label for="username">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" />
-                            <% if(typeof alert != 'undefined') { %>
-                                <% for (var i = 0; i < alert.length; i++) { %>
-                                    <% if (alert[i].param == 'username') { %>
-                                        <p style="color: red; margin-top: 5px;">
-                                            <%= alert[i].msg  %>
-                                        </p>                        
-                                    <% } %>                                            
+    <div class="wrap">
+        <div class="login-form">
+            <h3 class="text-center" style="margin-bottom: 1em;font-family: 'Poppins-Bold', cursive; font-size: 50px;">
+                SIGN IN
+            </h3>
+            <div>
+                <form action="/user/signin" method="POST" novalidate>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" name="username" required />                        
+                        <label for="username">Username</label>
+
+                    </div>
+                    <% if(typeof alert !='undefined' ) { %>
+                        <% for (var i=0; i < alert.length; i++) { %>
+                            <% if (alert[i].param=='username' ) { %>
+                                <p style="color: red; margin-bottom: 15px;">
+                                    <%= alert[i].msg %>
+                                </p>
                                 <% } %>
-                            <% } %>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" />
-                            <% if(typeof alert != 'undefined') { %>
-                                <% for (var i = 0; i < alert.length; i++) { %>
-                                    <% if (alert[i].param == 'password') { %>
-                                        <p style="color: red; margin-top: 5px;">
-                                            <%= alert[i].msg  %>
-                                        </p>                        
-                                    <% } %>                                            
+                                    <% } %>
+                                        <% } %>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password" name="password" required />
+                        
+                        <label for="password">Password</label>
+
+                    </div>
+                    <% if(typeof alert !='undefined' ) { %>
+                        <% for (var i=0; i < alert.length; i++) { %>
+                            <% if (alert[i].param=='password' ) { %>
+                                <p style="color: red; margin-bottom: 15px;">
+                                    <%= alert[i].msg %>
+                                </p>
                                 <% } %>
-                            <% } %>
-                        </div>                                                                  
-                        <!-- <button type="submit" class="btn btn-default">Submit</button> -->
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <% if(typeof alert != 'undefined') { %>
-                                <% for (var i = 0; i < alert.length; i++) { %>
-                                    <% if (alert[i].param == 'wrong') { %>
-                                        <p style="color: red; margin-top: 5px;">
-                                            <%= alert[i].msg  %>
-                                        </p>                        
-                                    <% } %>                                            
-                                <% } %>
-                            <% } %>
-                            <button id='sign-up-1' class="btn btn-info me-md-2" type="submit">Signin</button>
-                            <a href="/user/signup"><button class="btn  btn-primary" type="button">Sign up</button></a>                       
-                        </div>
-                    </form>
-                </div>            
-            </div>        
-        </div>       
+                                    <% } %>
+                                        <% } %>
+                    <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                    <div class="form-group">
+                        <% if(typeof alert !='undefined' ) { %>
+                            <% for (var i=0; i < alert.length; i++) { %>
+                                <% if (alert[i].param=='wrong' ) { %>
+                                    <p style="color: red; margin-top: 5px;">
+                                        <%= alert[i].msg %>
+                                    </p>
+                                    <% } %>
+                                        <% } %>
+                                            <% } %>
+                    <button id='sign-up-1' class="btn" style="margin-left: 100%;transform: translateX(-100%);background-color: lightseagreen;" type="submit">Signin</button>
+
+                    </div>
+                    <p style="color: rgb(75, 75, 75);text-align: right;">Not have account yet? <a href="/user/signup" style="color:lightseagreen;">Sign up</a></p>
+                </form>
+            </div>
+        </div>
+        <img src="/img/bear.png" style="margin-left: 20px;" alt="" srcset="">
     </div>
 </body>
 
