@@ -326,9 +326,9 @@ router.get('/papers_detail', (req, res) => {
 // });
 
 //---------------- Paper review result ----------------
-// router.get('/paper_review_result', (req, res) => {
-//     return res.render('author/authorPaperReviewResult', {data : "Unknown", username : req.username});
-// });
+router.get('/paper_review_result', (req, res) => {
+    return res.render('author/authorPaperReviewResult', {data : [], username : req.username});
+});
 router.post('/paper_review_result', (req, res) => {
     // console.log(req.cookies.authorization);
     fetch('http://localhost:3000/api/author/review_summary', {
@@ -341,6 +341,27 @@ router.post('/paper_review_result', (req, res) => {
     })
         .then(response => response.json())
         .then(data => res.render('author/authorPaperReviewResult', {data, username : req.username}))
+        .catch(err => console.log(err));
+});
+
+//---------------- Paper author ----------------
+router.get('/papers_author', (req, res) => {
+    return res.render('author/authorPaperAuthor', {data : [], username : req.username});
+});
+
+router.post('/papers_author', (req, res) => {
+    // console.log(req.cookies.authorization);
+    console.log("paper author");
+    fetch('http://localhost:3000/api/author/info_book_authors', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body : JSON.stringify(req.body)
+    })
+        .then(response => response.json())
+        .then(data => res.render('author/authorPaperAuthor', {data, username : req.username}))
         .catch(err => console.log(err));
 });
 module.exports = router;

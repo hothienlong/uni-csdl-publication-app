@@ -260,6 +260,7 @@ router.post('/info_book_authors', (req, res)=>{
         [s_id, p_id], 
             (err, results, fields)=>{
             if (err) return res.status(500).send(err);
+            // console.log(results);
             return res.send(results[0]);
         }
     );
@@ -281,20 +282,6 @@ router.post('/status_paper', (req, res)=>{
     );
 });
 
-router.get('/review_summary', (req, res)=>{
-
-    console.log("hello reviewer summary");
-    var query = 'call get_review_summary(?);';
-    connection.query(
-        query,
-        [null], 
-            (err, results, fields)=>{
-            if (err) return res.status(500).send(err);
-            console.log(results[0]);
-            return res.send(results[0]);
-        }
-    );
-});
 router.post('/review_summary', (req, res)=>{
     var p_id = req.body.p_id;
 
