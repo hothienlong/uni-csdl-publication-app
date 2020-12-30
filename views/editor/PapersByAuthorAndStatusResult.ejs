@@ -53,9 +53,10 @@
                                             <th>Title</th>
                                             <th>Summary</th>
                                             <th>Associated file</th>
-                                            <!-- <th>Page number</th> -->
-                                            <th>Autor contact</th>
+                                            <th>Page number</th>
+                                            <th>Author</th>
                                             <th>Send date</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -74,14 +75,17 @@
                                                 <td>
                                                     <%= data[i].associated_file %>
                                                 </td>
-                                                <!-- <td>
+                                                <td>
                                                     <%= data[i].page_count %>
-                                                </td> -->
+                                                </td>
                                                 <td>
                                                     <%= data[i].sent_by %>
                                                 </td>
                                                 <td>
                                                     <%= data[i].sent_date.substring(0, 10) %>
+                                                </td>
+                                                <td>
+                                                    <%= data[i].status %>
                                                 </td>
                                                 <td>
                                                     <a href="/views/editor/paper/<%=data[i].id%>" class="btn btn-block"><i

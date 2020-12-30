@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const blueBird = require('bluebird');
 const { json } = require('body-parser');
 const { reject } = require('bluebird');
+var {validationResult, check} = require('express-validator');
 fetch.Promise = blueBird;
 
 router.use(express.static('public'));
@@ -14,11 +15,6 @@ router.get('/', (req, res) => {
     return res.render('editor/DashBoard', {username: req.username});
 });
 
-router.get('/addPaper', (req, res) => {
-    fetch('http://localhost:3000/api/editor/getContactAuthor')
-        .then(response => response.json())
-        .then(authors => res.render('editor/AddPaper', {authors: authors, username: req.username}))
-});
 
 
 router.get('/paper/:paperId', (req, res) => {
@@ -32,14 +28,14 @@ router.get('/paper/:paperId', (req, res) => {
         params: {paperId: paperId}
     })
         .then(response => response.json())
-        .then(paper =>  res.render('editor/Paper', {paper: paper, username: req.username}))
+        .then(paper =>  res.render('editor/Paper', {paper: paper[0], username: req.username}))
         .catch((error) => {
             console.error('Error:', error);
         });    
 });
 
-router.post('/addPaper', (req, res) => {    
-    fetch('http://localhost:3000/api/editor/addPaper', {
+router.post('/updatePaper', (req, res) => {    
+    fetch('http://localhost:3000/api/editor/updatePaper', {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
@@ -54,7 +50,7 @@ router.post('/addPaper', (req, res) => {
         .catch((error) => {
             console.error('Error:', error);
         });
-    res.redirect('/views/editor/paper')
+    res.redirect('/views/editor/paperAssigned')
 });
 
 
@@ -133,7 +129,47 @@ router.get('/assignReviewAfter', (req, res) => {
                 })  
 });
 
-router.post('/assignReviewAfter', (req, res) => {  
+router.post('/assignReviewAfter', [check('reviewing_date').notEmpty().withMessage("Date must not be empty!")] ,(req, res) => {  
+    var validator_error= validationResult(req).array();    
+    if (new Date(req.body.reviewing_date).getTime() < new Date().getTime()) {
+        validator_error.push ({
+            value: '',
+            msg: 'The date must be greater than current day!',
+            param: 'wrong_date',
+            location: 'body'
+        })
+    }
+    const alert = validator_error;
+    if(alert.length > 0) { 
+        paperId = req.body.paperId;
+
+    Promise.all([fetch('http://localhost:3000/api/editor/getReviewerByPaper/' + paperId, {
+                    method: 'GET',
+                    headers: {
+                        'authorization': req.cookies.authorization
+                        }
+                    })
+                    .then(response => response.json()),
+                fetch('http://localhost:3000/api/editor/getAllReviewers', {
+                        method: 'GET',
+                        headers: {
+                            'authorization': req.cookies.authorization
+                            }
+                        })
+                        .then(response => response.json()),
+                fetch('http://localhost:3000/api/editor/getReivewingDetailByPaper/' + paperId, {
+                    method: 'GET',
+                    headers: {
+                        'authorization': req.cookies.authorization
+                        }
+                    })
+                    .then(response => response.json())
+                ]).then(result => {
+                    console.log("assignReviewAfter: ", alert);
+                    res.render('editor/AssignReviewAfter', {result: result, paperId: paperId, username: req.username,  alert: alert});                    
+                })         
+        return;
+    }
     console.log('res form: ', req.body.reviewer);
     let reviewers = req.body.reviewer;
     let i;

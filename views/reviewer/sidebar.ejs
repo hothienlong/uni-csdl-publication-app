@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Publication Database</div>
     </a>
 
     <!-- Divider -->
@@ -31,6 +31,119 @@
     <div class="sidebar-heading">
         Interface
     </div>
+
+
+
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <% if (active_bar == 'getPaperByType') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getPaperByType">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Papers by Type</span></a>
+    </li>
+
+    <% if (active_bar == 'getPaperByTypeInYears') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getPaperByTypeInYears">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Papers by Type In Years </span></a>
+    </li>
+
+    <% if (active_bar == 'getPaperOfAuthor') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getPaperOfAuthor">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Papers Of Author </span></a>
+    </li>
+
+    <% if (active_bar == 'getPaperOfAuthorInYears') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getPaperOfAuthorInYears">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Papers Of Author In Years </span></a>
+    </li>
+
+
+    <% if (active_bar == 'getAuthorHadReviewMost') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getAuthorHadReviewMost">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Author Had Review Most </span></a>
+    </li>
+
+
+
+    <% if (active_bar == 'getResultReviewInYears') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getResultReviewInYears">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Result Review In Years </span></a>
+    </li>
+
+
+    <% if (active_bar == 'getTopReviewPaperCountYears') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getTopReviewPaperCountYears">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Top Review Paper Count Years </span></a>
+    </li>
+
+
+    <% if (active_bar == 'getBestResultPaper') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getBestResultPaper">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get 3 Best Result Paper  </span></a>
+    </li>
+
+
+    <% if (active_bar == 'getWorstResultPaper') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getWorstResultPaper">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get 3 Worst Result Paper  </span></a>
+    </li>
+
+
+    <% if (active_bar == 'getAvgPaperPerYears') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/reviewer/getAvgPaperPerYears">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Get Average Paper Per Years  </span></a>
+    </li>
+
+    
 
     
 </ul>

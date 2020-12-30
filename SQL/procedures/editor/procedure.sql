@@ -104,7 +104,7 @@ drop procedure if exists get_papers_by_author_and_status;
 delimiter |
 create procedure get_papers_by_author_and_status(author_id varchar(45), status varchar(45))
 begin
-	select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
+	select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, p.status
 		from paper as p inner join paper_authors as au on p.id = au.p_id		
         where au.author_id = author_id and p.status = status;
 end |
@@ -177,39 +177,62 @@ delimiter ;
 grant execute on procedure publication.get_author to nodejs_application@localhost;
 
 
-
 drop procedure if exists get_paper_by_id;
 delimiter |
 create procedure get_paper_by_id
 (paperId varchar(45))
 begin
-	select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
+	select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date, p.status
 	from paper as p where p.id = paperId;	
 end |
 delimiter ;
 grant execute on procedure publication.get_paper_by_id to nodejs_application@localhost;
 
 
-
 drop procedure if exists editor_get_papers;
 
-delimiter $$
+delimiter |
 create procedure editor_get_papers
 (editorId varchar(45))
 begin
-	select title, summary, associated_file, page_count, sent_by, sent_date from paper 
+	select p.id, title, summary, associated_file, page_count, sent_by, sent_date, p.status from paper as p
 		join review_assignment_detail on id = review_assignment_detail.p_id
 		join editor_review_assignment on id = editor_review_assignment.paper_id
 		where editor_review_assignment.editor_id = editorId;
-end$$
+end |
+grant execute on procedure publication.editor_get_papers to nodejs_application@localhost;
 
 drop procedure if exists editor_get_all_papers;
+delimiter |
 create procedure editor_get_all_papers
 ()
 begin
-	select id, title, summary, associated_file, page_count, sent_by, sent_date from paper; 
-end$$
+	select id, title, summary, associated_file, page_count, sent_by, sent_date, status from paper; 
+end |
 delimiter ;
 
-grant execute on procedure publication.editor_get_papers to nodejs_application@localhost;
 grant execute on procedure publication.editor_get_all_papers to nodejs_application@localhost;
+
+
+drop procedure if exists update_paper;
+delimiter |
+create procedure update_paper (
+paperId varchar(45),
+title text,
+summary text,
+associated_file text,
+page_count int,
+sent_by varchar(45),
+sent_date date,
+status varchar(45)
+)
+begin
+	update paper as p set p.id = paperId, p.title = title, p.summary = summary, p.associated_file = associated_file,
+    p.page_count = page_count, p.sent_by = sent_by, p.sent_date = sent_date, p.status = status
+    where p.id = paperId; 
+end |
+delimiter ;
+
+grant execute on procedure publication.update_paper to nodejs_application@localhost;
+
+

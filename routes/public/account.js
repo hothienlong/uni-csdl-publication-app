@@ -53,7 +53,7 @@ router.post('/signup', [check('fname').notEmpty().withMessage('Name cannot be em
                     const alert = [{
                         value: '',
                         msg: 'Username already exists!',
-                        param: 'wrong',
+                        param: 'username',
                         location: 'body'
                     }];
 
@@ -122,7 +122,7 @@ router.post('/signin', [check('username').notEmpty().withMessage('Username canno
 
 router.get('/logout', (req, res) => {
     res.clearCookie('authorization');
-    res.render('signin');
+    res.render('Index');
 });
 
 module.exports = router

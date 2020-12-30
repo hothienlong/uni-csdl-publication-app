@@ -37,7 +37,7 @@ router.use('/editor', (req, res, next) => {
         .then(response => response.json())
         .then(result => {
             if (result.isEditor != 1) {
-                res.render('403');
+                return res.redirect('/403');
             }
             else {
                 next();
@@ -58,7 +58,7 @@ router.use('/reviewer', (req, res, next) => {
         .then(response => response.json())
         .then(result => {
             if (result.isReviewer != 1) {
-                res.render('403');
+                return res.redirect('/403');
             }
             else {
                 next();
@@ -79,7 +79,7 @@ router.use('/author', (req, res, next) => {
         .then(response => response.json())
         .then(result => {
             if (result.isAuthor != 1) {
-                res.render('403');
+                return res.redirect('/403');
             }
             else {
                 next();
