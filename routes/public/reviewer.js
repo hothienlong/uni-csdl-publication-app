@@ -216,4 +216,41 @@ router.post('/getAvgPaperPerYears' ,(req,res) => {
 
 
 
+router.get('/Profile', (req,res)=> {
+    return res.render('reviewer/Profile', {username: req.username})
+})
+
+
+router.get('/getProfile', (req,res)=> {
+    fetch('http://localhost:3000/api/reviewer/get_profile_reviewer', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
+
+
+
+router.post('/updateProfile', (req,res) => {
+    fetch('http://localhost:3000/api/reviewer/update_info_reviewer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+    // return res.send(req.body)
+
+})
+
+
+
 module.exports = router;

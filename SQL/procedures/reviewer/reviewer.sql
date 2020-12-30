@@ -1,17 +1,35 @@
 use publication;
 
 -- 1 update reviewer info
+drop procedure if exists get_profile_reviewer;
+delimiter $$
+create procedure get_profile_reviewer
+(
+    reviewer_id varchar(45)
+)
+begin
+    select id, fname,address,email,company,job,degree,profession,collaboration_date,work_email
+    from scientist inner join reviewer on id = s_id
+    where id = reviewer_id;
+
+end$$
+delimiter ;
+
+grant execute on procedure publication.get_profile_reviewer to reviewer@localhost
+
+
+
+
 drop procedure if exists update_information_reviewer ;
 delimiter $$
 create procedure update_information_reviewer
 (
-	reviewer_id varchar(45) , collaboration_day date, work_email varchar(45), fname text, address text, email text, company text , job text, degree text, profession text
+	reviewer_id varchar(45), work_email varchar(45), fname text, address text, email text, company text , job text, degree text, profession text
 )
 begin
 
 	update reviewer r
-    set r.collaboration_date = collaboration_day ,
-		r.work_email = work_email
+    set r.work_email = work_email
 	where r.s_id = reviewer_id;
     
   update scientist s
@@ -449,3 +467,8 @@ delimiter ;
 
 grant execute on procedure publication.get_avg_reviewed_paper_count_per_year to reviewer@localhost;
 -- call get_avg_reviewed_paper_count_per_year('nnhhaadd_sci');
+
+
+
+
+
