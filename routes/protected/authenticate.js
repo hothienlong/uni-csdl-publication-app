@@ -79,7 +79,7 @@ router.get('/getAuthorization', (req, res) => {
     let query = 'call get_user_roles(?)';
     connection.query(query, [username], (err, results, fields) => {
         if (err) res.sendStatus(500);
-        console.log('role: ', results[0][0]);
+        // console.log('role: ', results[0][0]);
         return res.json(results[0][0]);
     })
 });

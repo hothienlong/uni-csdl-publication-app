@@ -34,57 +34,96 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <%- include('../layout/topbar'); %>
-                <div class="container-fluid">                   
-                       
-                            
+                <div class="container-fluid">                                                                   
                          <div>
                             <form action="/views/editor/assignReviewAfter" method="POST"> 
                                 <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="papers">Paper:</label>                                                        
-                                            <input type="text" name="paperId" style="width: 100%;" value="<%= paperId %>"/>
-                                        </div> 
-                                    </div>
-                                      
-                                    <div class="col-4">
-                                        <% var i = 0; %>                   
-                                        <% result[0].forEach((reviewer) => { %>
-                                            <% i++; %>
+                                
+                                    <% let currentDate=new Date(); %>
+                                    <% if (result[2].length> 0 && result[2][0].reviewing_date != '' && new Date(result[2][0].reviewing_date).getTime() < currentDate.getTime()) { %>
+                                        <div class="col-4">
                                             <div class="form-group">
-                                                <label for="reviewer<%= i %>">Reviewer <%= i %></label>                                                    
-                                                <input id="reviewerDisabled" style="width: 100%;" type="text" name="reviewer<%= i %>" value="<%= reviewer.reviewer_id %>" disabled/>
-                                            </div>
-                                        <% }) %>
-                                        <% if (i < 3) %>
-                                        <%      i++;                 %>
-                                        <%      for (i; i < 4; ++i) {%>
-                                                    <div class="form-group">
-                                                        <label for="papers">Reviewer <%= i %></label>                                                        
-                                                        <select id="reviewer<%= i %>" name="reviewer" style="width: 100%">
-                                                            <option value="-1">Please choose a reviewer</option>
-                                                            <%  result[1].forEach(function (reviewer) { %>
-                                                                <option value=<%= reviewer.s_id %>> <%= reviewer.s_id %> </option>
-                                                            <% }) %>                                                                                                                                                                                    
-                                                        </select>
-                                                    </div>      
-                                        <%      } %>
+                                                <label for="papers">Paper:</label>                                                        
+                                                <input class="form-control" type="text" name="paperId" style="width: 100%;" value="<%= paperId %>" readonly/>
+                                            </div> 
+                                        </div>
+                                        <div class="col-4">
+                                            <% var i = 0; %>                   
+                                            <% result[0].forEach((reviewer) => { %>
+                                                <% i++; %>
+                                                <div class="form-group">
+                                                    <label for="reviewer<%= i %>">Reviewer <%= i %></label>                                                    
+                                                    <input class="form-control" id="reviewerreadonly" style="width: 100%;" type="text" name="reviewer<%= i %>" value="<%= reviewer.reviewer_id %>" readonly/>
+                                                </div>
+                                            <% }) %>                                                                                            
+                                        </div>       
 
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button id='selectPaperBtn' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Submit</button>
-                                            <!-- <button class="btn btn-primary" type="button">Go back</button> -->
-                                        </div>
-                                    </div>       
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="reviewing-date">Reviewing date (YYYY-MM-DD)</label>  <br> 
-                                            <% if (result[2].length == 0 || result[2][0].reviewing_date == '') { %>                                                                                             
-                                                <input style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" placeholder=""/>                                                 
-                                            <% } else { %>
-                                                <input style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" value="<%= result[2][0].reviewing_date.substring(0, 10) %>"/>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="reviewing-date">Reviewing date (YYYY-MM-DD)</label>  <br>                                                 
+                                                <input class="form-control" style="width: 100%;" id ="reviewing-date" type="text" name="reviewing_date" value="<%= result[2][0].reviewing_date.substring(0, 10) %>" readonly/>                                                
+                                            </div>
+                                        </div>      
+                                        <% if(typeof alert != 'undefined') { console.log('abc');%>
+                                            <% for (var i = 0; i < alert.length; i++) { %>                                               
+                                                    <p style="color: red; margin-top: 5px;">
+                                                        <%= alert[i].msg  %>
+                                                    </p>                                                                                    
                                             <% } %>
+                                        <% } %>    
+                                    <% } else {%>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="papers">Paper:</label>                                                        
+                                                <input type="text" name="paperId" class="form-control" style="width: 100%;" value="<%= paperId %>" readonly/>
+                                            </div> 
                                         </div>
-                                    </div>          
+                                        <div class="col-4">
+                                            <% var i = 0; %>                   
+                                            <% result[0].forEach((reviewer) => { %>
+                                                <% i++; %>
+                                                <div class="form-group">
+                                                    <label for="reviewer<%= i %>">Reviewer <%= i %></label>                                                    
+                                                    <input class="form-control" id="reviewerreadonly" style="width: 100%;" type="text" name="reviewer<%= i %>" value="<%= reviewer.reviewer_id %>"/>
+                                                </div>
+                                            <% }) %>
+                                            <% if (i < 3) %>
+                                            <%      i++;                 %>
+                                            <%      for (i; i < 4; ++i) {%>
+                                                        <div class="form-group">
+                                                            <label for="papers">Reviewer <%= i %></label>                                                        
+                                                            <select id="reviewer<%= i %>" name="reviewer" style="width: 100%">
+                                                                <option value="-1">Please choose a reviewer</option>
+                                                                <%  result[1].forEach(function (reviewer) { %>
+                                                                    <option value=<%= reviewer.s_id %>> <%= reviewer.s_id %> </option>
+                                                                <% }) %>                                                                                                                                                                                    
+                                                            </select>
+                                                        </div>      
+                                            <%      } %>
+    
+                                            <div class="d-grid gap-2 d-md-flex justify-content-center">                                                                                
+                                                    <button id='selectPaperBtn' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Submit</button>                                                
+                                            </div>
+                                        </div>       
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="reviewing-date">Reviewing date (YYYY-MM-DD)</label>  <br> 
+                                                <% if (result[2].length == 0 || result[2][0].reviewing_date == '') { %>                                                                                             
+                                                    <input style="width: 100%;" class="form-control" id ="reviewing-date" type="text" name="reviewing_date"/>                                                 
+                                                <% } else { %>
+                                                    <input style="width: 100%;" class="form-control" id ="reviewing-date" type="text" name="reviewing_date" value="<%= result[2][0].reviewing_date.substring(0, 10) %>"/>
+                                                <% } %>
+
+                                                <% if(typeof alert != 'undefined') { %>
+                                                    <% for (var i = 0; i < alert.length; i++) { console.log('cde');%>                                                        
+                                                            <p style="color: red; margin-top: 5px;">
+                                                                <%= alert[i].msg  %>
+                                                            </p>                                                                                
+                                                    <% } %>
+                                                <% } %>
+                                            </div>
+                                        </div> 
+                                    <% } %>                                                                               
                                 </div>
                          
                             </form>                      

@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -32,6 +33,93 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <%- include('../layout/topbar'); %>
+                <div class="container-fluid">        
+                    <div class="card-header py-3 d-flex justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Paper detail</h6>                            
+                    </div>       
+                    
+                    <form action="/views/editor/updatePaper" method="POST">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="id">ID:</label>
+                                    <input type="text" class="form-control" id="id" name="id"
+                                        value="<%= paper.id %>" readonly/>                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Title:</label>
+                                    <input type="text" class="form-control" id="title" name="title"
+                                        value="<%= paper.title %>" readonly/>
+                                    
+                                </div>
+                                
+
+                                <div class="form-group">
+                                    <label for="date">Date sent:</label>
+                                    <input type="text" class="form-control" id="date" name="date"
+                                        value="<%= paper.sent_date.substring(0,10)%>" readonly/>
+                                </div>  
+                                
+                                <div class="form-group">
+                                    <label for="status">Status:</label>
+                                    <select name="status" id="status" style="width: 100%">
+                                        <option value="<%= paper.status %>"><%= paper.status %></option>  
+                                            <% if (paper.status != 'UNSOLVED_REVIEW') { %>                                      
+                                                <option value="UNSOLVED_REVIEW"> UNSOLVED_REVIEW </option>
+                                            <% } %>  
+                                            <% if (paper.status != 'REVIEW') { %>                                      
+                                                <option value="REVIEW"> REVIEW </option>
+                                            <% } %>  
+                                            <% if (paper.status != 'RESPOND_REVIEW') { %>                                      
+                                                <option value="RESPOND_REVIEW"> RESPOND_REVIEW </option>
+                                            <% } %>  
+                                            <% if (paper.status != 'COMPLETE_REVIEW') { %>                                      
+                                                <option value="COMPLETE_REVIEW"> COMPLETE_REVIEW </option>
+                                            <% } %>  
+                                            <% if (paper.status != 'PUBLICATION') { %>                                      
+                                                <option value="PUBLICATION"> PUBLICATION </option>
+                                            <% } %>   
+                                            <% if (paper.status != 'POSTED') { %>                                      
+                                                <option value="POSTED"> POSTED </option>
+                                            <% } %>                             
+                                    </select>
+                                </div> 
+                                
+                            </div>
+                        
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="file">File:</label>
+                                    <input type="text" class="form-control" id="file"
+                                        name="file" value="<%= paper.associated_file%>"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pagenums">Page numbers:</label>
+                                    <input type="text" class="form-control" id="pagenums" name="pagenums"
+                                        value="<%= paper.page_count %>" />                                    
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="author">Author:</label>                                                        
+                                    <input type="text" class="form-control" id="author" name="author"
+                                        value="<%= paper.sent_by %>" />
+                                </div>
+                                                                                
+                                <div class="form-group w-100">
+                                    <label for="summary">Summary:</label>
+                                    <textarea type="summary" class="form-control" id="summary"
+                                        name="summary" placeholder="<%= paper.summary%>" rows="5"><%= paper.summary%></textarea>                                    
+                                </div>                                                    
+                            </div>
+                              
+                            
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-center">
+                            <button id='add-paper' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Update</button>                            
+                        </div>
+                    </form>
+                </div>
             </div>
             
 
@@ -53,12 +141,14 @@
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-/
     <!-- Core plu/gin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-/
     <!-- Custom s/cripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        $('#status').select2();
+    </script>
 
 </body>
 

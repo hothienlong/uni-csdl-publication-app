@@ -72,10 +72,11 @@ router.get('/paper/:paperId', (req, res) => {
 });
 
 
-router.post('/addPaper', (req, res) => {    
+router.post('/updatePaper', (req, res) => {    
+    console.log("a");
     connection.query(
-        'call add_paper(?,?,?,?,?,?,?,?);',
-        [req.body.id, req.body.title, req.body.summary, req.body.file, req.body.pagenums, req.body.author, req.body.date, req.body.type_paper],
+        'call update_paper(?,?,?,?,?,?,?,?);',
+        [req.body.id, req.body.title, req.body.summary, req.body.file, req.body.pagenums, req.body.author, req.body.date , req.body.status],
         (err, results, fieldInfo) => {
             if (err) return res.status(500).send(err);
             res.sendStatus(200);
