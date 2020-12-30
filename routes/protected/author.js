@@ -214,20 +214,22 @@ router.post('/update_information', (req, res)=>{
     );
 });
 
-router.put('/edit_paper', (req, res)=>{
-    var s_id = req.user;
-    var p_id = req.body.p_id;
-    var title = req.body.title;
-    var summary = req.body.summary;
-    var associated_file = req.body.associated_file;
-    var page_count = req.body.page_count;
-    var sent_by = req.user;
+router.post('/edit_paper', (req, res)=>{
+    console.log(req.body);
+    var s_id = req.user;//
+    var p_id = req.body.p_id;//
+    var title = req.body.title;//
+    var summary = req.body.summary;//
+    var associated_file = req.body.associated_file;//
+    var page_count = req.body.page_count;//
+    // var sent_by = req.user;//
     var sent_date = req.body.sent_date;
+
 
     var query = 'call edit_paper(?,?,?,?,?,?,?,?);';
     connection.query(
         query,
-        [s_id, p_id, title, summary, associated_file, page_count, sent_by, sent_date], 
+        [s_id, p_id, title, summary, associated_file, page_count, s_id, sent_date], 
         (err, results, fields)=>{
             if (err) return res.status(500).send(err);
             return res.send(results);

@@ -193,6 +193,29 @@ router.post('/addResearchOverviewPaper', (req, res) => {
 //     res.redirect('/views/contactAuthor/paper')
 // });
 
+//---------------- Edit paper ----------------
+router.get('/edit_paper', (req, res) => {
+    return res.render('author/editPaper', {username : req.username});
+});
+
+router.post('/edit_paper', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/author/edit_paper', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+    .then(response => console.log("Success : ",response.status))
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    res.redirect('/views/author/edit_paper');
+
+});
+
 //---------------- Paper result ----------------
 router.get('/papers_result', (req, res) => {
     // console.log(req.cookies.authorization);

@@ -51,6 +51,20 @@
                 </li>
             <% } %>
 
+            <% if(sidebarItem == "editPaper"){ %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/views/author/edit_paper">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Edit paper</span></a>
+                </li>
+            <% }else{ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/views/author/edit_paper">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Edit paper</span></a>
+                </li>
+            <% } %>
+
             <% if(sidebarItem == "paperResult"){ %>
                 <li class="nav-item active">
                     <a class="nav-link" href="/views/author/papers_result">
@@ -80,19 +94,6 @@
                 </li>
             <% } %>
 
-            <% if(sidebarItem == "paperDetail"){ %>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/views/author/papers_detail">
-                        <i class="fas fa-fw fa-book"></i>
-                        <span>Papers detail</span></a>
-                </li>
-            <% }else{ %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/views/author/papers_detail">
-                        <i class="fas fa-fw fa-book"></i>
-                        <span>Papers detail</span></a>
-                </li>
-            <% } %>
 
             <% if(sidebarItem == "paperReviewResult"){ %>
                 <li class="nav-item active">
