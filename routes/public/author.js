@@ -9,6 +9,29 @@ fetch.Promise = blueBird;
 router.use(express.static('public'));
 
 
+//---------------- Profile ----------------
+router.get('/profile', (req, res) => {
+    return res.render('author/Profile', {username : req.username});
+});
+
+router.post('/update_profile', (req, res) => {
+    // console.log(req.cookies.authorization);
+    console.log("update profile");
+    fetch('http://localhost:3000/api/author/update_information', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body : JSON.stringify(req.body)
+    })
+        .then(response => console.log("Success : ",response.status))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    res.redirect('/views/author/Profile');
+
+});
 //---------------- Papers ----------------
 router.get('/', (req, res) => {
     return res.render('author/DashBoard', {username : req.username});

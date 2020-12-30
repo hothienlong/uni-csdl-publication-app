@@ -190,7 +190,7 @@ router.get('/authors', (req, res) => {
 });
 
 // 12 chức năng author
-router.put('/update_information', (req, res)=>{
+router.post('/update_information', (req, res)=>{
     var s_id = req.user;
     var fname = req.body.fname;
     var address = req.body.address;
@@ -208,6 +208,7 @@ router.put('/update_information', (req, res)=>{
         [s_id, fname, address, email, company, job, degree, profession], 
         (err, results, fields)=>{
             if (err) return res.status(500).send(err);
+            console.log(results);
             return res.sendStatus(200);
         }
     );
