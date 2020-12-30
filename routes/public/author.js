@@ -127,23 +127,30 @@ router.post('/addResearchPaper', [check('p_id').notEmpty().withMessage('Id canno
         
         let errors = validationResult(req).array(); 
 
-        if (req.body.page_count < 10 || req.body.page_count > 20) {
-            errors.push({
-                value: '',
-                msg: 'Research paper must have 10 to 20 pages!',
-                param: 'wrong_page_count',
-                location: 'body'
-            });
+        // console.log(req.body.page_count);
+        if(req.body.page_count != ""){
+            if (req.body.page_count < 10 || req.body.page_count > 20) {
+                errors.push({
+                    value: '',
+                    msg: 'Research paper must have 10 to 20 pages!',
+                    param: 'wrong_page_count',
+                    location: 'body'
+                });
+            }
         }
 
-        if (req.body.num_author != req.body.write_authors_id.length) {
-            errors.push({
-                value: '',
-                msg: 'Paper authors not same number of authors!',
-                param: 'wrong_num_author',
-                location: 'body'
-            });
+
+        if(typeof(req.body.write_authors_id) != "undefined"){
+            if (req.body.num_author != req.body.write_authors_id.length) {
+                errors.push({
+                    value: '',
+                    msg: 'Paper authors not same number of authors!',
+                    param: 'wrong_num_author',
+                    location: 'body'
+                });
+            }
         }
+
 
         const alert = errors;
 
@@ -215,23 +222,28 @@ router.post('/addResearchOverviewPaper', [check('p_id').notEmpty().withMessage('
      (req, res) => {
         let errors = validationResult(req).array(); 
 
-        if (req.body.page_count < 3 || req.body.page_count > 10) {
-            errors.push({
-                value: '',
-                msg: 'Research paper must have 10 to 20 pages!',
-                param: 'wrong_page_count',
-                location: 'body'
-            });
+        if(req.body.page_count != ""){
+            if (req.body.page_count < 3 || req.body.page_count > 10) {
+                errors.push({
+                    value: '',
+                    msg: 'Research paper must have 10 to 20 pages!',
+                    param: 'wrong_page_count',
+                    location: 'body'
+                });
+            }
         }
 
-        if (req.body.num_author != req.body.write_authors_id.length) {
-            errors.push({
-                value: '',
-                msg: 'Paper authors not same number of authors!',
-                param: 'wrong_num_author',
-                location: 'body'
-            });
+        if(typeof(req.body.write_authors_id) != "undefined"){
+            if (req.body.num_author != req.body.write_authors_id.length) {
+                errors.push({
+                    value: '',
+                    msg: 'Paper authors not same number of authors!',
+                    param: 'wrong_num_author',
+                    location: 'body'
+                });
+            }
         }
+
 
         const alert = errors;
 
