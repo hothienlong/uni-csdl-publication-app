@@ -326,17 +326,21 @@ router.get('/papers_detail', (req, res) => {
 // });
 
 //---------------- Paper review result ----------------
-// router.get('/papers_author', (req, res) => {
-//     // console.log(req.cookies.authorization);
-//     fetch('http://localhost:3000/api/author/papers_statistic', {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'authorization': req.cookies.authorization
-//         }
-//     })
-//         .then(response => response.json())
-//         .then(data => res.render('author/authorPaperReviewResult', {data, username : req.username}))
-//         .catch(err => console.log(err));
+// router.get('/paper_review_result', (req, res) => {
+//     return res.render('author/authorPaperReviewResult', {data : "Unknown", username : req.username});
 // });
+router.post('/paper_review_result', (req, res) => {
+    // console.log(req.cookies.authorization);
+    fetch('http://localhost:3000/api/author/review_summary', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body : JSON.stringify(req.body)
+    })
+        .then(response => response.json())
+        .then(data => res.render('author/authorPaperReviewResult', {data, username : req.username}))
+        .catch(err => console.log(err));
+});
 module.exports = router;
