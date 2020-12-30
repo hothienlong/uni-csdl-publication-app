@@ -74,15 +74,6 @@
                                                 <label for="research_overview_paper">Research overview paper</label>
                                             </form>
                                         </div>                                                        
-                                        <% if(typeof alert != 'undefined') { %>
-                                            <% for (var i = 0; i < alert.length; i++) { %>
-                                                <% if (alert[i].param == 'type_paper') { %>
-                                                    <p style="color: red; margin-top: 5px;">
-                                                        <%= alert[i].msg  %>
-                                                    </p>                        
-                                                <% } %>                                            
-                                            <% } %>
-                                        <% } %>
                                     </fieldset>
 
                                     <hr class="sidebar-divider d-none d-md-block">
@@ -98,7 +89,7 @@
                                                             placeholder="Enter id" />
                                                         <% if(typeof alert !='undefined' ) { %>
                                                             <% for (var i=0; i < alert.length; i++) { %>
-                                                                <% if (alert[i].param=='id' ) { %>
+                                                                <% if (alert[i].param=='p_id' ) { %>
                                                                     <p style="color: red; margin-top: 5px;">
                                                                         <%= alert[i].msg %>
                                                                     </p>
@@ -126,18 +117,20 @@
                                                         <input type="text" class="form-control" id="file"
                                                             name="associated_file" placeholder="Enter file" />
                                                     </div>
+                                                    <% if(typeof alert !='undefined' ) { %>
+                                                        <% for (var i=0; i < alert.length; i++) { %>
+                                                            <% if (alert[i].param=='associated_file' ) { %>
+                                                                <p style="color: red; margin-top: 5px;">
+                                                                    <%= alert[i].msg %>
+                                                                </p>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% } %>
 
-                                                    <!-- <div class="form-group">
-                                                        <label for="date">Date:</label>
-                                                        <input type="text" class="form-control" id="date" name="date"
-                                                            placeholder="Enter date" />
-                                                    </div>  -->
-
-
-                                
                                                     
-                                                </div>
-                                            
+                                                </div>    
+
+
                                                 <div class="col-6">
 
                                                     <div class="form-group">
@@ -159,6 +152,15 @@
                                                         <label for="pagenums">Number of authors:</label>
                                                         <input type="text" class="form-control" id="pagenums" name="num_author"
                                                             placeholder="Enter number of authors" />
+                                                            <% if(typeof alert !='undefined' ) { %>
+                                                                <% for (var i=0; i < alert.length; i++) { %>
+                                                                    <% if (alert[i].param=='num_author' ) { %>
+                                                                        <p style="color: red; margin-top: 5px;">
+                                                                            <%= alert[i].msg %>
+                                                                        </p>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                                                <% } %>
                                                     </div>
 
                                                     <div class="form-group">
@@ -175,23 +177,23 @@
                                                             <!-- <option value="-1">Please choose paper authors</option> -->
                                                             <%  authors.forEach(function (au) { %>
                                                                 <option value=<%= au.S_ID %>> <%= au.S_ID %> </option>
-                                                            <% }) %> 
-                                                        </select>                                                          
+                                                            <% }) %>    
+                                                        </select>     
+                                                        <% if(typeof alert !='undefined' ) { %>
+                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                <% if (alert[i].param=='write_authors_id' ) { %>
+                                                                    <p style="color: red; margin-top: 5px;">
+                                                                        <%= alert[i].msg %>
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% } %>                                                     
                                                     </div>
                                                                                                     
                                                     <div class="form-group w-100">
                                                         <label for="summary">Summary:</label>
                                                         <textarea type="summary" class="form-control" id="summary"
                                                             name="summary" placeholder="Enter summary" rows="5"></textarea>
-                                                        <% if(typeof alert !='undefined' ) { %>
-                                                            <% for (var i=0; i < alert.length; i++) { %>
-                                                                <% if (alert[i].param=='summary' ) { %>
-                                                                    <p style="color: red; margin-top: 5px;">
-                                                                        <%= alert[i].msg %>
-                                                                    </p>
-                                                                    <% } %>
-                                                                        <% } %>
-                                                                            <% } %>
                                                     </div>                                                    
                                                 </div>
                                                   

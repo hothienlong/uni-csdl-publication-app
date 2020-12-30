@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const blueBird = require('bluebird');
 const { json } = require('body-parser');
 fetch.Promise = blueBird;
+var {validationResult, check} = require('express-validator');
 
 router.use(express.static('public'));
 
@@ -103,33 +104,59 @@ router.post('/publication_papers', (req, res) => {
 
 //---------------- Submit paper ----------------
 router.get('/addResearchPaper', (req, res) => {
-    fetch('http://localhost:3000/api/author/authors', {
-        method: 'GET',
-        headers: {
-            'authorization': req.cookies.authorization
-        }
-    })
-        .then(response => response.json())
-        .then(authors => res.render('author/addResearchPaper', {authors, username : req.username}))
-        .catch(err => console.log(err));
-});
 
-router.post('/addResearchPaper', (req, res) => {
-    // console.log("add research");
-    fetch('http://localhost:3000/api/author/submit_research_paper', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': req.cookies.authorization
-        },
-        body: JSON.stringify(req.body)
-    })
-        .then(response => console.log("Success : ",response.status))
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    res.redirect('/views/author/addResearchPaper');
-});
+        fetch('http://localhost:3000/api/author/authors', {
+            method: 'GET',
+            headers: {
+                'authorization': req.cookies.authorization
+            }
+        })
+            .then(response => response.json())
+            .then(authors => res.render('author/addResearchPaper', {authors, username : req.username}))
+            .catch(err => console.log(err));
+    });
+
+router.post('/addResearchPaper', [check('p_id').notEmpty().withMessage('Id cannot be empty'),
+                                check('title').notEmpty().withMessage('Title cannot be empty'),
+                                check('associated_file').notEmpty().withMessage('File cannot be empty'),
+                                check('page_count').notEmpty().withMessage('Number of pages cannot be empty'),
+                                check('num_author').notEmpty().withMessage('Number of authors cannot be empty'),
+                                check('write_authors_id').notEmpty().withMessage('Paper authors cannot be empty')],
+    (req, res) => {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+
+            const alert = errors.array()
+            // console.log(alert);
+            fetch('http://localhost:3000/api/author/authors', {
+                method: 'GET',
+                headers: {
+                    'authorization': req.cookies.authorization
+                }
+            })
+                .then(response => response.json())
+                .then(authors => res.render('author/addResearchPaper', {alert, authors, username : req.username}))
+                .catch(err => console.log(err));
+            return;
+        }
+
+        console.log("add research");
+        fetch('http://localhost:3000/api/author/submit_research_paper', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': req.cookies.authorization
+            },
+            body: JSON.stringify(req.body)
+        })
+            .then(response => console.log("Success : ",response.status))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        res.redirect('/views/author/addResearchPaper');
+    });
 
 router.get('/addBookReviewPaper', (req, res) => {
     fetch('http://localhost:3000/api/author/authors', {
@@ -156,22 +183,47 @@ router.get('/addResearchOverviewPaper', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.post('/addResearchOverviewPaper', (req, res) => {
-    console.log("add research overview");
-    fetch('http://localhost:3000/api/author/submit_overview_paper', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': req.cookies.authorization
-        },
-        body: JSON.stringify(req.body)
-    })
-        .then(response => console.log("Success : ",response.status))
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    res.redirect('/views/author/addResearchOverviewPaper');
-});
+router.post('/addResearchOverviewPaper', [check('p_id').notEmpty().withMessage('Id cannot be empty'),
+                                        check('title').notEmpty().withMessage('Title cannot be empty'),
+                                        check('associated_file').notEmpty().withMessage('File cannot be empty'),
+                                        check('page_count').notEmpty().withMessage('Number of pages cannot be empty'),
+                                        check('num_author').notEmpty().withMessage('Number of authors cannot be empty'),
+                                        check('write_authors_id').notEmpty().withMessage('Paper authors cannot be empty')],
+     (req, res) => {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+
+            const alert = errors.array()
+            // console.log(alert);
+            fetch('http://localhost:3000/api/author/authors', {
+                method: 'GET',
+                headers: {
+                    'authorization': req.cookies.authorization
+                }
+            })
+                .then(response => response.json())
+                .then(authors => res.render('author/addResearchOverviewPaper', {alert, authors, username : req.username}))
+                .catch(err => console.log(err));
+            return;
+        }
+
+        console.log("add research overview");
+        fetch('http://localhost:3000/api/author/submit_overview_paper', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': req.cookies.authorization
+            },
+            body: JSON.stringify(req.body)
+        })
+            .then(response => console.log("Success : ",response.status))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        res.redirect('/views/author/addResearchOverviewPaper');
+    });
 
 // router.post('/addPaper', (req, res) => {
 //     // console.log("type: ", typeof(req.body));
@@ -198,23 +250,39 @@ router.get('/edit_paper', (req, res) => {
     return res.render('author/editPaper', {username : req.username});
 });
 
-router.post('/edit_paper', (req, res) => {
-    // console.log(req.cookies.authorization);
-    fetch('http://localhost:3000/api/author/edit_paper', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': req.cookies.authorization
-        },
-        body: JSON.stringify(req.body)
-    })
-    .then(response => console.log("Success : ",response.status))
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-    res.redirect('/views/author/edit_paper');
+router.post('/edit_paper', [check('p_id').notEmpty().withMessage('Id cannot be empty'),
+                        check('title').notEmpty().withMessage('Title cannot be empty'),
+                        check('associated_file').notEmpty().withMessage('File cannot be empty'),
+                        check('page_count').notEmpty().withMessage('Number of pages cannot be empty')], 
+                        
+    (req, res) => {
+        
+        const errors = validationResult(req);
 
-});
+        if (!errors.isEmpty()) {
+
+            const alert = errors.array()
+            // console.log(alert);
+            res.render('author/editPaper', {alert, username : req.username});
+            return;
+        }
+
+        console.log("edit paper");
+        fetch('http://localhost:3000/api/author/edit_paper', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': req.cookies.authorization
+            },
+            body: JSON.stringify(req.body)
+        })
+        .then(response => console.log("Success : ",response.status))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+        res.redirect('/views/author/edit_paper');
+
+    });
 
 //---------------- Paper result ----------------
 router.get('/papers_result', (req, res) => {
