@@ -63,7 +63,14 @@
                                                                     
                                     <div class="form-group">
                                         <label for="status">Status:</label>
-                                        <input type="text" class="form-control" id="status_if" name="status" value="<%= paper.status %>" readonly/>
+                                         <% if (paper.status == 'PUBLICATION') { %>
+                                            <select name="status" id="status_iff" style="width: 100%">                                                                                                                                                                                      
+                                                <option value="PUBLICATION"> PUBLICATION </option>
+                                                <option value="POSTED"> POSTED </option>                                                                      
+                                            </select>
+                                            <% } else { %>
+                                                <input type="text" class="form-control" id="status_if" name="status" value="<%= paper.status %>" readonly/>
+                                        <% } %>
                                     </div> 
 
                                     <div class="form-group">
@@ -232,7 +239,7 @@
                             
                             
                         </div>
-                        <% if (paper.status != 'POSTED' && paper.status != 'PUBLICATION') { %>    
+                        <% if (paper.status != 'POSTED') { %>    
                             <div class="d-grid gap-2 d-md-flex justify-content-center" style="margin-top: 20px;">
                                 <button id='add-paper' class="btn btn-info me-md-2" type="submit" style="margin-right: 5px;">Update</button>                            
                             </div>   
@@ -269,6 +276,7 @@
     <script>
         $('#status').select2();
         $('#paper_result_select').select2();
+        $('#status_iff').select2();
     </script>
 
 </body>
