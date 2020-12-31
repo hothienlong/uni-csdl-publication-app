@@ -146,13 +146,11 @@
         let fname = $("#update_fname").val()
         let address = $("#update_address").val()
         let email = $("#update_email").val()
-        let work_email = $("#update_work_email").val()
         let company = $("#update_company").val()
         let job = $("#update_job").val()
         let degree = $("#update_degree").val()
         let profession = $("#update_profession").val()
 
-        // console.log(fname,address,email,work_email,company,job,degree,profession)
         $.ajax({
             dataType: 'json',
             type: 'post',
@@ -161,7 +159,6 @@
                 fname: fname,
                 address: address,
                 email: email,
-                work_email: work_email,
                 company: company,
                 job: job,
                 degree: degree,
@@ -187,7 +184,6 @@
                 let fname = $("#fname").text()
                 let address = $("#address").text()
                 let email = $("#email").text()
-                let work_email = $("#work_email").text()
                 let company = $("#company").text()
                 let job = $("#job").text()
                 let degree = $("#degree").text()
@@ -197,7 +193,6 @@
                 $("#update_fname").val(fname)
                 $("#update_address").val(address)
                 $("#update_email").val(email)
-                $("#update_work_email").val(work_email)
                 $("#update_company").val(company)
                 $("#update_job").val(job)
                 $("#update_degree").val(degree)
@@ -224,10 +219,6 @@
         rows += `<tr>`
         rows += `<th scope="row">Email</th>`
         rows += `<td id="email">${data['email']}</td>`
-        rows += `</tr>`
-        rows += `<tr>`
-        rows += `<th scope="row">Work Email</th>`
-        rows += `<td id="work_email">${data['work_email']}</td>`
         rows += `</tr>`
         rows += `<tr>`
         rows += `<th scope="row">Company</th>`

@@ -15,6 +15,18 @@ router.get('/profile', (req, res) => {
     return res.render('author/Profile', {username : req.username});
 });
 
+router.get('/getProfile', (req,res)=> {
+    fetch('http://localhost:3000/api/author/get_profile', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
 router.post('/update_profile', (req, res) => {
     // console.log(req.cookies.authorization);
     console.log("update profile");

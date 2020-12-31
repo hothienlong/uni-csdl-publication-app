@@ -189,6 +189,19 @@ router.get('/authors', (req, res) => {
     );
 });
 
+router.get('/get_profile',(req,res)=> {
+    const s_id = req.user
+
+    const query = 'call get_profile_author(?)'
+    connection.query(
+        query,
+        [s_id],
+        (err,results,fields) => {
+            if (err) return res.status(500).send(err)
+            return res.send(results)
+        }
+    )
+})
 // 12 chức năng author
 router.post('/update_information', (req, res)=>{
     var s_id = req.user;
