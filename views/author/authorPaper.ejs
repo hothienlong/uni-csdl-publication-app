@@ -48,27 +48,40 @@
                                     </span>
                                     <span class="text">Submit paper</span>
                                 </a><br><br>
-                                <form action="/views/author/paper_in_x_years" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Get all papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/>                         
+
+                                <!-- 3 Function for paper -->
+                                <div class="row">
+                                    <div class="col-5">
+                                        <form action="/views/author/paper_in_x_years" method="POST">
+                                            <div class="form-group">
+                                                <label><b>Get all papers in x years:</b></label>
+                                                <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/>                         
+                                            </div>
+                                            <button class="btn btn-info me-md-2" type="submit">Submit</button>
+                                        </form>
                                     </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
-                                <form action="/views/author/posted_paper_in_x_years" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Get all posted papers in x years:</b></label>
-                                        <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/>                         
+                                    <div class="col-5">
+                                        <form action="/views/author/posted_paper_in_x_years" method="POST">
+                                            <div class="form-group">
+                                                <label><b>Get all posted papers in x years:</b></label>
+                                                <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/>                         
+                                            </div>
+                                            <button class="btn btn-info me-md-2" type="submit">Submit</button>
+                                        </form>
+                                        <br>
                                     </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
-                                <form action="/views/author/publication_papers" method="POST">
-                                    <div class="form-group">
-                                        <label><b>Get all publication papers in x years:</b></label> <br>
-                                        <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/>   
+                                    
+                                    <div class="col-5">
+                                        <form action="/views/author/publication_papers" method="POST">
+                                            <div class="form-group">
+                                                <label><b>Get all publication papers in x years:</b></label> <br>
+                                                <input type="text" class="form-control" id="years" name="years" placeholder="Enter x"/>   
+                                            </div>
+                                            <button class="btn btn-info me-md-2" type="submit">Submit</button>
+                                        </form>
                                     </div>
-                                    <button class="btn btn-info me-md-2" type="submit">Submit</button>
-                                </form>
+                                </div>
+                                <!-- End 3 Function for paper -->
                             </div>
                         </div>
 

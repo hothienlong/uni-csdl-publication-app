@@ -6,6 +6,7 @@ const blueBird = require('bluebird');
 const { json } = require('body-parser');
 const { reject } = require('bluebird');
 var {validationResult, check} = require('express-validator');
+const { route } = require('../protected/editor');
 fetch.Promise = blueBird;
 
 router.use(express.static('public'));
@@ -414,7 +415,40 @@ router.get('/papersByAuthorAndStatusResult', (req, res) => {
 });
 
 
+router.get('/profile', (req, res) => {
+    return res.render('editor/profile', {username: req.username});
+})
 
+
+router.get('/getProfile', (req,res)=> {
+    fetch('http://localhost:3000/api/editor/get_profile', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+})
+
+
+
+
+router.post('/updateProfile', (req,res) => {
+    fetch('http://localhost:3000/api/editor/update_profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': req.cookies.authorization
+        },
+        body: JSON.stringify(req.body)
+    })
+    .then(res => res.json())
+    .then(data => res.send(data))
+    // return res.send(req.body)
+
+})
 
 
 module.exports = router;

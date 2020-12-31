@@ -111,16 +111,16 @@
                                                 </div>
                                             
                                                 <div class="col-6">
-
                                                     <div class="form-group">
-                                                        <label for="pagenums">Number of pages:</label>
+                                                        <label for="pagenums">Number of pages: </label>
+                                                        <label> (Research (10-20 pages), Review (3-6 pages), Overview (3-10 pages))</label>
                                                         <input type="text" class="form-control" id="pagenums" name="page_count"
                                                             placeholder="Enter number of pages" />
                                                         <% if(typeof alert !='undefined' ) { %>
                                                             <% for (var i=0; i < alert.length; i++) { %>
-                                                                <% if (alert[i].param=='page_count' ) { %>
+                                                                <% if (alert[i].param=='wrong_num_author' ) { %>
                                                                     <p style="color: red; margin-top: 5px;">
-                                                                        <%= alert[i].msg %>
+                                                                        <%= alert[i].msg %> 
                                                                     </p>
                                                                     <% } %>
                                                                         <% } %>

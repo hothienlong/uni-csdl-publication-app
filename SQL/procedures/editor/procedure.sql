@@ -246,3 +246,45 @@ delimiter ;
 grant execute on procedure publication.update_paper to nodejs_application@localhost;
 
 
+
+
+drop procedure if exists get_profile_editor;
+delimiter $$
+create procedure get_profile_editor
+(
+    editor_id varchar(45)
+)
+begin
+    select id, fname,address,email,company,job,degree,profession, appointed_date
+    from scientist as s inner join editor as e on e.s_id = s.id
+    where id = editor_id;
+
+end$$
+delimiter ;
+
+grant execute on procedure publication.get_profile_editor to nodejs_application@localhost;
+
+drop procedure if exists update_information_editor ;
+delimiter $$
+create procedure update_information_editor
+(
+	editor_id varchar(45),  fname text, address text, email varchar(45),   company text , job text, degree text, profession text
+)
+begin    
+  update scientist s
+  set s.fname = fname,
+  s.address = address,
+      s.email = email,
+      s.company = company,
+      s.job = job,
+      s.degree = degree,
+      s.profession = profession
+  where s.id = editor_id;
+
+end$$
+delimiter ;
+
+
+grant execute on procedure publication.update_information_editor to nodejs_application@localhost;
+
+

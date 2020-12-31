@@ -17,7 +17,7 @@
     <% } else {%>
         <li class="nav-item">
         <% } %>
-        <a class="nav-link" href="/views/editor">
+        <a class="nav-link" href="/views">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -94,9 +94,21 @@
             <i class="fas fa-fw fa-book"></i>
             <span>Papers By Author / Status</span></a>
     </li>  
+
+    
    
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+
+    <% if (active_bar == 'Profile') { %>
+        <li class="nav-item active">
+    <% } else {%>
+        <li class="nav-item">
+    <% } %>
+        <a class="nav-link" href="/views/editor/profile">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Profile</span></a>
+    </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

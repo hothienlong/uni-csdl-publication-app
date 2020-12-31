@@ -402,3 +402,46 @@ grant execute on procedure get_total_papers_of_type_in_years to nodejs_applicati
 -- 12 get total overview paper in 5 years
 -- call get_total_papers_of_type_in_years("longauthor", 'OverviewPaper', 5);
 
+
+
+drop procedure if exists get_profile_author;
+delimiter $$
+create procedure get_profile_author
+(
+    author_id varchar(45)
+)
+begin
+    select id, fname,address,email,company,job,degree,profession
+    from scientist as s inner join author as a on a.s_id = s.id
+    where id = author_id;
+
+end$$
+delimiter ;
+
+grant execute on procedure publication.get_profile_author to nodejs_application@localhost;
+
+drop procedure if exists update_information_author ;
+delimiter $$
+create procedure update_information_author
+(
+	author_id varchar(45),  fname text, address text, email varchar(45),   company text , job text, degree text, profession text
+)
+begin    
+  update scientist s
+  set s.fname = fname,
+  s.address = address,
+      s.email = email,
+      s.company = company,
+      s.job = job,
+      s.degree = degree,
+      s.profession = profession
+  where s.id = author_id;
+
+end$$
+delimiter ;
+
+
+grant execute on procedure publication.update_information_author to nodejs_application@localhost;
+
+
+

@@ -114,11 +114,11 @@
                                                                                                                 Choose position
                                                                                                             </legend>
                                                                                                             <div>
-                                                                                                                <input type="radio" id="editor" name="position" value="editor">
+                                                                                                                <input type="checkbox" id="editor" name="position" value="editor">
                                                                                                                 <label for="editor">Editor</label>
                                                                                                             </div>
                                                                                                             <div>
-                                                                                                                <input type="radio" id="reviewer" name="position" value="reviewer">
+                                                                                                                <input type="checkbox" id="reviewer" name="position" value="reviewer">
                                                                                                                 <label for="reviewer">Reviewer</label>
                                                                                                                 <div class="form-group " style="display: none; transition: all 200ms ease-in-out;margin:23px 0px ;">
                                                                                                                     <input type="text" class="form-control" id="work_email" name="work_email" required />
@@ -127,40 +127,29 @@
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                             <div>
-                                                                                                                <input type="radio" id="author" name="position" value="author">
+                                                                                                                <input type="checkbox" id="author" name="position" value="author">
                                                                                                                 <label for="author">Author</label>
                                                                                                                 
                                                                                                             </div>
-                                                                                                            <% if(typeof
-                                                                                                                    alert
-                                                                                                                    !='undefined'
-                                                                                                                    ) {
-                                                                                                                    %>
-                                                                                                                <% for
-                                                                                                                        (var
-                                                                                                                        i=0;
-                                                                                                                        i
-                                                                                                                        <
-                                                                                                                        alert.length;
-                                                                                                                        i++)
-                                                                                                                        {
-                                                                                                                        %>
-                                                                                                                    <% if
-                                                                                                                            (alert[i].param=='position'
-                                                                                                                            )
-                                                                                                                            {
-                                                                                                                            %>
+                                                                                                            <% if(typeof alert !='undefined' ) { %>
+                                                                                                                <% for (var i=0; i < alert.length; i++) { %>
+                                                                                                                    <% if (alert[i].param=='position' ) { %>
                                                                                                                         <p style="color: red; margin-bottom: 15px;">
-                                                                                                                            <%= alert[i].msg
-                                                                                                                                    %>
+                                                                                                                            <%= alert[i].msg %>
                                                                                                                         </p>
-                                                                                                                        <% }
-                                                                                                                                %>
-                                                                                                                            <% }
-                                                                                                                                    %>
-                                                                                                                                <% }
-                                                                                                                                        %>
+                                                                                                                        <% } %>
+                                                                                                                            <% } %>
+                                                                                                                                <% } %>
                                                                                                         </fieldset>
+                                                                                                        <% if(typeof alert !='undefined' ) { %>
+                                                                                                            <% for (var i=0; i < alert.length; i++) { %>
+                                                                                                                <% if (alert[i].param=='wrong' ) { %>
+                                                                                                                    <p style="color: red; margin-top: 5px;">
+                                                                                                                        <%= alert[i].msg %>
+                                                                                                                    </p>
+                                                                                                                    <% } %>
+                                                                                                                        <% } %>
+                                                                                                                            <% } %>
 
 
                             </div>

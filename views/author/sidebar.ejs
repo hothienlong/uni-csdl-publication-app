@@ -65,17 +65,17 @@
                 </li>
             <% } %>
 
-            <% if(sidebarItem == "paperResult"){ %>
+            <% if(sidebarItem == "paperAuthor"){ %>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/views/author/papers_result">
+                    <a class="nav-link" href="/views/author/papers_author">
                         <i class="fas fa-fw fa-book"></i>
-                        <span>Papers result</span></a>
+                        <span>Papers author</span></a>
                 </li>
             <% }else{ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="/views/author/papers_result">
+                    <a class="nav-link" href="/views/author/papers_author">
                         <i class="fas fa-fw fa-book"></i>
-                        <span>Papers result</span></a>
+                        <span>Papers author</span></a>
                 </li>
             <% } %>
 
@@ -108,20 +108,22 @@
                         <span>Papers review result</span></a>
                 </li>
             <% } %>
-            
-            <% if(sidebarItem == "paperAuthor"){ %>
+
+            <% if(sidebarItem == "paperResult"){ %>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/views/author/papers_author">
+                    <a class="nav-link" href="/views/author/papers_result">
                         <i class="fas fa-fw fa-book"></i>
-                        <span>Papers author</span></a>
+                        <span>Papers result</span></a>
                 </li>
             <% }else{ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="/views/author/papers_author">
+                    <a class="nav-link" href="/views/author/papers_result">
                         <i class="fas fa-fw fa-book"></i>
-                        <span>Papers author</span></a>
+                        <span>Papers result</span></a>
                 </li>
             <% } %>
+            
+
 
                 <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
