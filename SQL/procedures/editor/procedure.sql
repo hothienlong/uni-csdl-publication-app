@@ -65,7 +65,7 @@ begin
 		from paper as p inner join book_review as b on p.id = b.p_id where p.id in (select id  from paper where status = status_paper);
 	elseif (type_paper = 'RESEARCH_OVERVIEW_PAPER') then
 		select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
-		from paper as p inner join research_over_view_paper as r on p.id = r.p_id where p.id in (select id  from paper where status = status_paper);
+		from paper as p inner join research_overview_paper as r on p.id = r.p_id where p.id in (select id  from paper where status = status_paper);
     elseif (type_paper = 'RESEARCH_PAPER') then
 		select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
 		from paper as p inner join research_paper as r on p.id = r.p_id where p.id in (select id  from paper where status = status_paper);
@@ -87,7 +87,7 @@ begin
 		where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 365*distant_year;
 	elseif (type_paper = 'RESEARCH_OVERVIEW_PAPER') then
 		select p.id, p.title, p.summary, p.associated_file, p.page_count, p.sent_by, p.sent_date
-		from paper as p inner join research_over_view_paper as r on p.id = r.p_id
+		from paper as p inner join research_overview_paper as r on p.id = r.p_id
 			inner join review_assignment_detail as re on p.id = re.p_id
         where p.id in (select id  from paper where status = 'POSTED') and datediff(current_date, re.inform_date) < 365*distant_year;
     elseif (type_paper = 'RESEARCH_PAPER') then

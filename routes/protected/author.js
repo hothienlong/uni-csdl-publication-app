@@ -7,7 +7,8 @@ const connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'nodejs_application',
     password : 'nodejs_application_password',
-    database : 'publication'
+    database : 'publication',
+    timezone : "gmt"
 });
 connection.connect();
 

@@ -59,7 +59,7 @@ router.get('/paper/:paperId', (req, res) => {
 router.post('/updatePaper',  [check('inform_date').notEmpty().withMessage("Inform date must not be empty!")]  ,(req, res) => {
     var validator_error= validationResult(req).array();    
     let username = req.username;
-    if (new Date(req.body.inform_date).getTime() <= new Date().getTime()) {
+    if (new Date(req.body.inform_date).getTime() <= new Date().getUTCDate()) {
         validator_error.push ({
             value: '',
             msg: 'The inform date must be greater than current day!',
@@ -212,7 +212,7 @@ router.get('/assignReviewAfter', (req, res) => {
 
 router.post('/assignReviewAfter', [check('reviewing_date').notEmpty().withMessage("Reviewing date must not be empty!")] ,(req, res) => {  
     var validator_error= validationResult(req).array();    
-    if (new Date(req.body.reviewing_date).getTime() <= new Date().getTime()) {
+    if (new Date(req.body.reviewing_date).getTime() <= new Date().getUTCDate()) {
         validator_error.push ({
             value: '',
             msg: 'The reviewing date must be greater than current day!',
