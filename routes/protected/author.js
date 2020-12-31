@@ -28,18 +28,27 @@ router.post('/submit_research_paper', (req, res)=>{
         [p_id, title, summary, associated_file, page_count, sent_by], 
         (err, results, fields)=>{
         if (err) return res.status(500).send(err);
-
-        for(var i = 0; i < num_author; i++){
-            var subquery = 'call add_author(?,?);'
+        var subquery = 'call add_author(?,?);'
+        if (num_author == 1) {
             connection.query(
                 subquery,
-                [p_id, write_authors_id[i]],
+                [p_id, write_authors_id],
                 (err, results, fields)=>{
                     if (err) return res.status(500).send(err);
                 }
             );
         }
-
+        else {
+            for(var i = 0; i < num_author; i++){            
+                connection.query(
+                    subquery,
+                    [p_id, write_authors_id[i]],
+                    (err, results, fields)=>{
+                        if (err) return res.status(500).send(err);
+                    }
+                );
+            }
+        }        
         return res.sendStatus(200);
         }
     );
