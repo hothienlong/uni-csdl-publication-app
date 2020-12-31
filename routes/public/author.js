@@ -153,7 +153,7 @@ router.post('/addResearchPaper', [check('p_id').notEmpty().withMessage('Id canno
 
 
         if(typeof(req.body.write_authors_id) != "undefined"){
-            if (req.body.num_author != req.body.write_authors_id.length) {
+            if (typeof(req.body.write_authors_id) !== "string" &&  req.body.num_author != req.body.write_authors_id.length) {
                 errors.push({
                     value: '',
                     msg: 'Paper authors not same number of authors!',
@@ -246,7 +246,7 @@ router.post('/addResearchOverviewPaper', [check('p_id').notEmpty().withMessage('
         }
 
         if(typeof(req.body.write_authors_id) != "undefined"){
-            if (req.body.num_author != req.body.write_authors_id.length) {
+            if (typeof(req.body.write_authors_id) !== "string" && req.body.num_author != req.body.write_authors_id.length) {
                 errors.push({
                     value: '',
                     msg: 'Paper authors not same number of authors!',
